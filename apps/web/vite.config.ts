@@ -2,7 +2,14 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
+// Deploy-time base path. Defaults to '/' for local dev; the production image
+// passes VITE_BASE_PATH=/todly/ so the app can live under mohe.today/todly.
+// Declared locally so we don't need @types/node just to read one build arg.
+declare const process: { env: Record<string, string | undefined> }
+const base = process.env.VITE_BASE_PATH || '/'
+
 export default defineConfig({
+  base,
   // sockjs-client references the Node `global` object at module load time, which
   // is undefined in the browser and crashes the app. Map it to `globalThis`.
   define: {
@@ -27,8 +34,8 @@ export default defineConfig({
         theme_color: '#2E86E6',
         background_color: '#EDF1F7',
         display: 'standalone',
-        start_url: '/',
-        scope: '/',
+        start_url: base,
+        scope: base,
         icons: [
           { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
           { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
@@ -45,9 +52,9 @@ export default defineConfig({
         // generated SW can receive and display push notifications.
         importScripts: ['push-sw.js'],
         // Offline app-shell: serve index.html for navigations that miss the cache.
-        navigateFallback: 'index.html',
+        navigateFallback: base + 'index.html',
         // Don't hijack API or websocket navigations with the SPA shell.
-        navigateFallbackDenylist: [/^\/api/, /^\/ws/],
+        navigateFallbackDenylist: [new RegExp('^' + base + 'api'), new RegExp('^' + base + 'ws')],
         globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}'],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
@@ -55,7 +62,7 @@ export default defineConfig({
           {
             // API GETs: try network first (fresh), fall back to cache offline.
             urlPattern: ({ url, request }) =>
-              url.pathname.startsWith('/api') && request.method === 'GET',
+              url.pathname.startsWith(base + 'api') && request.method === 'GET',
             handler: 'NetworkFirst',
             options: {
               cacheName: 'todly-api',

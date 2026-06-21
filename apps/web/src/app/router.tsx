@@ -95,7 +95,12 @@ export const router = createBrowserRouter([
       },
     ],
   },
-])
+], {
+  // Honour the Vite base path so routing works when the app is mounted under a
+  // sub-path (e.g. mohe.today/todly). BASE_URL is '/' in local dev. React Router
+  // wants the basename without a trailing slash.
+  basename: import.meta.env.BASE_URL.replace(/\/$/, '') || '/',
+})
 
 /** Phone-frame wrapper for pushed screens; mirrors AppShell minus BottomNav. */
 function PushedLayout() {

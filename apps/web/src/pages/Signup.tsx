@@ -115,7 +115,7 @@ export default function Signup() {
 
   return (
     <AuthScreen>
-      <form onSubmit={onSubmit} className="relative flex flex-col" style={{ padding: '14px 26px 32px' }}>
+      <form noValidate onSubmit={onSubmit} className="relative flex flex-col" style={{ padding: '14px 26px 32px' }}>
         {/* Header: back arrow + centered wordmark */}
         <div className="relative flex items-center" style={{ height: 40, marginBottom: 24 }}>
           <Link
