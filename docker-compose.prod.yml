@@ -1,0 +1,89 @@
+# Production deployment for mohe.today/todly.
+#
+# Fronted by the shared Caddy reverse proxy (container `proxy-caddy` on the
+# external `proxy_network`). Only `todly-api` and `todly-web` join that network
+# so Caddy can route to them by name; Postgres/Redis stay on the private
+# `todly_internal` network and publish no host ports.
+#
+#   docker compose -f docker-compose.prod.yml up -d --build
+#
+# The web image is built with VITE_BASE_PATH=/todly/ so all asset/router/API
+# URLs are prefixed; Caddy strips the /todly prefix before forwarding.
+
+services:
+  db:
+    image: postgres:16
+    container_name: todly-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: todly
+      POSTGRES_USER: todly
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-todly_prod_pw_change_me}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todly"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - todly_internal
+
+  redis:
+    image: redis:7
+    container_name: todly-redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - todly_internal
+
+  api:
+    build: ./apps/api
+    container_name: todly-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/todly
+      SPRING_DATASOURCE_USERNAME: todly
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-todly_prod_pw_change_me}
+      SPRING_DATA_REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET:-9rV/iHD75blihUcAqvLxsk+0ctJfG97f8fHTMnIaze19cOePzJrXhiKT70IHxCpW}
+      TODLY_STORAGE_DIR: /app/data/photos
+    volumes:
+      - photos:/app/data/photos
+    networks:
+      - todly_internal
+      - proxy_network
+
+  web:
+    build:
+      context: ./apps/web
+      args:
+        VITE_BASE_PATH: /todly/
+        VITE_API_BASE_URL: /todly/api/v1
+        VITE_WS_URL: /todly/ws
+    container_name: todly-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    networks:
+      - proxy_network
+
+volumes:
+  pgdata:
+  photos:
+
+networks:
+  todly_internal:
+    driver: bridge
+  proxy_network:
+    external: true
+    name: proxy_network

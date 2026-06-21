@@ -37,7 +37,7 @@ export default function ResetPassword() {
 
   return (
     <AuthScreen gradientHeader>
-      <form onSubmit={onSubmit} className="relative flex flex-col" style={{ padding: '24px 26px 32px' }}>
+      <form noValidate onSubmit={onSubmit} className="relative flex flex-col" style={{ padding: '24px 26px 32px' }}>
         <div className="relative flex items-center" style={{ height: 40, marginBottom: 24 }}>
           <Link
             to="/login"

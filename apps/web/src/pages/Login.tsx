@@ -35,7 +35,7 @@ export default function Login() {
 
   return (
     <AuthScreen gradientHeader>
-      <form onSubmit={onSubmit} className="relative flex flex-col" style={{ padding: '24px 26px 32px' }}>
+      <form noValidate onSubmit={onSubmit} className="relative flex flex-col" style={{ padding: '24px 26px 32px' }}>
         <div className="flex flex-col items-center text-center" style={{ marginTop: 54, marginBottom: 38 }}>
           <div style={{ marginBottom: 20 }}>
             <Wordmark size={40} />
