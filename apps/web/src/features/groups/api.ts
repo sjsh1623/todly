@@ -1,5 +1,6 @@
 import { isAxiosError } from 'axios'
 import { api } from '../../shared/lib/api'
+import { useAuthStore } from '../auth/store'
 import type { ApiError } from '../auth/types'
 import type {
   AcceptInvitationResult,
@@ -36,7 +37,11 @@ export async function deleteGroup(id: string): Promise<void> {
 }
 
 export async function leaveGroup(id: string): Promise<void> {
-  await api.post(`/groups/${id}/leave`)
+  // Self-leave is the membership-removal endpoint with the current user's id
+  // (DELETE /groups/{id}/members/{userId}, per the API contract).
+  const userId = useAuthStore.getState().user?.id
+  if (!userId) throw new Error('Not authenticated')
+  await api.delete(`/groups/${id}/members/${userId}`)
 }
 
 export async function createInvite(id: string, expiresInHours?: number): Promise<Invitation> {

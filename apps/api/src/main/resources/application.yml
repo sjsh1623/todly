@@ -42,6 +42,17 @@ todly:
   oidc:
     google-client-id: ${GOOGLE_CLIENT_ID:}
     apple-client-id: ${APPLE_CLIENT_ID:}
+  push:
+    # Web Push (PWA) — generate a VAPID keypair and set these to enable delivery.
+    # Absent keys = safe no-op (see WebPushSender).
+    vapid:
+      public: ${PUSH_VAPID_PUBLIC:}
+      private: ${PUSH_VAPID_PRIVATE:}
+      subject: ${PUSH_VAPID_SUBJECT:mailto:support@todly.app}
+    # Native push (iOS/Android) via Firebase Cloud Messaging. Point `credentials`
+    # at a Firebase service-account JSON file. Absent = safe no-op (see FcmSender).
+    fcm:
+      credentials: ${PUSH_FCM_CREDENTIALS:}
 
 springdoc:
   api-docs:
