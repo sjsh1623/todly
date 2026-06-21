@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import * as authApi from './api'
 import { useAuthStore } from './store'
+import { syncPushIfGranted } from '../push'
 
 /**
  * On app load: if a refresh token was persisted, mint a fresh access token and
@@ -34,6 +35,8 @@ export function useAuthBootstrap(): boolean {
           // /me failure is non-fatal; tokens are still valid.
         }
         if (!cancelled) setStatus('authenticated')
+        // Best-effort: refresh this device's push token if already permitted.
+        void syncPushIfGranted()
       } catch {
         if (!cancelled) logout()
       } finally {

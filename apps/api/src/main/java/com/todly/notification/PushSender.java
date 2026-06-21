@@ -1,67 +1,80 @@
 package com.todly.notification;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Web-push (VAPID) delivery — STRUCTURE ONLY (PHASE 7 / IMP-06).
+ * Push dispatcher. Splits a user's device tokens by platform and delegates to
+ * the right transport:
+ * <ul>
+ *   <li>{@code web}            → {@link WebPushSender} (VAPID / Web Push)</li>
+ *   <li>{@code ios}/{@code android} → {@link FcmSender} (Firebase Cloud Messaging)</li>
+ * </ul>
  *
- * <p>When both {@code PUSH_VAPID_PUBLIC} and {@code PUSH_VAPID_PRIVATE} env vars
- * (mapped to {@code todly.push.vapid.public/private}) are present this would sign
- * and POST a Web Push message to each of the user's stored {@link DeviceToken}
- * endpoints. No real HTTP/crypto is wired here — adding the {@code web-push} (or
- * {@code nl.martijndwars:web-push}) dependency and the VAPID keys is all that's
- * required to make {@link #send} actually deliver.
- *
- * <p>When keys are absent (the default for local/dev/tests) it is a safe no-op
- * that only logs at debug — push being unconfigured NEVER fails a notification.
+ * <p>Each transport is independently config-gated; when neither is configured
+ * this is a safe no-op. Push is always auxiliary to the in-app + realtime
+ * notification, which has already been delivered, so failures never propagate.
  */
 @Component
 public class PushSender {
 
     private static final Logger log = LoggerFactory.getLogger(PushSender.class);
 
-    private final String vapidPublic;
-    private final String vapidPrivate;
+    private final WebPushSender webPushSender;
+    private final FcmSender fcmSender;
+    private final ObjectMapper mapper = new ObjectMapper();
 
-    public PushSender(@Value("${todly.push.vapid.public:}") String vapidPublic,
-                      @Value("${todly.push.vapid.private:}") String vapidPrivate) {
-        this.vapidPublic = vapidPublic;
-        this.vapidPrivate = vapidPrivate;
+    public PushSender(WebPushSender webPushSender, FcmSender fcmSender) {
+        this.webPushSender = webPushSender;
+        this.fcmSender = fcmSender;
     }
 
-    /** True when VAPID keys are configured (push could actually be sent). */
+    /** True when at least one transport is configured. */
     public boolean enabled() {
-        return vapidPublic != null && !vapidPublic.isBlank()
-            && vapidPrivate != null && !vapidPrivate.isBlank();
+        return webPushSender.enabled() || fcmSender.enabled();
     }
 
     /**
-     * Best-effort web push to all of the user's device tokens. No-op (debug log
-     * only) when keys are absent. Any failure is swallowed — push is auxiliary to
-     * the in-app + realtime notification, which has already been delivered.
+     * Best-effort push to all of the user's device tokens, routed by platform.
      */
     public void send(List<DeviceToken> tokens, String title, String body, String link) {
-        if (!enabled()) {
-            log.debug("Web push disabled (no VAPID keys); skipping push for title={}", title);
-            return;
-        }
         if (tokens == null || tokens.isEmpty()) {
             return;
         }
-        for (DeviceToken token : tokens) {
-            try {
-                // TODO: sign with VAPID and POST the encrypted payload to the
-                //       subscription endpoint. Intentionally unimplemented here.
-                log.debug("Would web-push to token={} platform={} title={}",
-                    token.getId(), token.getPlatform(), title);
-            } catch (RuntimeException ex) {
-                log.warn("Web push to token={} failed", token.getId(), ex);
-            }
+        List<DeviceToken> web = tokens.stream()
+            .filter(t -> t.getPlatform() == DevicePlatform.web)
+            .toList();
+        List<DeviceToken> nativeTokens = tokens.stream()
+            .filter(t -> t.getPlatform() == DevicePlatform.ios || t.getPlatform() == DevicePlatform.android)
+            .toList();
+
+        if (!web.isEmpty()) {
+            webPushSender.send(web, buildWebPayload(title, body, link));
+        }
+        if (!nativeTokens.isEmpty()) {
+            fcmSender.send(nativeTokens, title, body, link);
+        }
+    }
+
+    /** Serializes the payload the service worker `push` handler expects. */
+    private String buildWebPayload(String title, String body, String link) {
+        Map<String, String> payload = new LinkedHashMap<>();
+        payload.put("title", title == null ? "todly" : title);
+        payload.put("body", body == null ? "" : body);
+        payload.put("url", link == null ? "/" : link);
+        try {
+            return mapper.writeValueAsString(payload);
+        } catch (JsonProcessingException e) {
+            // Fields are plain strings; this should never happen.
+            log.warn("Failed to serialize web push payload", e);
+            return "{\"title\":\"todly\"}";
         }
     }
 }

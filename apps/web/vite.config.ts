@@ -41,6 +41,9 @@ export default defineConfig({
         ],
       },
       workbox: {
+        // Pull in the Web Push event handlers (push / notificationclick) so the
+        // generated SW can receive and display push notifications.
+        importScripts: ['push-sw.js'],
         // Offline app-shell: serve index.html for navigations that miss the cache.
         navigateFallback: 'index.html',
         // Don't hijack API or websocket navigations with the SPA shell.

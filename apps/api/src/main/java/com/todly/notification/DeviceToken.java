@@ -27,7 +27,9 @@ public class DeviceToken {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @Column(name = "token", nullable = false, unique = true, length = 512)
+    // TEXT column (see V3 migration): holds either a short native FCM/APNs token
+    // or the full Web Push subscription JSON.
+    @Column(name = "token", nullable = false, unique = true, columnDefinition = "text")
     private String token;
 
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)

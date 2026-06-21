@@ -1,10 +1,12 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { PushHeader, StatusBar } from '../shared/ui'
+import { PushHeader, StatusBar, useToast } from '../shared/ui'
 import {
   useNotificationSettings,
   useUpdateNotificationSettings,
 } from '../features/notifications'
 import type { NotificationSettings as Settings } from '../features/notifications'
+import { enablePush, isNativePush, webPushSupported } from '../features/push'
 
 type Row = {
   key: keyof Pick<Settings, 'pushLive' | 'pushDue' | 'pushComment' | 'pushAssigned'>
@@ -58,8 +60,35 @@ function Toggle({
 
 export default function NotificationSettings() {
   const navigate = useNavigate()
+  const toast = useToast()
   const { data: settings, isLoading } = useNotificationSettings()
   const update = useUpdateNotificationSettings()
+
+  // Push opt-in (OS/browser permission + token registration).
+  const pushAvailable = isNativePush() || webPushSupported()
+  const [granted, setGranted] = useState(
+    typeof Notification !== 'undefined' && Notification.permission === 'granted',
+  )
+  const [enabling, setEnabling] = useState(false)
+
+  useEffect(() => {
+    if (typeof Notification !== 'undefined') {
+      setGranted(Notification.permission === 'granted')
+    }
+  }, [])
+
+  const handleEnablePush = async () => {
+    setEnabling(true)
+    try {
+      const ok = await enablePush()
+      setGranted(ok)
+      toast[ok ? 'success' : 'error'](
+        ok ? '푸시 알림을 켰어요' : '푸시 알림 권한이 필요해요',
+      )
+    } finally {
+      setEnabling(false)
+    }
+  }
 
   const toggle = (key: Row['key']) => {
     if (!settings) return
@@ -72,6 +101,37 @@ export default function NotificationSettings() {
       <PushHeader title="알림" onBack={() => navigate(-1)} />
 
       <div style={{ padding: '8px 22px 24px' }}>
+        {pushAvailable && (
+          <div
+            className="flex items-center justify-between"
+            style={{ background: '#fff', borderRadius: 18, padding: '15px 18px', marginBottom: 16, gap: 12, boxShadow: '0 6px 20px rgba(17,40,86,.06)' }}
+          >
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>기기 푸시 알림</div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-subtle)', marginTop: 2 }}>
+                {granted ? '이 기기에서 푸시를 받고 있어요' : '앱을 닫아도 알림을 받으려면 권한을 허용해 주세요'}
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={handleEnablePush}
+              disabled={enabling || granted}
+              style={{
+                flex: 'none',
+                padding: '10px 16px',
+                borderRadius: 12,
+                background: granted ? '#E6F0FB' : '#1366CE',
+                color: granted ? '#1366CE' : '#fff',
+                fontSize: 13,
+                fontWeight: 800,
+                opacity: enabling ? 0.6 : 1,
+              }}
+            >
+              {granted ? '켜짐' : enabling ? '설정 중…' : '켜기'}
+            </button>
+          </div>
+        )}
+
         <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', margin: '0 0 11px 4px' }}>알림</div>
 
         {isLoading || !settings ? (
