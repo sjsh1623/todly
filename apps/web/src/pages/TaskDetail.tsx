@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import i18n from '../shared/i18n/i18n'
 import { Avatar, Card, Heatmap, PushHeader } from '../shared/ui'
 import { useAuthStore } from '../features/auth'
 import { PROFILE_COLOR_TO_AVATAR } from '../features/auth/types'
@@ -17,10 +19,10 @@ import {
 } from '../features/tasks'
 import type { Task } from '../features/tasks'
 
-const PRIORITY_LABEL: Record<Task['priority'], string> = {
-  low: '낮음',
-  medium: '보통',
-  high: '높음',
+const PRIORITY_LABEL_KEY: Record<Task['priority'], string> = {
+  low: 'taskDetail.priorityLow',
+  medium: 'taskDetail.priorityMedium',
+  high: 'taskDetail.priorityHigh',
 }
 
 /** Friendly relative-day label for a due date (오늘/내일/요일/날짜). */
@@ -30,15 +32,27 @@ function formatDueHint(iso: string): string {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const diff = Math.round((due.getTime() - today.getTime()) / 86_400_000)
-  if (diff === 0) return '오늘'
-  if (diff === 1) return '내일'
-  if (diff === -1) return '어제'
-  if (diff < -1) return `${Math.abs(diff)}일 지남`
-  if (diff > 1 && diff < 7) return ['일', '월', '화', '수', '목', '금', '토'][due.getDay()] + '요일'
-  return `${due.getMonth() + 1}월 ${due.getDate()}일`
+  if (diff === 0) return i18n.t('taskDetail.dueToday')
+  if (diff === 1) return i18n.t('taskDetail.dueTomorrow')
+  if (diff === -1) return i18n.t('taskDetail.dueYesterday')
+  if (diff < -1) return i18n.t('taskDetail.dueDaysOverdue', { n: Math.abs(diff) })
+  if (diff > 1 && diff < 7) {
+    const weekdayKeys = [
+      'taskDetail.dueWeekdaySun',
+      'taskDetail.dueWeekdayMon',
+      'taskDetail.dueWeekdayTue',
+      'taskDetail.dueWeekdayWed',
+      'taskDetail.dueWeekdayThu',
+      'taskDetail.dueWeekdayFri',
+      'taskDetail.dueWeekdaySat',
+    ]
+    return i18n.t('taskDetail.dueWeekday', { day: i18n.t(weekdayKeys[due.getDay()]) })
+  }
+  return i18n.t('taskDetail.dueMonthDay', { month: due.getMonth() + 1, day: due.getDate() })
 }
 
 export default function TaskDetail() {
+  const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const user = useAuthStore((s) => s.user)
@@ -64,9 +78,9 @@ export default function TaskDetail() {
   if (taskQuery.isLoading) {
     return (
       <div>
-        <PushHeader title="투두" onBack={() => navigate(-1)} />
+        <PushHeader title={t('taskDetail.header')} onBack={() => navigate(-1)} />
         <div style={{ padding: 40, textAlign: 'center', fontSize: 13, fontWeight: 600, color: '#9AA7BC' }}>
-          불러오는 중…
+          {t('taskDetail.loading')}
         </div>
       </div>
     )
@@ -75,9 +89,9 @@ export default function TaskDetail() {
   if (!task) {
     return (
       <div>
-        <PushHeader title="투두" onBack={() => navigate(-1)} />
+        <PushHeader title={t('taskDetail.header')} onBack={() => navigate(-1)} />
         <div style={{ padding: 40, textAlign: 'center', fontSize: 13, fontWeight: 600, color: '#9AA7BC' }}>
-          투두를 찾을 수 없어요
+          {t('taskDetail.notFound')}
         </div>
       </div>
     )
@@ -119,7 +133,7 @@ export default function TaskDetail() {
   }
 
   const handleDelete = () => {
-    if (!window.confirm('이 투두를 삭제할까요? 되돌릴 수 없어요.')) return
+    if (!window.confirm(t('taskDetail.deleteConfirm'))) return
     deleteTask.mutate(
       { taskId: task.id, groupId: task.groupId },
       { onSuccess: () => navigate(-1) },
@@ -129,14 +143,14 @@ export default function TaskDetail() {
   return (
     <div style={{ paddingBottom: 100 }}>
       <PushHeader
-        title="투두"
+        title={t('taskDetail.header')}
         onBack={() => navigate(-1)}
         trailing={
           <div className="relative">
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
-              aria-label="더보기"
+              aria-label={t('taskDetail.more')}
               aria-haspopup="menu"
               aria-expanded={menuOpen}
               className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
@@ -163,7 +177,7 @@ export default function TaskDetail() {
                     className="w-full text-left"
                     style={{ padding: '11px 12px', borderRadius: 10, fontSize: 14, fontWeight: 700, color: '#FF6B6B' }}
                   >
-                    투두 삭제
+                    {t('taskDetail.deleteTask')}
                   </button>
                 </div>
               </>
@@ -209,7 +223,7 @@ export default function TaskDetail() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF9D52" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M5 21V4M5 4h11l-2 4 2 4H5" />
             </svg>
-            <span style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--color-text)' }}>{PRIORITY_LABEL[task.priority]}</span>
+            <span style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--color-text)' }}>{t(PRIORITY_LABEL_KEY[task.priority])}</span>
           </div>
         </div>
 
@@ -226,7 +240,7 @@ export default function TaskDetail() {
             />
             <div style={{ flex: 1, fontSize: 14, fontWeight: 800, color: 'var(--color-text)' }}>
               {assignee.nickname}
-              {isMine && <span style={{ fontSize: 12, fontWeight: 700, color: '#9AA7BC' }}> · 내가 담당</span>}
+              {isMine && <span style={{ fontSize: 12, fontWeight: 700, color: '#9AA7BC' }}> · {t('taskDetail.assignedToMe')}</span>}
             </div>
           </div>
         ) : (
@@ -240,14 +254,14 @@ export default function TaskDetail() {
             <svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none" aria-hidden="true">
               <path d="M13 2 4 14h6l-1 8 9-12h-6z" />
             </svg>
-            {assignSelf.isPending ? '담당 중…' : '내가 할게요'}
+            {assignSelf.isPending ? t('taskDetail.assigning') : t('taskDetail.claim')}
           </button>
         )}
 
         {/* Checklist */}
         <Card style={{ borderRadius: 20, padding: 16, marginBottom: 14 }}>
           <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
-            <span style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-text)' }}>체크리스트</span>
+            <span style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-text)' }}>{t('taskDetail.checklist')}</span>
             <span style={{ fontSize: 12, fontWeight: 700, color: '#9AA7BC' }}>
               {doneCount}/{subtasks.length}
             </span>
@@ -290,7 +304,7 @@ export default function TaskDetail() {
               <button
                 type="button"
                 onClick={() => removeSubtask.mutate(st.id)}
-                aria-label={`${st.title} 삭제`}
+                aria-label={t('taskDetail.deleteItem', { title: st.title })}
                 className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                 style={{ flex: 'none', width: 22, height: 22 }}
               >
@@ -312,8 +326,8 @@ export default function TaskDetail() {
               value={newSubtask}
               onChange={(e) => setNewSubtask(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') handleAddSubtask() }}
-              placeholder="항목 추가"
-              aria-label="체크리스트 항목 추가"
+              placeholder={t('taskDetail.addItemPlaceholder')}
+              aria-label={t('taskDetail.addItemAria')}
               className="flex-1 bg-transparent focus:outline-none"
               style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--color-text)' }}
             />
@@ -324,7 +338,7 @@ export default function TaskDetail() {
                 disabled={addSubtask.isPending}
                 style={{ fontSize: 12.5, fontWeight: 800, color: '#1366CE' }}
               >
-                추가
+                {t('taskDetail.add')}
               </button>
             )}
           </div>
@@ -332,25 +346,25 @@ export default function TaskDetail() {
 
         {/* Photos */}
         <Card style={{ borderRadius: 20, padding: 16, marginBottom: 14 }}>
-          <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-text)', marginBottom: 12 }}>사진</div>
+          <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-text)', marginBottom: 12 }}>{t('taskDetail.photos')}</div>
           <div className="flex" style={{ gap: 9, flexWrap: 'wrap' }}>
             {(task.photos ?? []).map((p) => (
               <button
                 key={p.id}
                 type="button"
                 onClick={() => setViewPhoto(p.url)}
-                aria-label="사진 보기"
+                aria-label={t('taskDetail.viewPhoto')}
                 className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                 style={{ width: 64, height: 64, borderRadius: 14, overflow: 'hidden', flex: 'none', padding: 0, border: 'none' }}
               >
-                <img src={p.thumbUrl || p.url} alt="투두 사진" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={p.thumbUrl || p.url} alt={t('taskDetail.photoAlt')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </button>
             ))}
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
               disabled={uploadPhoto.isPending}
-              aria-label="사진 추가"
+              aria-label={t('taskDetail.addPhoto')}
               className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:opacity-60"
               style={{ width: 64, height: 64, borderRadius: 14, background: '#F4F7FB', border: '1.5px dashed #C9D3E0', flex: 'none' }}
             >
@@ -367,8 +381,8 @@ export default function TaskDetail() {
         {weeks > 0 && (
           <Card style={{ borderRadius: 20, padding: 16, marginBottom: 14 }}>
             <div className="flex items-center justify-between" style={{ marginBottom: 13 }}>
-              <span style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-text)' }}>이 투두의 꾸준함</span>
-              <span style={{ fontSize: 11.5, fontWeight: 700, color: '#1366CE' }}>{weeks}주째</span>
+              <span style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-text)' }}>{t('taskDetail.consistency')}</span>
+              <span style={{ fontSize: 11.5, fontWeight: 700, color: '#1366CE' }}>{t('taskDetail.weeksRunning', { n: weeks })}</span>
             </div>
             {task.consistency?.heatmap && task.consistency.heatmap.length > 0 && (
               <Heatmap days={task.consistency.heatmap} weeks={14} radius={2.5} />
@@ -378,7 +392,7 @@ export default function TaskDetail() {
 
         {/* Comments */}
         <Card style={{ borderRadius: 20, padding: 16 }}>
-          <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-text)', marginBottom: 13 }}>댓글</div>
+          <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-text)', marginBottom: 13 }}>{t('taskDetail.comments')}</div>
           {(task.comments ?? []).map((c) => (
             <div key={c.id} className="flex" style={{ gap: 9, marginBottom: 11 }}>
               <Avatar
@@ -408,8 +422,8 @@ export default function TaskDetail() {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') handleAddComment() }}
-              placeholder="댓글 달기…"
-              aria-label="댓글 입력"
+              placeholder={t('taskDetail.commentPlaceholder')}
+              aria-label={t('taskDetail.commentAria')}
               className="flex-1 bg-transparent focus:outline-none"
               style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--color-text)' }}
             />
@@ -420,7 +434,7 @@ export default function TaskDetail() {
                 disabled={addComment.isPending}
                 style={{ fontSize: 12.5, fontWeight: 800, color: '#1366CE' }}
               >
-                등록
+                {t('taskDetail.submitComment')}
               </button>
             )}
           </div>
@@ -448,13 +462,13 @@ export default function TaskDetail() {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={isDone ? '#1366CE' : '#fff'} strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M5 12.5l4.5 4.5L19 6.5" />
           </svg>
-          {isDone ? '완료 취소' : '완료로 등록'}
+          {isDone ? t('taskDetail.reopen') : t('taskDetail.complete')}
         </button>
         <button
           type="button"
           onClick={handleDelete}
           disabled={deleteTask.isPending}
-          aria-label="투두 삭제"
+          aria-label={t('taskDetail.deleteTask')}
           className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           style={{ width: 54, height: 54, borderRadius: 16, background: '#fff', boxShadow: '0 5px 16px rgba(17,40,86,.05)' }}
         >
@@ -472,9 +486,9 @@ export default function TaskDetail() {
           onClick={() => setViewPhoto(null)}
           role="dialog"
           aria-modal="true"
-          aria-label="사진 보기"
+          aria-label={t('taskDetail.viewPhoto')}
         >
-          <img src={viewPhoto} alt="투두 사진" style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: 16 }} />
+          <img src={viewPhoto} alt={t('taskDetail.photoAlt')} style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: 16 }} />
         </div>
       )}
     </div>

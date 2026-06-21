@@ -1,3 +1,5 @@
+import i18n from '../../shared/i18n/i18n'
+
 export type PasswordStrength = 'weak' | 'medium' | 'strong'
 
 export type PasswordStrengthInfo = {
@@ -21,9 +23,9 @@ export function getPasswordStrength(password: string): PasswordStrengthInfo {
   else if (length >= 8 && classes >= 2) level = 'medium'
 
   const meta: Record<PasswordStrength, PasswordStrengthInfo> = {
-    weak: { level: 'weak', label: '약함', color: 'var(--color-due)' },
-    medium: { level: 'medium', label: '보통', color: 'var(--color-overdue)' },
-    strong: { level: 'strong', label: '안전함', color: '#46D38A' },
+    weak: { level: 'weak', label: i18n.t('passwordStrength.weak'), color: 'var(--color-due)' },
+    medium: { level: 'medium', label: i18n.t('passwordStrength.medium'), color: 'var(--color-overdue)' },
+    strong: { level: 'strong', label: i18n.t('passwordStrength.strong'), color: '#46D38A' },
   }
   return meta[level]
 }

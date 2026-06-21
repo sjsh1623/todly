@@ -10,7 +10,8 @@ export {
   useSkipRoutine,
 } from './hooks'
 export {
-  WEEKDAYS_KO,
+  WEEKDAY_KEYS,
+  weekdayLabels,
   parseWeekdays,
   serializeWeekdays,
   recurrenceLabel,

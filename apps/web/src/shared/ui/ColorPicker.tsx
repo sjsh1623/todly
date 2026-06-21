@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import type { ProfileColor } from '../../features/auth/types'
 
 type Swatch = { value: ProfileColor; color: string }
@@ -14,17 +15,17 @@ type ColorPickerProps = {
   onChange: (value: ProfileColor) => void
 }
 
-const LABELS: Record<ProfileColor, string> = {
-  blue: '블루',
-  green: '민트',
-  orange: '오렌지',
-  purple: '퍼플',
-}
-
 /** Single-select profile color swatches. The selected swatch gets a ring. */
 export function ColorPicker({ value, onChange }: ColorPickerProps) {
+  const { t } = useTranslation()
+  const LABELS: Record<ProfileColor, string> = {
+    blue: t('colorPicker.blue'),
+    green: t('colorPicker.green'),
+    orange: t('colorPicker.orange'),
+    purple: t('colorPicker.purple'),
+  }
   return (
-    <div role="radiogroup" aria-label="프로필 색상" className="flex" style={{ gap: 9 }}>
+    <div role="radiogroup" aria-label={t('colorPicker.label')} className="flex" style={{ gap: 9 }}>
       {SWATCHES.map((s) => {
         const selected = s.value === value
         return (

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type PushHeaderProps = {
   title?: string
@@ -9,6 +10,7 @@ type PushHeaderProps = {
 
 /** A back-navigation header for full-screen pushed views (light variant). */
 export function PushHeader({ title, onBack, trailing }: PushHeaderProps) {
+  const { t } = useTranslation()
   return (
     <div
       className="relative flex items-center justify-between"
@@ -17,7 +19,7 @@ export function PushHeader({ title, onBack, trailing }: PushHeaderProps) {
       <button
         type="button"
         onClick={onBack}
-        aria-label="뒤로"
+        aria-label={t('pushHeader.back')}
         className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
         style={{ width: 38, height: 38, borderRadius: 13, background: '#fff', boxShadow: '0 4px 12px rgba(20,50,90,.06)' }}
       >

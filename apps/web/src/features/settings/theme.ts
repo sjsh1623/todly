@@ -5,13 +5,16 @@ export const THEME_NAMES: ThemeName[] = ['ocean', 'mint', 'violet', 'coral', 'su
 
 export const DEFAULT_THEME: ThemeName = 'ocean'
 
-/** UI label + the swatch fill color for each theme (matches the design). */
-export const THEME_META: Record<ThemeName, { label: string; swatch: string }> = {
-  ocean: { label: '오션', swatch: '#1366CE' },
-  mint: { label: '민트', swatch: '#0FB5A0' },
-  violet: { label: '바이올렛', swatch: '#6B5BD0' },
-  coral: { label: '코랄', swatch: '#FF7A6B' },
-  sunset: { label: '선셋', swatch: '#FF9D52' },
+/**
+ * The swatch fill color for each theme (matches the design). The display label
+ * is localized via the i18n key `theme.<name>` (see parts/settings.ts).
+ */
+export const THEME_META: Record<ThemeName, { swatch: string }> = {
+  ocean: { swatch: '#1366CE' },
+  mint: { swatch: '#0FB5A0' },
+  violet: { swatch: '#6B5BD0' },
+  coral: { swatch: '#FF7A6B' },
+  sunset: { swatch: '#FF9D52' },
 }
 
 export function isThemeName(value: unknown): value is ThemeName {

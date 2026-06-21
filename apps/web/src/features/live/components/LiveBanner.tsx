@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { PROFILE_COLOR_TO_AVATAR } from '../../auth/types'
 import { useElapsed } from '../hooks'
 import type { LiveSession } from '../types'
@@ -23,6 +24,7 @@ type LiveBannerProps = {
 
 /** SCR-04 group live banner: pulsing avatar + "라이브 · {elapsed}". */
 export function LiveBanner({ session, onJoin }: LiveBannerProps) {
+  const { t } = useTranslation()
   const avatarColor = PROFILE_COLOR_TO_AVATAR[session.profileColor]
   const elapsed = useElapsed(session.startedAt, session.pausedSeconds, session.status, 'short')
 
@@ -58,10 +60,10 @@ export function LiveBanner({ session, onJoin }: LiveBannerProps) {
       </div>
       <div className="flex-1 min-w-0">
         <div className="truncate" style={{ fontSize: 13.5, fontWeight: 800, color: 'var(--color-text)' }}>
-          {session.nickname}님이 '{session.taskTitle}' 하는 중
+          {t('liveBanner.doing', { nickname: session.nickname, taskTitle: session.taskTitle })}
         </div>
         <div style={{ fontSize: 11.5, fontWeight: 700, color: '#159B89' }}>
-          {session.status === 'paused' ? '일시정지' : '라이브'} · {elapsed}
+          {session.status === 'paused' ? t('liveBanner.paused') : t('liveBanner.live')} · {elapsed}
         </div>
       </div>
       {onJoin && (
@@ -71,7 +73,7 @@ export function LiveBanner({ session, onJoin }: LiveBannerProps) {
           className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
           style={{ flex: 'none', padding: '8px 14px', borderRadius: 13, background: '#1366CE', color: '#fff', fontSize: 12, fontWeight: 800 }}
         >
-          참여
+          {t('liveBanner.join')}
         </button>
       )}
     </div>

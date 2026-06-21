@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Avatar, Button, Card, FAB, ProgressBar, StatusBar } from '../shared/ui'
 import { useGroups } from '../features/groups'
 import { PROFILE_COLOR_TO_AVATAR } from '../features/auth/types'
 import type { GroupListItem } from '../features/groups'
 
 function GroupCard({ group, onClick }: { group: GroupListItem; onClick: () => void }) {
+  const { t } = useTranslation()
   const { percent, done, total } = group.progress
   return (
     <Card
@@ -17,7 +19,7 @@ function GroupCard({ group, onClick }: { group: GroupListItem; onClick: () => vo
           onClick()
         }
       }}
-      aria-label={`${group.name} 그룹 열기, 진행률 ${percent}%`}
+      aria-label={t('groups.openCard', { name: group.name, percent })}
       className="cursor-pointer transition-transform active:scale-[.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       style={{ borderRadius: 22, padding: 18 }}
     >
@@ -60,7 +62,7 @@ function GroupCard({ group, onClick }: { group: GroupListItem; onClick: () => vo
           )}
         </div>
         <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-text-subtle)' }}>
-          {total}개 중 {done}개 완료
+          {t('groups.progressDone', { total, done })}
         </span>
       </div>
     </Card>
@@ -81,6 +83,7 @@ function SkeletonCard() {
 
 export default function Groups() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { data, isLoading, isError, refetch } = useGroups()
 
   return (
@@ -89,10 +92,10 @@ export default function Groups() {
 
       <header style={{ padding: '6px 22px 12px' }}>
         <h1 className="font-display" style={{ fontSize: 26, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.5px' }}>
-          그룹
+          {t('groups.title')}
         </h1>
         <p style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--color-text-subtle)', marginTop: 4 }}>
-          함께한 진행률을 한눈에 보세요
+          {t('groups.subtitle')}
         </p>
       </header>
 
@@ -108,10 +111,10 @@ export default function Groups() {
         {isError && (
           <Card style={{ borderRadius: 22, padding: 22, textAlign: 'center' }}>
             <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)', marginBottom: 14 }}>
-              그룹을 불러오지 못했어요
+              {t('groups.loadError')}
             </p>
             <Button variant="secondary" style={{ height: 48 }} onClick={() => refetch()}>
-              다시 시도
+              {t('groups.retry')}
             </Button>
           </Card>
         )}
@@ -129,15 +132,15 @@ export default function Groups() {
               </svg>
             </div>
             <h2 style={{ fontSize: 19, fontWeight: 800, color: 'var(--color-text)', marginBottom: 8 }}>
-              첫 그룹을 만들어 함께 시작해보세요
+              {t('groups.emptyTitle')}
             </h2>
             <p style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--color-text-subtle)', marginBottom: 26, lineHeight: 1.5 }}>
-              그룹을 만들면 초대 링크로 친구를 부르고
+              {t('groups.emptyLine1')}
               <br />
-              할 일을 함께 완성할 수 있어요
+              {t('groups.emptyLine2')}
             </p>
             <Button style={{ maxWidth: 220 }} onClick={() => navigate('/groups/new')}>
-              그룹 만들기
+              {t('groups.createGroup')}
             </Button>
           </div>
         )}
@@ -148,7 +151,7 @@ export default function Groups() {
           ))}
       </div>
 
-      <FAB aria-label="그룹 만들기" onClick={() => navigate('/groups/new')} />
+      <FAB aria-label={t('groups.createGroup')} onClick={() => navigate('/groups/new')} />
     </div>
   )
 }

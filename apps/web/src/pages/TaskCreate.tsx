@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useTranslation } from 'react-i18next'
+import i18n from '../shared/i18n/i18n'
 import { Button, PushHeader, StatusBar } from '../shared/ui'
 import { useGroups } from '../features/groups'
 import {
@@ -13,10 +15,10 @@ import {
 import type { TaskPriority } from '../features/tasks'
 import { useCreateRoutine, serializeWeekdays } from '../features/routines'
 
-const PRIORITIES: { value: TaskPriority; label: string }[] = [
-  { value: 'low', label: '낮음' },
-  { value: 'medium', label: '보통' },
-  { value: 'high', label: '높음' },
+const PRIORITIES: { value: TaskPriority; labelKey: string }[] = [
+  { value: 'low', labelKey: 'taskCreate.priorityLow' },
+  { value: 'medium', labelKey: 'taskCreate.priorityMedium' },
+  { value: 'high', labelKey: 'taskCreate.priorityHigh' },
 ]
 
 type DueMode = 'none' | 'today' | 'tomorrow' | 'date'
@@ -32,7 +34,11 @@ function isoForOffset(days: number): string {
 }
 
 const schema = z.object({
-  title: z.string().trim().min(1, '할 일을 입력해 주세요').max(120, '120자 이내로 입력해 주세요'),
+  title: z
+    .string()
+    .trim()
+    .min(1, i18n.t('taskCreate.titleRequired'))
+    .max(120, i18n.t('taskCreate.titleMax')),
   // Optional at the schema level: a routine can be created without a group. The
   // group requirement is enforced for the plain-task path inside onSubmit.
   groupId: z.string().optional(),
@@ -42,9 +48,18 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>
 
-const WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일']
+const WEEKDAY_KEYS = [
+  'taskCreate.weekdayMon',
+  'taskCreate.weekdayTue',
+  'taskCreate.weekdayWed',
+  'taskCreate.weekdayThu',
+  'taskCreate.weekdayFri',
+  'taskCreate.weekdaySat',
+  'taskCreate.weekdaySun',
+]
 
 export default function TaskCreate() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const presetGroup = searchParams.get('group') ?? ''
@@ -126,7 +141,7 @@ export default function TaskCreate() {
 
     // Routine OFF → plain task. A group is required here.
     if (!values.groupId) {
-      setError('groupId', { type: 'manual', message: '그룹을 선택해 주세요' })
+      setError('groupId', { type: 'manual', message: t('taskCreate.groupRequired') })
       return
     }
     createTask.mutate(
@@ -153,7 +168,7 @@ export default function TaskCreate() {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#fff' }}>
       <StatusBar />
-      <PushHeader title="투두 추가" onBack={() => navigate(-1)} />
+      <PushHeader title={t('taskCreate.header')} onBack={() => navigate(-1)} />
 
       <form onSubmit={onSubmit} className="flex-1 flex flex-col">
         <div style={{ padding: '14px 22px 24px' }}>
@@ -162,8 +177,8 @@ export default function TaskCreate() {
             <input
               autoFocus
               maxLength={120}
-              placeholder="무엇을 할까요?"
-              aria-label="할 일"
+              placeholder={t('taskCreate.titlePlaceholder')}
+              aria-label={t('taskCreate.titleAria')}
               aria-invalid={errors.title ? true : undefined}
               className="w-full bg-transparent outline-none placeholder:text-[#C2CBD8]"
               style={{ fontSize: 23, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.4px' }}
@@ -177,12 +192,12 @@ export default function TaskCreate() {
           </div>
 
           {/* Group chips */}
-          <div style={labelStyle}>그룹</div>
+          <div style={labelStyle}>{t('taskCreate.group')}</div>
           <Controller
             control={control}
             name="groupId"
             render={({ field }) => (
-              <div role="radiogroup" aria-label="그룹" className="flex flex-wrap" style={{ gap: 8, marginBottom: 8 }}>
+              <div role="radiogroup" aria-label={t('taskCreate.group')} className="flex flex-wrap" style={{ gap: 8, marginBottom: 8 }}>
                 {(groups ?? []).map((g) => {
                   const selected = field.value === g.id
                   return (
@@ -208,7 +223,7 @@ export default function TaskCreate() {
                 })}
                 {groups && groups.length === 0 && (
                   <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)' }}>
-                    먼저 그룹을 만들어 주세요
+                    {t('taskCreate.noGroups')}
                   </span>
                 )}
               </div>
@@ -224,12 +239,12 @@ export default function TaskCreate() {
           {/* Section (list) chips */}
           {sections.length > 0 && (
             <>
-              <div style={labelStyle}>리스트</div>
+              <div style={labelStyle}>{t('taskCreate.list')}</div>
               <Controller
                 control={control}
                 name="sectionId"
                 render={({ field }) => (
-                  <div role="radiogroup" aria-label="리스트" className="flex flex-wrap" style={{ gap: 8, marginBottom: 24 }}>
+                  <div role="radiogroup" aria-label={t('taskCreate.list')} className="flex flex-wrap" style={{ gap: 8, marginBottom: 24 }}>
                     {sections.map((s) => {
                       const selected = field.value === s.id
                       return (
@@ -261,17 +276,17 @@ export default function TaskCreate() {
 
           {/* Due date quick options */}
           <div className="flex items-center" style={{ gap: 7, margin: '0 0 11px 2px' }}>
-            <span style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0' }}>마감일</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0' }}>{t('taskCreate.dueDate')}</span>
             <span style={{ fontSize: 10.5, fontWeight: 700, color: '#AEB9CC', background: '#F0F3F8', padding: '3px 8px', borderRadius: 8 }}>
-              선택 사항
+              {t('taskCreate.optional')}
             </span>
           </div>
-          <div role="radiogroup" aria-label="마감일" className="flex flex-wrap" style={{ gap: 7, marginBottom: dueMode === 'date' ? 12 : 24 }}>
+          <div role="radiogroup" aria-label={t('taskCreate.dueDate')} className="flex flex-wrap" style={{ gap: 7, marginBottom: dueMode === 'date' ? 12 : 24 }}>
             {([
-              ['none', '없음'],
-              ['today', '오늘'],
-              ['tomorrow', '내일'],
-              ['date', '날짜'],
+              ['none', t('taskCreate.dueNone')],
+              ['today', t('taskCreate.dueToday')],
+              ['tomorrow', t('taskCreate.dueTomorrow')],
+              ['date', t('taskCreate.dueDateOption')],
             ] as [DueMode, string][]).map(([mode, label]) => {
               const selected = dueMode === mode
               return (
@@ -306,7 +321,7 @@ export default function TaskCreate() {
           {dueMode === 'date' && (
             <input
               type="date"
-              aria-label="마감 날짜"
+              aria-label={t('taskCreate.dueDateAria')}
               value={customDate}
               onChange={(e) => setCustomDate(e.target.value)}
               className="w-full outline-none"
@@ -324,12 +339,12 @@ export default function TaskCreate() {
           )}
 
           {/* Priority segmented */}
-          <div style={labelStyle}>우선순위</div>
+          <div style={labelStyle}>{t('taskCreate.priority')}</div>
           <Controller
             control={control}
             name="priority"
             render={({ field }) => (
-              <div role="radiogroup" aria-label="우선순위" className="flex" style={{ background: '#F4F7FB', borderRadius: 15, padding: 4, marginBottom: 24 }}>
+              <div role="radiogroup" aria-label={t('taskCreate.priority')} className="flex" style={{ background: '#F4F7FB', borderRadius: 15, padding: 4, marginBottom: 24 }}>
                 {PRIORITIES.map((p) => {
                   const selected = field.value === p.value
                   return (
@@ -350,7 +365,7 @@ export default function TaskCreate() {
                         boxShadow: selected ? '0 3px 10px rgba(20,50,90,.07)' : undefined,
                       }}
                     >
-                      {p.label}
+                      {t(p.labelKey)}
                     </button>
                   )
                 })}
@@ -366,13 +381,13 @@ export default function TaskCreate() {
                   <path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3" />
                   <path d="M17.4 3.7v3.4h-3.4" />
                 </svg>
-                <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}>루틴으로 반복</span>
+                <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}>{t('taskCreate.repeatAsRoutine')}</span>
               </div>
               <button
                 type="button"
                 role="switch"
                 aria-checked={routineOn}
-                aria-label="루틴으로 반복"
+                aria-label={t('taskCreate.repeatAsRoutine')}
                 onClick={() => setRoutineOn((v) => !v)}
                 className="relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                 style={{ width: 46, height: 27, borderRadius: 14, background: routineOn ? '#1366CE' : '#DDE3EC' }}
@@ -396,16 +411,17 @@ export default function TaskCreate() {
             {routineOn && (
               <>
                 <div className="flex items-center justify-between" style={{ padding: '13px 0', borderBottom: '1px solid #EDF1F7' }}>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}>반복 요일</span>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}>{t('taskCreate.repeatDays')}</span>
                   <div className="flex" style={{ gap: 5 }}>
-                    {WEEKDAYS.map((label, i) => {
+                    {WEEKDAY_KEYS.map((key, i) => {
+                      const label = t(key)
                       const on = routineDays.includes(i)
                       return (
                         <button
-                          key={label}
+                          key={key}
                           type="button"
                           aria-pressed={on}
-                          aria-label={`${label}요일`}
+                          aria-label={t('taskCreate.weekdayAria', { day: label })}
                           onClick={() => toggleRoutineDay(i)}
                           className="flex items-center justify-center focus:outline-none"
                           style={{
@@ -425,12 +441,12 @@ export default function TaskCreate() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between" style={{ padding: '13px 0' }}>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}>시간</span>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}>{t('taskCreate.time')}</span>
                   <input
                     type="time"
                     value={routineTime}
                     onChange={(e) => setRoutineTime(e.target.value)}
-                    aria-label="루틴 시간"
+                    aria-label={t('taskCreate.routineTimeAria')}
                     className="outline-none"
                     style={{ background: '#fff', border: '1.5px solid #E6ECF4', borderRadius: 11, padding: '8px 12px', fontSize: 13.5, fontWeight: 700, color: 'var(--color-text)' }}
                   />
@@ -452,10 +468,10 @@ export default function TaskCreate() {
               <path d="M12 6v12M6 12h12" />
             </svg>
             {createTask.isPending || createRoutine.isPending
-              ? '추가하는 중…'
+              ? t('taskCreate.submitting')
               : routineOn
-                ? '루틴 추가하기'
-                : '투두 추가하기'}
+                ? t('taskCreate.submitRoutine')
+                : t('taskCreate.submitTask')}
           </Button>
         </div>
       </form>

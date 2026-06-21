@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Avatar, Button, ColorPicker, PushHeader, StatusBar, TextField } from '../shared/ui'
 import { useAuthStore } from '../features/auth'
 import { PROFILE_COLOR_TO_AVATAR, type ProfileColor } from '../features/auth/types'
@@ -22,6 +23,7 @@ function Chevron() {
 
 export default function AccountSettings() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
   const updateMe = useUpdateMe()
   const connected = useConnectedAccounts()
@@ -56,7 +58,7 @@ export default function AccountSettings() {
     try {
       await settingsApi.exportData()
     } catch (e) {
-      setExportError(getSettingsErrorMessage(e, '내보내기에 실패했어요'))
+      setExportError(getSettingsErrorMessage(e, t('accountSettings.exportFailed')))
     } finally {
       setExporting(false)
     }
@@ -65,7 +67,7 @@ export default function AccountSettings() {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'var(--color-bg-2)' }}>
       <StatusBar />
-      <PushHeader title="계정" onBack={() => navigate(-1)} />
+      <PushHeader title={t('accountSettings.title')} onBack={() => navigate(-1)} />
 
       <div style={{ padding: '8px 22px 40px' }}>
         {/* Profile row / inline edit */}
@@ -77,15 +79,15 @@ export default function AccountSettings() {
                 <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-subtle)' }}>@{user?.username}</div>
               </div>
             </div>
-            <TextField label="닉네임" value={nickname} onChange={(e) => setNickname(e.target.value)} maxLength={12} style={{ marginBottom: 16 }} />
-            <div style={{ fontSize: 12.5, fontWeight: 700, color: '#7C8AA0', margin: '0 0 10px 2px' }}>프로필 색상</div>
+            <TextField label={t('accountSettings.nickname')} value={nickname} onChange={(e) => setNickname(e.target.value)} maxLength={12} style={{ marginBottom: 16 }} />
+            <div style={{ fontSize: 12.5, fontWeight: 700, color: '#7C8AA0', margin: '0 0 10px 2px' }}>{t('accountSettings.profileColor')}</div>
             <div style={{ marginBottom: 16 }}>
               <ColorPicker value={profileColor} onChange={setProfileColor} />
             </div>
             <div className="flex" style={{ gap: 10 }}>
-              <Button variant="secondary" onClick={() => setEditing(false)} style={{ height: 48 }}>취소</Button>
+              <Button variant="secondary" onClick={() => setEditing(false)} style={{ height: 48 }}>{t('accountSettings.cancel')}</Button>
               <Button onClick={saveProfile} disabled={updateMe.isPending || !nickname.trim()} style={{ height: 48 }}>
-                {updateMe.isPending ? '저장 중…' : '저장'}
+                {updateMe.isPending ? t('accountSettings.saving') : t('accountSettings.save')}
               </Button>
             </div>
             {updateMe.isError && (
@@ -107,7 +109,7 @@ export default function AccountSettings() {
               className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
               style={{ fontSize: 12.5, fontWeight: 800, color: 'var(--color-primary-strong)', background: 'var(--color-primary-tint)', padding: '7px 13px', borderRadius: 12 }}
             >
-              편집
+              {t('accountSettings.edit')}
             </button>
           </div>
         )}
@@ -115,7 +117,7 @@ export default function AccountSettings() {
         {/* Account rows */}
         <div style={{ background: 'var(--color-card)', borderRadius: 22, padding: '2px 18px', boxShadow: '0 6px 20px rgba(17,40,86,.06)', marginBottom: 22 }}>
           <div className="flex items-center justify-between" style={{ padding: '16px 0', borderBottom: '1px solid #F0F3F8' }}>
-            <span style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>이메일</span>
+            <span style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>{t('accountSettings.email')}</span>
             <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)' }}>{user?.email}</span>
           </div>
 
@@ -125,18 +127,18 @@ export default function AccountSettings() {
             className="w-full flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
             style={{ padding: '16px 0', borderBottom: '1px solid #F0F3F8' }}
           >
-            <span style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>비밀번호 변경</span>
+            <span style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>{t('accountSettings.changePassword')}</span>
             <Chevron />
           </button>
 
           <div className="flex items-center justify-between" style={{ padding: '16px 0', borderBottom: '1px solid #F0F3F8' }}>
-            <span style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>연결된 계정</span>
+            <span style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>{t('accountSettings.connectedAccounts')}</span>
             <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)' }}>
               {connected.isLoading
-                ? '불러오는 중…'
+                ? t('accountSettings.loading')
                 : connected.data && connected.data.length > 0
                 ? connected.data.map((a) => a.provider).join(', ')
-                : '없음'}
+                : t('accountSettings.none')}
             </span>
           </div>
 
@@ -147,7 +149,7 @@ export default function AccountSettings() {
             className="w-full flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:opacity-50"
             style={{ padding: '16px 0' }}
           >
-            <span style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>{exporting ? '내보내는 중…' : '데이터 내보내기'}</span>
+            <span style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>{exporting ? t('accountSettings.exporting') : t('accountSettings.exportData')}</span>
             <Chevron />
           </button>
         </div>
@@ -165,7 +167,7 @@ export default function AccountSettings() {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13" />
           </svg>
-          계정 삭제
+          {t('accountSettings.deleteAccount')}
         </button>
       </div>
 
@@ -201,6 +203,7 @@ function SheetShell({ children, onClose }: { children: React.ReactNode; onClose:
 }
 
 function PasswordSheet({ onClose }: { onClose: () => void }) {
+  const { t } = useTranslation()
   const changePassword = useChangePassword()
   const [current, setCurrent] = useState('')
   const [next, setNext] = useState('')
@@ -211,11 +214,11 @@ function PasswordSheet({ onClose }: { onClose: () => void }) {
   const submit = () => {
     setError(null)
     if (next.length < 8) {
-      setError('새 비밀번호는 8자 이상이어야 해요')
+      setError(t('accountSettings.passwordTooShort'))
       return
     }
     if (next !== confirm) {
-      setError('새 비밀번호가 일치하지 않습니다')
+      setError(t('accountSettings.passwordMismatch'))
       return
     }
     changePassword.mutate(
@@ -229,22 +232,22 @@ function PasswordSheet({ onClose }: { onClose: () => void }) {
 
   return (
     <SheetShell onClose={onClose}>
-      <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--color-text)', marginBottom: 18 }}>비밀번호 변경</div>
+      <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--color-text)', marginBottom: 18 }}>{t('accountSettings.changePassword')}</div>
       {done ? (
         <>
-          <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--color-text-muted)', marginBottom: 20 }}>비밀번호가 변경되었어요.</p>
-          <Button onClick={onClose}>확인</Button>
+          <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--color-text-muted)', marginBottom: 20 }}>{t('accountSettings.passwordChanged')}</p>
+          <Button onClick={onClose}>{t('accountSettings.confirm')}</Button>
         </>
       ) : (
         <>
-          <TextField label="현재 비밀번호" type="password" value={current} onChange={(e) => setCurrent(e.target.value)} style={{ marginBottom: 14 }} />
-          <TextField label="새 비밀번호" type="password" value={next} onChange={(e) => setNext(e.target.value)} style={{ marginBottom: 14 }} />
-          <TextField label="새 비밀번호 확인" type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} style={{ marginBottom: error ? 8 : 18 }} />
+          <TextField label={t('accountSettings.currentPassword')} type="password" value={current} onChange={(e) => setCurrent(e.target.value)} style={{ marginBottom: 14 }} />
+          <TextField label={t('accountSettings.newPassword')} type="password" value={next} onChange={(e) => setNext(e.target.value)} style={{ marginBottom: 14 }} />
+          <TextField label={t('accountSettings.confirmNewPassword')} type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} style={{ marginBottom: error ? 8 : 18 }} />
           {error && <p role="alert" style={{ margin: '0 0 14px 2px', fontSize: 12.5, fontWeight: 600, color: 'var(--color-due)' }}>{error}</p>}
           <div className="flex" style={{ gap: 10 }}>
-            <Button variant="secondary" onClick={onClose}>취소</Button>
+            <Button variant="secondary" onClick={onClose}>{t('accountSettings.cancel')}</Button>
             <Button onClick={submit} disabled={changePassword.isPending || !current || !next}>
-              {changePassword.isPending ? '변경 중…' : '변경'}
+              {changePassword.isPending ? t('accountSettings.changing') : t('accountSettings.change')}
             </Button>
           </div>
         </>
@@ -255,6 +258,7 @@ function PasswordSheet({ onClose }: { onClose: () => void }) {
 
 function DeleteSheet({ hasPassword, onClose }: { hasPassword: boolean; onClose: () => void }) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const deleteAccount = useDeleteAccount()
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -263,28 +267,28 @@ function DeleteSheet({ hasPassword, onClose }: { hasPassword: boolean; onClose: 
     setError(null)
     deleteAccount.mutate(hasPassword ? password : undefined, {
       onSuccess: () => navigate('/login', { replace: true }),
-      onError: (e) => setError(getSettingsErrorMessage(e, '계정 삭제에 실패했어요')),
+      onError: (e) => setError(getSettingsErrorMessage(e, t('accountSettings.deleteFailed'))),
     })
   }
 
   return (
     <SheetShell onClose={onClose}>
-      <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--color-text)', marginBottom: 10 }}>계정 삭제</div>
+      <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--color-text)', marginBottom: 10 }}>{t('accountSettings.deleteAccount')}</div>
       <p style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--color-text-muted)', marginBottom: 18 }}>
-        계정과 모든 데이터가 영구적으로 삭제돼요. 이 작업은 되돌릴 수 없어요.
+        {t('accountSettings.deleteWarning')}
       </p>
       {hasPassword && (
-        <TextField label="비밀번호 확인" type="password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ marginBottom: error ? 8 : 18 }} />
+        <TextField label={t('accountSettings.confirmPassword')} type="password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ marginBottom: error ? 8 : 18 }} />
       )}
       {error && <p role="alert" style={{ margin: '0 0 14px 2px', fontSize: 12.5, fontWeight: 600, color: 'var(--color-due)' }}>{error}</p>}
       <div className="flex" style={{ gap: 10 }}>
-        <Button variant="secondary" onClick={onClose}>취소</Button>
+        <Button variant="secondary" onClick={onClose}>{t('accountSettings.cancel')}</Button>
         <Button
           onClick={submit}
           disabled={deleteAccount.isPending || (hasPassword && !password)}
           style={{ background: '#FF6B6B' }}
         >
-          {deleteAccount.isPending ? '삭제 중…' : '삭제'}
+          {deleteAccount.isPending ? t('accountSettings.deleting') : t('accountSettings.delete')}
         </Button>
       </div>
     </SheetShell>

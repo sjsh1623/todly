@@ -1,11 +1,13 @@
 import type { ButtonHTMLAttributes } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type FABProps = ButtonHTMLAttributes<HTMLButtonElement>
 
 export function FAB({ className = '', style, ...rest }: FABProps) {
+  const { t } = useTranslation()
   return (
     <button
-      aria-label="추가"
+      aria-label={t('fab.add')}
       className={`absolute right-4 z-10 flex items-center justify-center text-white ${className}`}
       style={{
         bottom: 92 + 16,

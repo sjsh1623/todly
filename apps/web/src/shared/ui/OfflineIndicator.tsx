@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useToast } from './Toast'
 
 /**
@@ -7,6 +8,7 @@ import { useToast } from './Toast'
  * Mounted once near the app root (inside ToastProvider).
  */
 export function OfflineIndicator() {
+  const { t } = useTranslation()
   const toast = useToast()
   const [offline, setOffline] = useState(() => typeof navigator !== 'undefined' && !navigator.onLine)
   // Track whether we were ever offline so we only toast on a real recovery.
@@ -21,7 +23,7 @@ export function OfflineIndicator() {
       setOffline(false)
       if (wasOffline.current) {
         wasOffline.current = false
-        toast.success('다시 연결됐어요')
+        toast.success(t('offlineIndicator.reconnected'))
       }
     }
     window.addEventListener('offline', goOffline)
@@ -52,7 +54,7 @@ export function OfflineIndicator() {
         <path d="M2 8.8a16 16 0 0 1 20 0M5 12.3a11 11 0 0 1 14 0M8.5 15.8a6 6 0 0 1 7 0" />
         <path d="M3 3l18 18" />
       </svg>
-      오프라인 상태예요. 일부 기능이 제한될 수 있어요.
+      {t('offlineIndicator.banner')}
     </div>
   )
 }

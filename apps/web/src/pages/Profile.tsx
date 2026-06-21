@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Avatar, Button, Card, Heatmap, SkeletonList, EmptyState } from '../shared/ui'
 import { useAuthStore, useLogout } from '../features/auth'
 import { PROFILE_COLOR_TO_AVATAR } from '../features/auth/types'
@@ -85,6 +86,7 @@ function MenuRow({
 
 export default function Profile() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
   const logout = useLogout()
   const stats = useStats()
@@ -123,39 +125,39 @@ export default function Profile() {
               />
             </div>
           )}
-          <h1 style={{ fontSize: 23, fontWeight: 800 }}>{user?.nickname ?? '프로필'}</h1>
+          <h1 style={{ fontSize: 23, fontWeight: 800 }}>{user?.nickname ?? t('profile.fallbackName')}</h1>
           {user && (
             <p style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,.78)', marginTop: 2 }}>
-              @{user.username} · 그룹 {groupCount}개
+              @{user.username}{t('profile.groupCount', { count: groupCount })}
             </p>
           )}
         </div>
 
         {/* Stat tiles */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 14 }}>
-          <StatTile value={`${s?.completionRate ?? 0}%`} label="완료율" color={STAT_COLORS.completionRate} />
-          <StatTile value={`${s?.currentStreak ?? 0}`} label="연속 일수" color={STAT_COLORS.currentStreak} />
-          <StatTile value={`${s?.lifeScore ?? 0}`} label="라이프 점수" color={STAT_COLORS.lifeScore} />
-          <StatTile value={`${s?.routineScore ?? 0}`} label="루틴 점수" color={STAT_COLORS.routineScore} />
+          <StatTile value={`${s?.completionRate ?? 0}%`} label={t('profile.statCompletionRate')} color={STAT_COLORS.completionRate} />
+          <StatTile value={`${s?.currentStreak ?? 0}`} label={t('profile.statCurrentStreak')} color={STAT_COLORS.currentStreak} />
+          <StatTile value={`${s?.lifeScore ?? 0}`} label={t('profile.statLifeScore')} color={STAT_COLORS.lifeScore} />
+          <StatTile value={`${s?.routineScore ?? 0}`} label={t('profile.statRoutineScore')} color={STAT_COLORS.routineScore} />
         </div>
 
         {/* 꾸준함 card */}
         <Card style={{ borderRadius: 22, padding: 18, marginBottom: 14 }}>
           <div className="flex items-center justify-between" style={{ marginBottom: 4 }}>
-            <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--color-text)' }}>꾸준함</div>
+            <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--color-text)' }}>{t('profile.consistency')}</div>
             <div style={{ fontSize: 12, fontWeight: 700, color: '#1366CE' }}>
-              올해 {s?.yearlyCount ?? 0}회 완료
+              {t('profile.yearlyComplete', { count: s?.yearlyCount ?? 0 })}
             </div>
           </div>
           <div style={{ fontSize: 11.5, fontWeight: 600, color: '#9AA7BC', marginBottom: 15 }}>
-            최근 16주 동안의 활동
+            {t('profile.recentWeeks')}
           </div>
           <Heatmap days={heatmap.data?.days ?? []} weeks={16} legend />
         </Card>
 
         {/* 꾸준함 자세히 → routine consistency */}
         <MenuRow
-          label="꾸준함 자세히"
+          label={t('profile.consistencyDetail')}
           onClick={() => navigate('/consistency')}
           icon={
             <span className="flex items-center justify-center" style={{ width: 32, height: 32, borderRadius: 10, background: '#E2F8F4' }} aria-hidden="true">
@@ -168,12 +170,12 @@ export default function Profile() {
 
         {/* 최근 활동 */}
         <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--color-text)', margin: '20px 2px 12px' }}>
-          최근 활동
+          {t('profile.recentActivity')}
         </div>
         <div className="flex flex-col" style={{ gap: 10 }}>
           {recent.isLoading && <SkeletonList rows={3} />}
           {recent.data?.length === 0 && (
-            <EmptyState bordered={false} title="아직 활동이 없어요" />
+            <EmptyState bordered={false} title={t('profile.emptyActivity')} />
           )}
           {recent.data?.map((a, i) => (
             <div
@@ -189,10 +191,10 @@ export default function Profile() {
         </div>
 
         {/* Settings / menu */}
-        <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', margin: '24px 4px 11px' }}>설정</div>
+        <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', margin: '24px 4px 11px' }}>{t('profile.settingsSection')}</div>
         <div className="flex flex-col" style={{ gap: 12 }}>
           <MenuRow
-            label="친구"
+            label={t('profile.friends')}
             onClick={() => navigate('/friends')}
             icon={
               <span className="flex items-center justify-center" style={{ width: 32, height: 32, borderRadius: 10, background: '#EAF2FE' }} aria-hidden="true">
@@ -205,7 +207,7 @@ export default function Profile() {
             }
           />
           <MenuRow
-            label="설정"
+            label={t('profile.settings')}
             onClick={() => navigate('/settings')}
             icon={
               <span className="flex items-center justify-center" style={{ width: 32, height: 32, borderRadius: 10, background: '#EEF2F7' }} aria-hidden="true">
@@ -217,7 +219,7 @@ export default function Profile() {
             }
           />
           <Button variant="secondary" onClick={handleLogout} disabled={logout.isPending} style={{ color: '#FF6B6B', height: 52, borderRadius: 16 }}>
-            {logout.isPending ? '로그아웃 중…' : '로그아웃'}
+            {logout.isPending ? t('profile.loggingOut') : t('profile.logout')}
           </Button>
         </div>
       </div>

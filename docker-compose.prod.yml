@@ -51,6 +51,10 @@ services:
       redis:
         condition: service_healthy
     environment:
+      # Korea-only product: run the JVM in KST so HomeService greeting
+      # (phraseForHour) and LocalDate.now()-based "today"/due dates match the
+      # user's wall clock instead of the container's UTC default.
+      TZ: Asia/Seoul
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/todly
       SPRING_DATASOURCE_USERNAME: todly
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-todly_prod_pw_change_me}

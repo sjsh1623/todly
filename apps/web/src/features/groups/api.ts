@@ -1,6 +1,7 @@
 import { isAxiosError } from 'axios'
 import { api } from '../../shared/lib/api'
 import { useAuthStore } from '../auth/store'
+import i18n from '../../shared/i18n/i18n'
 import type { ApiError } from '../auth/types'
 import type {
   AcceptInvitationResult,
@@ -59,29 +60,23 @@ export async function acceptInvite(code: string): Promise<AcceptInvitationResult
   return data
 }
 
-const ERROR_MESSAGES: Record<string, string> = {
-  ALREADY_MEMBER: '이미 이 그룹의 멤버예요',
-  INVITATION_EXPIRED: '초대 링크가 만료되었어요',
-  FORBIDDEN: '권한이 없어요',
-  OWNER_MUST_DELEGATE: '방장은 다른 멤버에게 권한을 넘긴 뒤 나갈 수 있어요',
-  GROUP_NOT_FOUND: '그룹을 찾을 수 없어요',
-  INVITATION_NOT_FOUND: '초대 링크를 찾을 수 없어요',
-}
-
 /** Reads the API error code from an axios error, if present. */
 export function getApiErrorCode(error: unknown): string | undefined {
   if (isAxiosError<ApiError>(error)) return error.response?.data?.code
   return undefined
 }
 
-/** Maps a groups API error to a user-facing Korean message. */
+/** Maps a groups API error to a localized, user-facing message. */
 export function getGroupErrorMessage(
   error: unknown,
-  fallback = '문제가 발생했어요. 다시 시도해 주세요',
+  fallback = i18n.t('errors.generic'),
 ): string {
   if (isAxiosError<ApiError>(error)) {
     const code = error.response?.data?.code
-    if (code && ERROR_MESSAGES[code]) return ERROR_MESSAGES[code]
+    if (code) {
+      const message = i18n.t(`errorGroup.${code}`, { defaultValue: '' })
+      if (message) return message
+    }
     if (error.response?.data?.message) return error.response.data.message
   }
   return fallback

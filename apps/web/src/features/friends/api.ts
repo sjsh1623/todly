@@ -1,5 +1,6 @@
 import { isAxiosError } from 'axios'
 import { api } from '../../shared/lib/api'
+import i18n from '../../shared/i18n/i18n'
 import type { ApiError } from '../auth/types'
 import type {
   Friend,
@@ -59,21 +60,17 @@ export async function inviteFriendsToGroup(
   return data
 }
 
-const ERROR_MESSAGES: Record<string, string> = {
-  USER_NOT_FOUND: '해당 아이디의 사용자를 찾을 수 없어요',
-  ALREADY_FRIENDS: '이미 친구예요',
-  REQUEST_EXISTS: '이미 친구 요청을 보냈어요',
-  BLOCKED: '차단된 사용자예요',
-}
-
-/** Maps a friends API error to a user-facing Korean message. */
+/** Maps a friends API error to a localized, user-facing message. */
 export function getFriendErrorMessage(
   error: unknown,
-  fallback = '문제가 발생했어요. 다시 시도해 주세요',
+  fallback = i18n.t('errors.generic'),
 ): string {
   if (isAxiosError<ApiError>(error)) {
     const code = error.response?.data?.code
-    if (code && ERROR_MESSAGES[code]) return ERROR_MESSAGES[code]
+    if (code) {
+      const message = i18n.t(`errorFriend.${code}`, { defaultValue: '' })
+      if (message) return message
+    }
     if (error.response?.data?.message) return error.response.data.message
   }
   return fallback

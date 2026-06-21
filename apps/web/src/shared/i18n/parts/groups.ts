@@ -1,0 +1,153 @@
+/**
+ * Flat i18n keys for the group screens (group list, group create, group
+ * detail, invite friends). Keys are dotted strings under a per-screen
+ * namespace and merge into the main ko/en bundles.
+ *
+ * groupsKo and groupsEn MUST share an identical key set.
+ */
+
+export const groupsKo = {
+  // groups (list)
+  'groups.openCard': '{{name}} 그룹 열기, 진행률 {{percent}}%',
+  'groups.progressDone': '{{total}}개 중 {{done}}개 완료',
+  'groups.title': '그룹',
+  'groups.subtitle': '함께한 진행률을 한눈에 보세요',
+  'groups.loadError': '그룹을 불러오지 못했어요',
+  'groups.retry': '다시 시도',
+  'groups.emptyTitle': '첫 그룹을 만들어 함께 시작해보세요',
+  'groups.emptyLine1': '그룹을 만들면 초대 링크로 친구를 부르고',
+  'groups.emptyLine2': '할 일을 함께 완성할 수 있어요',
+  'groups.createGroup': '그룹 만들기',
+
+  // groupCreate
+  'groupCreate.nameRequired': '그룹 이름을 입력해 주세요',
+  'groupCreate.nameMax': '60자 이내로 입력해 주세요',
+  'groupCreate.title': '그룹 만들기',
+  'groupCreate.nameLabel': '그룹 이름',
+  'groupCreate.namePlaceholder': '예) 이사 준비',
+  'groupCreate.typeLabel': '종류',
+  'groupCreate.colorLabel': '색상',
+  'groupCreate.colorOption': '색상 {{color}}',
+  'groupCreate.inviteHint':
+    '그룹을 만들면 초대 링크가 생성돼요. 다음 화면에서 링크를 복사하거나 친구를 바로 초대해 보세요.',
+  'groupCreate.creating': '만드는 중…',
+
+  // groupDetail
+  'groupDetail.inviteLinkCreated': '초대 링크를 만들었어요',
+  'groupDetail.linkCopied': '링크를 복사했어요',
+  'groupDetail.copyFailed': '복사에 실패했어요',
+  'groupDetail.deleteConfirm': '이 그룹을 삭제할까요? 되돌릴 수 없어요.',
+  'groupDetail.leaveConfirm': '이 그룹에서 나갈까요?',
+  'groupDetail.assignedSelf': '내가 담당하기로 했어요',
+  'groupDetail.loadError': '그룹을 불러오지 못했어요',
+  'groupDetail.toGroupList': '그룹 목록으로',
+  'groupDetail.back': '뒤로',
+  'groupDetail.more': '더보기',
+  'groupDetail.deleteGroup': '그룹 삭제',
+  'groupDetail.leaveGroup': '그룹 나가기',
+  'groupDetail.memberOnline': '멤버 {{members}}명 · {{online}}명 접속 중',
+  'groupDetail.inviteLink': '초대 링크',
+  'groupDetail.copy': '복사',
+  'groupDetail.creatingLink': '링크 만드는 중…',
+  'groupDetail.createInviteLink': '초대 링크 만들기',
+  'groupDetail.inviteFriends': '친구 초대',
+  'groupDetail.overallProgress': '전체 진행률',
+  'groupDetail.percentComplete': '{{percent}}% 완료',
+  'groupDetail.other': '기타',
+  'groupDetail.countItems': '{{count}}개',
+  'groupDetail.emptyTitle': '아직 투두가 없어요',
+  'groupDetail.addFirstTask': '+ 첫 투두 추가하기',
+  'groupDetail.addTask': '투두 추가',
+  'groupDetail.sectionProgress': '{{total}}개 중 {{done}}개',
+  'groupDetail.task': '투두',
+
+  // inviteFriends
+  'inviteFriends.invitedWithSkipped': '{{added}}명 초대 완료 · {{skipped}}명은 이미 멤버예요',
+  'inviteFriends.invited': '{{added}}명을 초대했어요',
+  'inviteFriends.title': '친구 초대',
+  'inviteFriends.searchLabel': '친구 검색',
+  'inviteFriends.searchPlaceholder': '이름 또는 아이디 검색',
+  'inviteFriends.myFriends': '내 친구',
+  'inviteFriends.selectedCount': '{{count}}명 선택됨',
+  'inviteFriends.loading': '불러오는 중…',
+  'inviteFriends.noResults': '검색 결과가 없어요',
+  'inviteFriends.noFriends': '초대할 친구가 없어요',
+  'inviteFriends.userMeta': '@{{username}} · 함께한 그룹 {{count}}개',
+  'inviteFriends.selected': '선택됨',
+  'inviteFriends.notSelected': '선택 안 됨',
+  'inviteFriends.inviting': '초대하는 중…',
+  'inviteFriends.inviteCta': '{{count}}명 초대하기',
+}
+
+export const groupsEn = {
+  // groups (list)
+  'groups.openCard': 'Open {{name}} group, {{percent}}% complete',
+  'groups.progressDone': '{{done}} of {{total}} done',
+  'groups.title': 'Groups',
+  'groups.subtitle': 'See your shared progress at a glance',
+  'groups.loadError': "Couldn't load your groups",
+  'groups.retry': 'Try again',
+  'groups.emptyTitle': 'Create your first group to get started together',
+  'groups.emptyLine1': 'Make a group to invite friends with a link',
+  'groups.emptyLine2': 'and finish your to-dos together',
+  'groups.createGroup': 'Create group',
+
+  // groupCreate
+  'groupCreate.nameRequired': 'Please enter a group name',
+  'groupCreate.nameMax': 'Keep it within 60 characters',
+  'groupCreate.title': 'Create group',
+  'groupCreate.nameLabel': 'Group name',
+  'groupCreate.namePlaceholder': 'e.g. Moving prep',
+  'groupCreate.typeLabel': 'Type',
+  'groupCreate.colorLabel': 'Color',
+  'groupCreate.colorOption': 'Color {{color}}',
+  'groupCreate.inviteHint':
+    "An invite link is created when you make a group. On the next screen, copy the link or invite friends right away.",
+  'groupCreate.creating': 'Creating…',
+
+  // groupDetail
+  'groupDetail.inviteLinkCreated': 'Invite link created',
+  'groupDetail.linkCopied': 'Link copied',
+  'groupDetail.copyFailed': "Couldn't copy the link",
+  'groupDetail.deleteConfirm': "Delete this group? This can't be undone.",
+  'groupDetail.leaveConfirm': 'Leave this group?',
+  'groupDetail.assignedSelf': "You're on it",
+  'groupDetail.loadError': "Couldn't load this group",
+  'groupDetail.toGroupList': 'Back to groups',
+  'groupDetail.back': 'Back',
+  'groupDetail.more': 'More',
+  'groupDetail.deleteGroup': 'Delete group',
+  'groupDetail.leaveGroup': 'Leave group',
+  'groupDetail.memberOnline': '{{members}} members · {{online}} online',
+  'groupDetail.inviteLink': 'Invite link',
+  'groupDetail.copy': 'Copy',
+  'groupDetail.creatingLink': 'Creating link…',
+  'groupDetail.createInviteLink': 'Create invite link',
+  'groupDetail.inviteFriends': 'Invite friends',
+  'groupDetail.overallProgress': 'Overall progress',
+  'groupDetail.percentComplete': '{{percent}}% complete',
+  'groupDetail.other': 'Other',
+  'groupDetail.countItems': '{{count}} items',
+  'groupDetail.emptyTitle': 'No to-dos yet',
+  'groupDetail.addFirstTask': '+ Add your first to-do',
+  'groupDetail.addTask': 'Add to-do',
+  'groupDetail.sectionProgress': '{{done}} of {{total}}',
+  'groupDetail.task': 'To-do',
+
+  // inviteFriends
+  'inviteFriends.invitedWithSkipped': 'Invited {{added}} · {{skipped}} already in the group',
+  'inviteFriends.invited': 'Invited {{added}}',
+  'inviteFriends.title': 'Invite friends',
+  'inviteFriends.searchLabel': 'Search friends',
+  'inviteFriends.searchPlaceholder': 'Search by name or username',
+  'inviteFriends.myFriends': 'My friends',
+  'inviteFriends.selectedCount': '{{count}} selected',
+  'inviteFriends.loading': 'Loading…',
+  'inviteFriends.noResults': 'No results found',
+  'inviteFriends.noFriends': 'No friends to invite',
+  'inviteFriends.userMeta': '@{{username}} · {{count}} shared groups',
+  'inviteFriends.selected': 'Selected',
+  'inviteFriends.notSelected': 'Not selected',
+  'inviteFriends.inviting': 'Inviting…',
+  'inviteFriends.inviteCta': 'Invite {{count}}',
+}

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '../../shared/ui'
 import { useGroups } from '../groups'
 import { useCreateRoutine } from './hooks'
-import { serializeWeekdays, WEEKDAYS_KO } from './recurrence'
+import { serializeWeekdays, WEEKDAY_KEYS } from './recurrence'
 import type { RecurFreq } from './types'
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
 
 /** A bottom-sheet to create a routine: title + group + time + recurrence. */
 export default function RoutineCreateSheet({ onClose, presetGroupId }: Props) {
+  const { t } = useTranslation()
   const { data: groups } = useGroups()
   const createRoutine = useCreateRoutine()
 
@@ -66,7 +68,7 @@ export default function RoutineCreateSheet({ onClose, presetGroupId }: Props) {
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="루틴 추가"
+      aria-label={t('routineCreate.title')}
     >
       <div
         className="w-full"
@@ -74,7 +76,7 @@ export default function RoutineCreateSheet({ onClose, presetGroupId }: Props) {
         onClick={(e) => e.stopPropagation()}
       >
         <div style={{ width: 40, height: 4, borderRadius: 2, background: '#E0E6EF', margin: '0 auto 18px' }} aria-hidden="true" />
-        <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--color-text)', marginBottom: 18 }}>루틴 추가</h2>
+        <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--color-text)', marginBottom: 18 }}>{t('routineCreate.title')}</h2>
 
         {/* Title */}
         <input
@@ -82,8 +84,8 @@ export default function RoutineCreateSheet({ onClose, presetGroupId }: Props) {
           value={title}
           maxLength={120}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="무엇을 반복할까요?"
-          aria-label="루틴 제목"
+          placeholder={t('routineCreate.titlePlaceholder')}
+          aria-label={t('routineCreate.titleLabel')}
           className="w-full outline-none placeholder:text-[#C2CBD8]"
           style={{ fontSize: 19, fontWeight: 800, color: 'var(--color-text)', borderBottom: '2px solid #EDF1F7', paddingBottom: 12, marginBottom: 20 }}
         />
@@ -91,10 +93,10 @@ export default function RoutineCreateSheet({ onClose, presetGroupId }: Props) {
         {/* Group (optional) */}
         {(groups ?? []).length > 0 && (
           <>
-            <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', marginBottom: 10 }}>그룹 (선택)</div>
-            <div className="flex flex-wrap" style={{ gap: 8, marginBottom: 20 }} role="radiogroup" aria-label="그룹">
+            <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', marginBottom: 10 }}>{t('routineCreate.groupLabel')}</div>
+            <div className="flex flex-wrap" style={{ gap: 8, marginBottom: 20 }} role="radiogroup" aria-label={t('routineCreate.groupAria')}>
               <button type="button" role="radio" aria-checked={groupId === ''} onClick={() => setGroupId('')} style={chip(groupId === '')}>
-                개인
+                {t('routineCreate.personal')}
               </button>
               {(groups ?? []).map((g) => (
                 <button key={g.id} type="button" role="radio" aria-checked={groupId === g.id} onClick={() => setGroupId(g.id)} style={chip(groupId === g.id)}>
@@ -106,23 +108,23 @@ export default function RoutineCreateSheet({ onClose, presetGroupId }: Props) {
         )}
 
         {/* Time */}
-        <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', marginBottom: 10 }}>시간</div>
+        <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', marginBottom: 10 }}>{t('routineCreate.timeLabel')}</div>
         <input
           type="time"
           value={time}
           onChange={(e) => setTime(e.target.value)}
-          aria-label="시간"
+          aria-label={t('routineCreate.timeLabel')}
           className="outline-none"
           style={{ background: '#F4F7FB', border: '1.5px solid #E6ECF4', borderRadius: 13, padding: '11px 14px', fontSize: 14, fontWeight: 700, color: 'var(--color-text)', marginBottom: 20 }}
         />
 
         {/* Frequency */}
-        <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', marginBottom: 10 }}>반복</div>
-        <div className="flex" style={{ gap: 8, marginBottom: freq === 'weekly' ? 14 : 24 }} role="radiogroup" aria-label="반복 주기">
+        <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', marginBottom: 10 }}>{t('routineCreate.repeatLabel')}</div>
+        <div className="flex" style={{ gap: 8, marginBottom: freq === 'weekly' ? 14 : 24 }} role="radiogroup" aria-label={t('routineCreate.repeatAria')}>
           {([
-            ['daily', '매일'],
-            ['weekly', '요일 선택'],
-            ['monthly', '매달'],
+            ['daily', t('routineCreate.freqDaily')],
+            ['weekly', t('routineCreate.freqWeekly')],
+            ['monthly', t('routineCreate.freqMonthly')],
           ] as [RecurFreq, string][]).map(([value, label]) => (
             <button key={value} type="button" role="radio" aria-checked={freq === value} onClick={() => setFreq(value)} style={chip(freq === value)}>
               {label}
@@ -132,14 +134,15 @@ export default function RoutineCreateSheet({ onClose, presetGroupId }: Props) {
 
         {freq === 'weekly' && (
           <div className="flex" style={{ gap: 6, marginBottom: 24 }}>
-            {WEEKDAYS_KO.map((label, i) => {
+            {WEEKDAY_KEYS.map((key, i) => {
+              const label = t(key)
               const on = days.includes(i)
               return (
                 <button
-                  key={label}
+                  key={key}
                   type="button"
                   aria-pressed={on}
-                  aria-label={`${label}요일`}
+                  aria-label={t('routineCreate.weekday', { day: label })}
                   onClick={() => toggleDay(i)}
                   className="flex items-center justify-center focus:outline-none"
                   style={{ width: 32, height: 32, borderRadius: 10, fontSize: 12, fontWeight: 800, background: on ? '#1366CE' : '#EDF1F7', color: on ? '#fff' : '#AEB9CC' }}
@@ -153,12 +156,12 @@ export default function RoutineCreateSheet({ onClose, presetGroupId }: Props) {
 
         {createRoutine.isError && (
           <p role="alert" style={{ marginBottom: 14, fontSize: 13, fontWeight: 600, color: 'var(--color-due)' }}>
-            문제가 발생했어요. 다시 시도해 주세요
+            {t('routineCreate.error')}
           </p>
         )}
 
         <Button onClick={submit} disabled={!canSubmit}>
-          {createRoutine.isPending ? '추가하는 중…' : '루틴 추가하기'}
+          {createRoutine.isPending ? t('routineCreate.submitting') : t('routineCreate.submit')}
         </Button>
       </div>
     </div>

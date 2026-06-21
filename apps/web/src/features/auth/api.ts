@@ -1,5 +1,6 @@
 import { isAxiosError } from 'axios'
 import { api } from '../../shared/lib/api'
+import i18n from '../../shared/i18n/i18n'
 import type {
   ApiError,
   AuthResponse,
@@ -50,17 +51,14 @@ export async function requestPasswordReset(email: string): Promise<void> {
   await api.post('/auth/password/reset-request', { email })
 }
 
-const ERROR_MESSAGES: Record<string, string> = {
-  INVALID_CREDENTIALS: '이메일 또는 비밀번호가 올바르지 않습니다',
-  EMAIL_TAKEN: '이미 가입된 이메일입니다',
-  USERNAME_TAKEN: '이미 사용 중인 아이디입니다',
-}
-
-/** Maps an axios/API error to a user-facing Korean message. */
-export function getApiErrorMessage(error: unknown, fallback = '문제가 발생했어요. 다시 시도해 주세요'): string {
+/** Maps an axios/API error to a localized, user-facing message. */
+export function getApiErrorMessage(error: unknown, fallback = i18n.t('errors.generic')): string {
   if (isAxiosError<ApiError>(error)) {
     const code = error.response?.data?.code
-    if (code && ERROR_MESSAGES[code]) return ERROR_MESSAGES[code]
+    if (code) {
+      const message = i18n.t(`errorAuth.${code}`, { defaultValue: '' })
+      if (message) return message
+    }
     if (error.response?.data?.message) return error.response.data.message
   }
   return fallback

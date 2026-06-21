@@ -1,5 +1,6 @@
 import { isAxiosError } from 'axios'
 import { api } from '../../shared/lib/api'
+import i18n from '../../shared/i18n/i18n'
 import type { ApiError } from '../auth/types'
 import type {
   CreateTaskPayload,
@@ -116,28 +117,23 @@ export async function uploadTaskPhoto(taskId: string, file: File): Promise<TaskP
   return data
 }
 
-const ERROR_MESSAGES: Record<string, string> = {
-  VERSION_CONFLICT: '다른 사람이 먼저 수정했어요. 새로고침 해주세요',
-  FORBIDDEN: '이 작업을 할 권한이 없어요',
-  TASK_NOT_FOUND: '투두를 찾을 수 없어요',
-  SECTION_NOT_FOUND: '리스트를 찾을 수 없어요',
-  GROUP_NOT_FOUND: '그룹을 찾을 수 없어요',
-}
-
 /** Reads the API error code from an axios error, if present. */
 export function getApiErrorCode(error: unknown): string | undefined {
   if (isAxiosError<ApiError>(error)) return error.response?.data?.code
   return undefined
 }
 
-/** Maps a tasks API error to a user-facing Korean message. */
+/** Maps a tasks API error to a localized, user-facing message. */
 export function getTaskErrorMessage(
   error: unknown,
-  fallback = '문제가 발생했어요. 다시 시도해 주세요',
+  fallback = i18n.t('errors.generic'),
 ): string {
   if (isAxiosError<ApiError>(error)) {
     const code = error.response?.data?.code
-    if (code && ERROR_MESSAGES[code]) return ERROR_MESSAGES[code]
+    if (code) {
+      const message = i18n.t(`errorTask.${code}`, { defaultValue: '' })
+      if (message) return message
+    }
     if (error.response?.data?.message) return error.response.data.message
   }
   return fallback

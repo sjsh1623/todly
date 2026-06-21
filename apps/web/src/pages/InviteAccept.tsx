@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Avatar, Button, Card, PushHeader, StatusBar } from '../shared/ui'
 import {
   getApiErrorCode,
@@ -8,6 +9,7 @@ import {
 } from '../features/groups'
 
 export default function InviteAccept() {
+  const { t } = useTranslation()
   const { code } = useParams<{ code: string }>()
   const navigate = useNavigate()
   const { data: preview, isLoading, isError, error } = useInvitePreview(code)
@@ -45,13 +47,13 @@ export default function InviteAccept() {
         {isError && (
           <Card style={{ width: '100%', maxWidth: 340, borderRadius: 22, padding: 28 }}>
             <p style={{ fontSize: 15, fontWeight: 800, color: 'var(--color-text)', marginBottom: 8 }}>
-              초대 링크를 확인할 수 없어요
+              {t('inviteAccept.invalidTitle')}
             </p>
             <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)', marginBottom: 20 }}>
-              {getGroupErrorMessage(error, '링크가 만료되었거나 존재하지 않아요')}
+              {getGroupErrorMessage(error, t('inviteAccept.invalidFallback'))}
             </p>
             <Button variant="secondary" style={{ height: 48 }} onClick={() => navigate('/groups')}>
-              그룹 목록으로
+              {t('inviteAccept.toGroupList')}
             </Button>
           </Card>
         )}
@@ -62,19 +64,19 @@ export default function InviteAccept() {
               <Avatar initial={preview.group.name.charAt(0)} gradient size={78} />
             </div>
             <p style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--color-text-subtle)', marginBottom: 6 }}>
-              그룹 초대를 받았어요
+              {t('inviteAccept.invitedHeading')}
             </p>
             <h1 className="font-display" style={{ fontSize: 24, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.5px' }}>
               {preview.group.name}
             </h1>
             <p style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--color-text-subtle)', marginTop: 8, marginBottom: 32 }}>
-              멤버 {preview.group.memberCount}명
+              {t('inviteAccept.memberCount', { memberCount: preview.group.memberCount })}
             </p>
 
             {expired ? (
               <Card style={{ width: '100%', borderRadius: 18, padding: 18, marginBottom: 16 }}>
                 <p style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--color-due)' }}>
-                  이 초대 링크는 만료되었어요
+                  {t('inviteAccept.expired')}
                 </p>
               </Card>
             ) : (
@@ -89,7 +91,7 @@ export default function InviteAccept() {
                   onClick={handleAccept}
                   style={{ boxShadow: '0 10px 24px rgba(19,102,206,.26)' }}
                 >
-                  {accept.isPending ? '참여하는 중…' : '그룹 참여하기'}
+                  {accept.isPending ? t('inviteAccept.joining') : t('inviteAccept.join')}
                 </Button>
               </>
             )}

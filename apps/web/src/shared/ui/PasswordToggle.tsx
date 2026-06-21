@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 type PasswordToggleProps = {
   visible: boolean
   onToggle: () => void
@@ -5,11 +7,12 @@ type PasswordToggleProps = {
 
 /** Eye / eye-off button used to reveal password fields. */
 export function PasswordToggle({ visible, onToggle }: PasswordToggleProps) {
+  const { t } = useTranslation()
   return (
     <button
       type="button"
       onClick={onToggle}
-      aria-label={visible ? '비밀번호 숨기기' : '비밀번호 보기'}
+      aria-label={visible ? t('passwordToggle.hide') : t('passwordToggle.show')}
       aria-pressed={visible}
       className="flex-none rounded-md p-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
     >

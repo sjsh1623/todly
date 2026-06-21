@@ -49,18 +49,18 @@ export default function Routine() {
 
   const heroTitle =
     total === 0
-      ? '루틴을 시작해 볼까요'
+      ? t('routine.heroTitleStart')
       : remaining === 0
-        ? '오늘 루틴 완료!'
+        ? t('routine.heroTitleDone')
         : ratio >= 0.6
-          ? '거의 다 왔어요'
-          : '오늘도 화이팅'
+          ? t('routine.heroTitleAlmost')
+          : t('routine.heroTitleGo')
   const heroSub =
     total === 0
-      ? '+ 버튼으로 첫 루틴을 추가하세요.'
+      ? t('routine.heroSubStart')
       : remaining === 0
-        ? '모든 루틴을 마쳤어요. 멋져요!'
-        : `오늘 ${remaining}개 남았어요.${nextUp ? ` 다음은 ${nextUp.title}예요.` : ''}`
+        ? t('routine.heroSubDone')
+        : `${t('routine.heroSubRemaining', { count: remaining })}${nextUp ? t('routine.heroSubNext', { title: nextUp.title }) : ''}`
 
   const bestStreak = active.reduce((max, r) => Math.max(max, r.streak?.current ?? 0), 0)
 
@@ -88,15 +88,15 @@ export default function Routine() {
         {/* Header */}
         <div className="flex items-start justify-between" style={{ marginBottom: 18 }}>
           <div>
-            <h1 style={{ fontSize: 27, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.5px' }}>루틴</h1>
-            <div style={{ fontSize: 12.5, fontWeight: 600, color: '#9AA7BC', marginTop: 2 }}>오늘의 루틴</div>
+            <h1 style={{ fontSize: 27, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.5px' }}>{t('routine.heading')}</h1>
+            <div style={{ fontSize: 12.5, fontWeight: 600, color: '#9AA7BC', marginTop: 2 }}>{t('routine.subheading')}</div>
           </div>
           {bestStreak > 0 && (
             <div className="inline-flex items-center" style={{ gap: 6, background: '#FFF1E6', padding: '8px 13px', borderRadius: 14 }}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="#FF9D52">
                 <path d="M12 2c1 4-2 5-2 8a4 4 0 0 0 8 0c0-1-.3-2-1-3 2 1 4 4 4 7a8 8 0 1 1-16 0c0-5 5-7 7-12z" />
               </svg>
-              <span style={{ fontSize: 13, fontWeight: 800, color: '#E07B2E' }}>{bestStreak}일째</span>
+              <span style={{ fontSize: 13, fontWeight: 800, color: '#E07B2E' }}>{t('routine.streakDays', { count: bestStreak })}</span>
             </div>
           )}
         </div>
@@ -197,17 +197,17 @@ export default function Routine() {
                     </div>
                     <div style={{ fontSize: 11.5, fontWeight: isNext && !r.todayDone ? 700 : 600, color: isNext && !r.todayDone ? '#1366CE' : '#9AA7BC' }}>
                       {isNext && !r.todayDone
-                        ? `다음 차례${mins != null ? ` · ${mins}분` : ''}`
+                        ? `${t('routine.nextUp')}${mins != null ? t('routine.nextUpMinutes', { count: mins }) : ''}`
                         : routineMetaLine(r)}
                       {r.streak?.current > 0 && !isNext && (
-                        <span style={{ marginLeft: 8, color: '#E07B2E', fontWeight: 800 }}>· {r.streak.current}일째</span>
+                        <span style={{ marginLeft: 8, color: '#E07B2E', fontWeight: 800 }}>{t('routine.streakInline', { count: r.streak.current })}</span>
                       )}
                     </div>
                   </div>
 
                   {/* Action */}
                   {r.todayDone ? (
-                    <div className="flex items-center justify-center" style={{ width: 26, height: 26, borderRadius: 9, background: '#46D38A', flex: 'none' }} aria-label="완료됨">
+                    <div className="flex items-center justify-center" style={{ width: 26, height: 26, borderRadius: 9, background: '#46D38A', flex: 'none' }} aria-label={t('routine.completed')}>
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12.5l4.5 4.5L19 6.5" />
                       </svg>
@@ -221,7 +221,7 @@ export default function Routine() {
                       style={{ gap: 5, padding: '9px 14px', borderRadius: 13, background: '#1366CE', color: '#fff', fontSize: 11.5, fontWeight: 800, flex: 'none' }}
                     >
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M7 5l11 7-11 7z" /></svg>
-                      시작
+                      {t('routine.start')}
                     </button>
                   ) : (
                     <button
@@ -231,7 +231,7 @@ export default function Routine() {
                         e.preventDefault()
                         skipRoutine.mutate(r.id)
                       }}
-                      aria-label={`${r.title} 완료 표시`}
+                      aria-label={t('routine.markDone', { title: r.title })}
                       className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                       style={{ width: 26, height: 26, borderRadius: 9, border: '2.5px solid #DDE3EC', background: 'transparent', flex: 'none' }}
                     />
@@ -243,7 +243,7 @@ export default function Routine() {
         )}
       </div>
 
-      <FAB onClick={() => setCreateOpen(true)} aria-label="루틴 추가" />
+      <FAB onClick={() => setCreateOpen(true)} aria-label={t('routine.addAria')} />
 
       {createOpen && <RoutineCreateSheet onClose={() => setCreateOpen(false)} />}
     </div>

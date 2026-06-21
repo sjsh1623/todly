@@ -3,17 +3,19 @@ import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useTranslation } from 'react-i18next'
 import { AuthScreen, Button, TextField, Wordmark } from '../shared/ui'
 import { requestPasswordReset } from '../features/auth/api'
 
-const schema = z.object({
-  email: z.string().min(1, '이메일을 입력해 주세요').email('올바른 이메일 형식이 아니에요'),
-})
-
-type FormValues = z.infer<typeof schema>
-
 export default function ResetPassword() {
+  const { t } = useTranslation()
   const [sent, setSent] = useState(false)
+
+  const schema = z.object({
+    email: z.string().min(1, t('resetPassword.emailRequired')).email(t('resetPassword.emailInvalid')),
+  })
+
+  type FormValues = z.infer<typeof schema>
 
   const {
     register,
@@ -41,7 +43,7 @@ export default function ResetPassword() {
         <div className="relative flex items-center" style={{ height: 40, marginBottom: 24 }}>
           <Link
             to="/login"
-            aria-label="뒤로 가기"
+            aria-label={t('resetPassword.back')}
             className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             style={{ width: 40, height: 40, borderRadius: 14, background: '#fff', boxShadow: '0 4px 12px rgba(20,50,90,.06)' }}
           >
@@ -56,10 +58,10 @@ export default function ResetPassword() {
 
         <div className="flex flex-col" style={{ marginTop: 24, marginBottom: 28 }}>
           <h1 style={{ fontSize: 28, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.6px' }}>
-            비밀번호 재설정
+            {t('resetPassword.title')}
           </h1>
           <p style={{ fontSize: 14, fontWeight: 600, color: '#7C8AA0', marginTop: 6 }}>
-            가입하신 이메일로 재설정 링크를 보내드릴게요
+            {t('resetPassword.subtitle')}
           </p>
         </div>
 
@@ -78,14 +80,14 @@ export default function ResetPassword() {
               lineHeight: 1.6,
             }}
           >
-            입력하신 이메일로 재설정 안내를 보냈어요.
+            {t('resetPassword.sentLine1')}
             <br />
-            메일함을 확인해 주세요.
+            {t('resetPassword.sentLine2')}
           </div>
         ) : (
           <>
             <TextField
-              label="이메일"
+              label={t('resetPassword.emailLabel')}
               type="email"
               inputMode="email"
               autoComplete="email"
@@ -95,15 +97,15 @@ export default function ResetPassword() {
               {...register('email')}
             />
             <Button type="submit" disabled={isSubmitting} style={{ boxShadow: '0 10px 24px rgba(19,102,206,.26)' }}>
-              {isSubmitting ? '전송 중…' : '재설정 링크 보내기'}
+              {isSubmitting ? t('resetPassword.submitting') : t('resetPassword.submit')}
             </Button>
           </>
         )}
 
         <div style={{ textAlign: 'center', fontSize: 13.5, fontWeight: 600, color: '#7C8AA0', padding: '24px 0 30px' }}>
-          비밀번호가 기억나셨나요?{' '}
+          {t('resetPassword.rememberPassword')}{' '}
           <Link to="/login" style={{ color: '#1366CE', fontWeight: 800 }}>
-            로그인
+            {t('resetPassword.loginLink')}
           </Link>
         </div>
       </form>

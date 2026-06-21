@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type SkeletonProps = {
   width?: number | string
@@ -32,8 +33,9 @@ export function Skeleton({ width = '100%', height = 14, radius = 8, circle = fal
  * A list of card-shaped skeleton rows. Used while page lists load.
  */
 export function SkeletonList({ rows = 4, gap = 12 }: { rows?: number; gap?: number }) {
+  const { t } = useTranslation()
   return (
-    <div role="status" aria-label="불러오는 중" className="flex flex-col" style={{ gap }}>
+    <div role="status" aria-label={t('skeleton.loading')} className="flex flex-col" style={{ gap }}>
       {Array.from({ length: rows }).map((_, i) => (
         <div
           key={i}

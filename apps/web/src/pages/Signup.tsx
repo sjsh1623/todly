@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useTranslation } from 'react-i18next'
 import {
   Avatar,
   AuthScreen,
@@ -20,30 +21,31 @@ import { useDebouncedValue } from '../shared/lib/useDebouncedValue'
 
 const NICKNAME_MAX = 12
 
-const schema = z.object({
-  nickname: z
-    .string()
-    .min(1, '닉네임을 입력해 주세요')
-    .max(NICKNAME_MAX, `닉네임은 최대 ${NICKNAME_MAX}자까지 가능해요`),
-  username: z
-    .string()
-    .min(3, '아이디는 3자 이상이어야 해요')
-    .max(20, '아이디는 최대 20자까지 가능해요')
-    .regex(/^[a-z0-9_]+$/, '영문 소문자, 숫자, 밑줄(_)만 사용할 수 있어요'),
-  email: z.string().min(1, '이메일을 입력해 주세요').email('올바른 이메일 형식이 아니에요'),
-  password: z.string().min(8, '비밀번호는 8자 이상이어야 해요'),
-  profileColor: z.enum(['blue', 'green', 'orange', 'purple']),
-})
-
-type FormValues = z.infer<typeof schema>
-
 type UsernameState = 'idle' | 'checking' | 'available' | 'taken' | 'error'
 
 export default function Signup() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const signup = useSignup()
   const [showPassword, setShowPassword] = useState(false)
   const [usernameState, setUsernameState] = useState<UsernameState>('idle')
+
+  const schema = z.object({
+    nickname: z
+      .string()
+      .min(1, t('signup.nicknameRequired'))
+      .max(NICKNAME_MAX, t('signup.nicknameMax', { max: NICKNAME_MAX })),
+    username: z
+      .string()
+      .min(3, t('signup.usernameMin'))
+      .max(20, t('signup.usernameMax'))
+      .regex(/^[a-z0-9_]+$/, t('signup.usernamePattern')),
+    email: z.string().min(1, t('signup.emailRequired')).email(t('signup.emailInvalid')),
+    password: z.string().min(8, t('signup.passwordMin')),
+    profileColor: z.enum(['blue', 'green', 'orange', 'purple']),
+  })
+
+  type FormValues = z.infer<typeof schema>
 
   const {
     register,
@@ -101,13 +103,13 @@ export default function Signup() {
   const usernameHint = (() => {
     switch (usernameState) {
       case 'checking':
-        return <span style={{ color: '#9AA7BC' }}>확인 중…</span>
+        return <span style={{ color: '#9AA7BC' }}>{t('signup.usernameChecking')}</span>
       case 'available':
-        return <span style={{ color: '#46D38A' }}>사용 가능한 아이디예요</span>
+        return <span style={{ color: '#46D38A' }}>{t('signup.usernameAvailable')}</span>
       case 'taken':
-        return <span style={{ color: 'var(--color-due)' }}>이미 사용 중인 아이디입니다</span>
+        return <span style={{ color: 'var(--color-due)' }}>{t('signup.usernameTaken')}</span>
       case 'error':
-        return <span style={{ color: 'var(--color-overdue)' }}>확인에 실패했어요</span>
+        return <span style={{ color: 'var(--color-overdue)' }}>{t('signup.usernameCheckFailed')}</span>
       default:
         return undefined
     }
@@ -120,7 +122,7 @@ export default function Signup() {
         <div className="relative flex items-center" style={{ height: 40, marginBottom: 24 }}>
           <Link
             to="/login"
-            aria-label="뒤로 가기"
+            aria-label={t('signup.back')}
             className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             style={{ width: 40, height: 40, borderRadius: 14, background: '#fff', boxShadow: '0 4px 12px rgba(20,50,90,.06)' }}
           >
@@ -134,17 +136,17 @@ export default function Signup() {
         </div>
 
         <h1 style={{ fontSize: 28, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.6px' }}>
-          함께 시작해요
+          {t('signup.title')}
         </h1>
         <p style={{ fontSize: 14, fontWeight: 600, color: '#7C8AA0', marginTop: 6, marginBottom: 28 }}>
-          몇 가지만 알려주시면 돼요
+          {t('signup.subtitle')}
         </p>
 
         {/* Avatar preview + color picker */}
         <div className="flex items-center" style={{ gap: 16, marginBottom: 26 }}>
           <Avatar initial={avatarInitial} color={PROFILE_COLOR_TO_AVATAR[profileColor]} size={66} gradient />
           <div>
-            <div style={{ fontSize: 12.5, fontWeight: 700, color: '#7C8AA0', marginBottom: 9 }}>프로필 색상</div>
+            <div style={{ fontSize: 12.5, fontWeight: 700, color: '#7C8AA0', marginBottom: 9 }}>{t('signup.profileColor')}</div>
             <Controller
               control={control}
               name="profileColor"
@@ -154,8 +156,8 @@ export default function Signup() {
         </div>
 
         <TextField
-          label="닉네임"
-          placeholder="석현"
+          label={t('signup.nicknameLabel')}
+          placeholder={t('signup.nicknamePlaceholder')}
           maxLength={NICKNAME_MAX}
           autoComplete="nickname"
           error={errors.nickname?.message}
@@ -169,7 +171,7 @@ export default function Signup() {
         />
 
         <TextField
-          label="아이디"
+          label={t('signup.usernameLabel')}
           placeholder="username"
           inputMode="text"
           autoCapitalize="none"
@@ -181,7 +183,7 @@ export default function Signup() {
         />
 
         <TextField
-          label="이메일"
+          label={t('signup.emailLabel')}
           type="email"
           inputMode="email"
           autoComplete="email"
@@ -192,7 +194,7 @@ export default function Signup() {
         />
 
         <TextField
-          label="비밀번호"
+          label={t('signup.passwordLabel')}
           type={showPassword ? 'text' : 'password'}
           autoComplete="new-password"
           placeholder="••••••"
@@ -218,19 +220,22 @@ export default function Signup() {
           disabled={signup.isPending || usernameState === 'taken'}
           style={{ boxShadow: '0 10px 24px rgba(19,102,206,.26)', marginBottom: 14 }}
         >
-          {signup.isPending ? '가입 중…' : '회원가입'}
+          {signup.isPending ? t('signup.submitting') : t('signup.submit')}
         </Button>
 
         <p style={{ textAlign: 'center', fontSize: 11.5, fontWeight: 500, color: '#9AA7BC', lineHeight: 1.6 }}>
-          가입하면 <span style={{ color: '#7C8AA0', fontWeight: 700 }}>이용약관</span>과{' '}
-          <span style={{ color: '#7C8AA0', fontWeight: 700 }}>개인정보처리방침</span>에<br />
-          동의하게 됩니다.
+          {t('signup.termsPrefix')} <span style={{ color: '#7C8AA0', fontWeight: 700 }}>{t('signup.termsOfService')}</span>
+          {t('signup.termsConjunction')}{' '}
+          <span style={{ color: '#7C8AA0', fontWeight: 700 }}>{t('signup.privacyPolicy')}</span>
+          {t('signup.termsSuffix')}
+          <br />
+          {t('signup.termsAgree')}
         </p>
 
         <div style={{ textAlign: 'center', fontSize: 13.5, fontWeight: 600, color: '#7C8AA0', padding: '20px 0 30px' }}>
-          이미 계정이 있으신가요?{' '}
+          {t('signup.haveAccount')}{' '}
           <Link to="/login" style={{ color: '#1366CE', fontWeight: 800 }}>
-            로그인
+            {t('signup.loginLink')}
           </Link>
         </div>
       </form>

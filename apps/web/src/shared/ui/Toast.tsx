@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { ReactNode } from 'react'
 
 export type ToastTone = 'success' | 'error' | 'info'
@@ -52,6 +53,7 @@ const TONE_STYLE: Record<ToastTone, { bg: string; icon: ReactNode }> = {
 const AUTO_DISMISS_MS = 2800
 
 export function ToastProvider({ children }: { children: ReactNode }) {
+  const { t } = useTranslation()
   const [toasts, setToasts] = useState<ToastItem[]>([])
   const idRef = useRef(0)
   const timers = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map())
@@ -91,13 +93,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         className="fixed left-0 right-0 z-[100] flex flex-col items-center gap-2 px-4 pointer-events-none"
         style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 104px)' }}
       >
-        {toasts.map((t) => {
-          const tone = TONE_STYLE[t.tone]
+        {toasts.map((toast) => {
+          const tone = TONE_STYLE[toast.tone]
           return (
             <div
-              key={t.id}
-              role={t.tone === 'error' ? 'alert' : 'status'}
-              aria-live={t.tone === 'error' ? 'assertive' : 'polite'}
+              key={toast.id}
+              role={toast.tone === 'error' ? 'alert' : 'status'}
+              aria-live={toast.tone === 'error' ? 'assertive' : 'polite'}
               className="pointer-events-auto flex items-center w-full max-w-[360px]"
               style={{
                 gap: 10,
@@ -111,11 +113,11 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               <span aria-hidden="true" className="flex-none">
                 {tone.icon}
               </span>
-              <span style={{ fontSize: 13.5, fontWeight: 700, flex: 1, minWidth: 0 }}>{t.message}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 700, flex: 1, minWidth: 0 }}>{toast.message}</span>
               <button
                 type="button"
-                onClick={() => dismiss(t.id)}
-                aria-label="알림 닫기"
+                onClick={() => dismiss(toast.id)}
+                aria-label={t('toast.dismiss')}
                 className="flex-none flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 rounded-full"
                 style={{ width: 24, height: 24, opacity: 0.85 }}
               >

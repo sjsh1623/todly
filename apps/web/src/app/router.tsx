@@ -24,6 +24,7 @@ import Help from '../pages/Help'
 import Login from '../pages/Login'
 import Signup from '../pages/Signup'
 import ResetPassword from '../pages/ResetPassword'
+import NotFound from '../pages/NotFound'
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +94,9 @@ export const router = createBrowserRouter([
           </RequireAuth>
         ),
       },
+
+      // Catch-all → friendly 404 (prevents React Router's raw error screen).
+      { path: '*', element: <NotFound /> },
     ],
   },
 ], {

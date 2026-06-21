@@ -1,5 +1,6 @@
 import { isAxiosError } from 'axios'
 import { api } from '../../shared/lib/api'
+import i18n from '../../shared/i18n/i18n'
 import type { ApiError, User } from '../auth/types'
 import type {
   ChangePasswordPayload,
@@ -50,19 +51,17 @@ export async function contact(payload: ContactPayload): Promise<void> {
   await api.post('/support/contact', payload)
 }
 
-const ERROR_MESSAGES: Record<string, string> = {
-  INVALID_CREDENTIALS: '현재 비밀번호가 올바르지 않습니다',
-  NO_PASSWORD_SET: '소셜 로그인 계정은 비밀번호가 없어요',
-}
-
-/** Maps a settings API error to a user-facing Korean message. */
+/** Maps a settings API error to a localized, user-facing message. */
 export function getSettingsErrorMessage(
   error: unknown,
-  fallback = '문제가 발생했어요. 다시 시도해 주세요',
+  fallback = i18n.t('errors.generic'),
 ): string {
   if (isAxiosError<ApiError>(error)) {
     const code = error.response?.data?.code
-    if (code && ERROR_MESSAGES[code]) return ERROR_MESSAGES[code]
+    if (code) {
+      const message = i18n.t(`errorSettings.${code}`, { defaultValue: '' })
+      if (message) return message
+    }
     if (error.response?.data?.message) return error.response.data.message
   }
   return fallback

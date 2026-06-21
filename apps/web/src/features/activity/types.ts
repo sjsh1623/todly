@@ -1,12 +1,19 @@
 import type { ProfileColor } from '../auth/types'
 
+// Values mirror the backend ActivityType enum (snake_case, serialized via
+// Enum.name()). Keep in sync with apps/api .../activity/ActivityType.java.
 export type ActivityType =
-  | 'task.completed'
-  | 'task.created'
-  | 'live.started'
-  | 'live.ended'
-  | 'milestone'
-  | 'member.joined'
+  | 'task_created'
+  | 'task_completed'
+  | 'task_reopened'
+  | 'live_started'
+  | 'live_ended'
+  | 'member_joined'
+  | 'comment_added'
+  | 'routine_done'
+  | 'milestone_reached'
+  | 'friend_joined_room'
+  | 'photo_shared'
   | string
 
 export type ActivityActor = {

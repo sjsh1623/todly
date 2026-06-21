@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { PROFILE_COLOR_TO_AVATAR } from '../features/auth/types'
 import {
   useElapsed,
@@ -30,6 +31,7 @@ function startTimeLabel(iso: string): string {
 
 /** SCR-06 "그 순간 · 라이브 시작" — full-screen live session for one task. */
 export default function LiveMoment() {
+  const { t } = useTranslation()
   const { taskId } = useParams<{ taskId: string }>()
   const navigate = useNavigate()
   const sessions = useLiveStore((s) => s.sessions)
@@ -58,17 +60,17 @@ export default function LiveMoment() {
         style={{ background: SCREEN_BG, padding: 30 }}
       >
         <div style={{ fontSize: 16, fontWeight: 800, color: '#fff', marginBottom: 8 }}>
-          진행 중인 라이브가 없어요
+          {t('liveMoment.noLiveTitle')}
         </div>
         <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,.7)', marginBottom: 24 }}>
-          이미 끝났거나 시작되지 않았어요
+          {t('liveMoment.noLiveSubtitle')}
         </div>
         <button
           type="button"
           onClick={goBack}
           style={{ padding: '12px 22px', borderRadius: 16, background: 'rgba(255,255,255,.16)', color: '#fff', fontSize: 14, fontWeight: 800 }}
         >
-          돌아가기
+          {t('liveMoment.back')}
         </button>
       </div>
     )
@@ -109,7 +111,7 @@ export default function LiveMoment() {
         <button
           type="button"
           onClick={goBack}
-          aria-label="닫기"
+          aria-label={t('liveMoment.close')}
           className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
           style={{ width: 38, height: 38, borderRadius: 13, background: 'rgba(255,255,255,.14)' }}
         >
@@ -170,7 +172,7 @@ export default function LiveMoment() {
             style={{ width: 8, height: 8, borderRadius: '50%', background: '#5FE3F0', animation: 'tdlDot 1.2s infinite' }}
           />
           <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '.5px', color: '#9EEEF7' }}>
-            {isPaused ? '일시정지됨' : '지금 라이브'}
+            {isPaused ? t('liveMoment.paused') : t('liveMoment.liveNow')}
           </span>
         </div>
 
@@ -178,7 +180,7 @@ export default function LiveMoment() {
           {session.taskTitle}
         </div>
         <div style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,.7)', marginBottom: 26 }}>
-          {startTimeLabel(session.startedAt)} 시작 · 그룹
+          {t('liveMoment.startedAt', { time: startTimeLabel(session.startedAt) })}
         </div>
 
         <div
@@ -218,7 +220,7 @@ export default function LiveMoment() {
               <rect x="13.6" y="6" width="3.4" height="12" rx="1.2" />
             </svg>
           )}
-          {isPaused ? '다시 시작' : '일시정지'}
+          {isPaused ? t('liveMoment.resume') : t('liveMoment.pause')}
         </button>
         <button
           type="button"
@@ -240,7 +242,7 @@ export default function LiveMoment() {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1366CE" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12.5l4.5 4.5L19 6.5" />
           </svg>
-          {busy ? '완료 중…' : '완료'}
+          {busy ? t('liveMoment.completing') : t('liveMoment.complete')}
         </button>
       </div>
     </div>

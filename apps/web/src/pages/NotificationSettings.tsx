@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { PushHeader, StatusBar, useToast } from '../shared/ui'
 import {
   useNotificationSettings,
@@ -10,16 +11,16 @@ import { enablePush, isNativePush, webPushSupported } from '../features/push'
 
 type Row = {
   key: keyof Pick<Settings, 'pushLive' | 'pushDue' | 'pushComment' | 'pushAssigned'>
-  label: string
-  desc: string
+  labelKey: string
+  descKey: string
 }
 
 // SCR-14 rows mapped to the available settings flags.
 const ROWS: Row[] = [
-  { key: 'pushLive', label: '라이브 시작 알림', desc: '함께하는 사람이 라이브를 시작하면 알려드려요' },
-  { key: 'pushDue', label: '투두 완료 알림', desc: '투두가 완료되면 알려드려요' },
-  { key: 'pushComment', label: '댓글 알림', desc: '내 투두에 댓글이 달리면 알려드려요' },
-  { key: 'pushAssigned', label: '친구 · 친구 요청', desc: '친구 요청과 수락을 알려드려요' },
+  { key: 'pushLive', labelKey: 'notificationSettings.pushLiveLabel', descKey: 'notificationSettings.pushLiveDesc' },
+  { key: 'pushDue', labelKey: 'notificationSettings.pushDueLabel', descKey: 'notificationSettings.pushDueDesc' },
+  { key: 'pushComment', labelKey: 'notificationSettings.pushCommentLabel', descKey: 'notificationSettings.pushCommentDesc' },
+  { key: 'pushAssigned', labelKey: 'notificationSettings.pushAssignedLabel', descKey: 'notificationSettings.pushAssignedDesc' },
 ]
 
 function Toggle({
@@ -61,6 +62,7 @@ function Toggle({
 export default function NotificationSettings() {
   const navigate = useNavigate()
   const toast = useToast()
+  const { t } = useTranslation()
   const { data: settings, isLoading } = useNotificationSettings()
   const update = useUpdateNotificationSettings()
 
@@ -83,7 +85,7 @@ export default function NotificationSettings() {
       const ok = await enablePush()
       setGranted(ok)
       toast[ok ? 'success' : 'error'](
-        ok ? '푸시 알림을 켰어요' : '푸시 알림 권한이 필요해요',
+        ok ? t('notificationSettings.pushEnabledToast') : t('notificationSettings.pushPermissionToast'),
       )
     } finally {
       setEnabling(false)
@@ -98,7 +100,7 @@ export default function NotificationSettings() {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'var(--color-bg-2)' }}>
       <StatusBar />
-      <PushHeader title="알림" onBack={() => navigate(-1)} />
+      <PushHeader title={t('notificationSettings.title')} onBack={() => navigate(-1)} />
 
       <div style={{ padding: '8px 22px 24px' }}>
         {pushAvailable && (
@@ -107,9 +109,9 @@ export default function NotificationSettings() {
             style={{ background: '#fff', borderRadius: 18, padding: '15px 18px', marginBottom: 16, gap: 12, boxShadow: '0 6px 20px rgba(17,40,86,.06)' }}
           >
             <div style={{ minWidth: 0 }}>
-              <div style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>기기 푸시 알림</div>
+              <div style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>{t('notificationSettings.devicePushLabel')}</div>
               <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-subtle)', marginTop: 2 }}>
-                {granted ? '이 기기에서 푸시를 받고 있어요' : '앱을 닫아도 알림을 받으려면 권한을 허용해 주세요'}
+                {granted ? t('notificationSettings.devicePushOn') : t('notificationSettings.devicePushHint')}
               </div>
             </div>
             <button
@@ -127,15 +129,15 @@ export default function NotificationSettings() {
                 opacity: enabling ? 0.6 : 1,
               }}
             >
-              {granted ? '켜짐' : enabling ? '설정 중…' : '켜기'}
+              {granted ? t('notificationSettings.devicePushEnabled') : enabling ? t('notificationSettings.devicePushEnabling') : t('notificationSettings.devicePushEnable')}
             </button>
           </div>
         )}
 
-        <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', margin: '0 0 11px 4px' }}>알림</div>
+        <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', margin: '0 0 11px 4px' }}>{t('notificationSettings.sectionLabel')}</div>
 
         {isLoading || !settings ? (
-          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)', padding: '16px 2px' }}>불러오는 중…</div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)', padding: '16px 2px' }}>{t('notificationSettings.loading')}</div>
         ) : (
           <div style={{ background: '#fff', borderRadius: 22, padding: '2px 18px', boxShadow: '0 6px 20px rgba(17,40,86,.06)' }}>
             {ROWS.map((row, i) => (
@@ -145,10 +147,10 @@ export default function NotificationSettings() {
                 style={{ padding: '15px 0', gap: 12, borderBottom: i === ROWS.length - 1 ? 'none' : '1px solid #F0F3F8' }}
               >
                 <div style={{ minWidth: 0 }}>
-                  <div style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>{row.label}</div>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-subtle)', marginTop: 2 }}>{row.desc}</div>
+                  <div style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--color-text)' }}>{t(row.labelKey)}</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-subtle)', marginTop: 2 }}>{t(row.descKey)}</div>
                 </div>
-                <Toggle on={Boolean(settings[row.key])} onClick={() => toggle(row.key)} label={row.label} />
+                <Toggle on={Boolean(settings[row.key])} onClick={() => toggle(row.key)} label={t(row.labelKey)} />
               </div>
             ))}
           </div>

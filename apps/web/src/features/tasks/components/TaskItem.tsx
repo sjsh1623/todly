@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../../shared/i18n/i18n'
 import { Avatar } from '../../../shared/ui'
 import { PROFILE_COLOR_TO_AVATAR } from '../../auth/types'
 import type { Task } from '../types'
@@ -27,17 +29,17 @@ type TaskItemProps = {
   liveSession?: TaskLiveSession
 }
 
-const PRIORITY_LABEL: Record<Task['priority'], string> = {
-  low: '낮은 우선순위',
+const PRIORITY_LABEL_KEY: Record<Task['priority'], string> = {
+  low: 'taskItem.priorityLow',
   medium: '',
-  high: '높은 우선순위',
+  high: 'taskItem.priorityHigh',
 }
 
 /** Builds the small grey subtitle (due hint + priority). */
 function subtitleFor(task: Task): string | null {
   const parts: string[] = []
   if (task.dueDate) parts.push(formatDueHint(task.dueDate))
-  if (task.priority === 'high' || task.priority === 'low') parts.push(PRIORITY_LABEL[task.priority])
+  if (task.priority === 'high' || task.priority === 'low') parts.push(i18n.t(PRIORITY_LABEL_KEY[task.priority]))
   return parts.length ? parts.join(' · ') : null
 }
 
@@ -48,14 +50,23 @@ function formatDueHint(iso: string): string {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const diffDays = Math.round((due.getTime() - today.getTime()) / 86_400_000)
-  if (diffDays === 0) return '오늘'
-  if (diffDays === 1) return '내일'
-  if (diffDays === -1) return '어제'
-  if (diffDays < -1) return `${Math.abs(diffDays)}일 지남`
+  if (diffDays === 0) return i18n.t('taskItem.dueToday')
+  if (diffDays === 1) return i18n.t('taskItem.dueTomorrow')
+  if (diffDays === -1) return i18n.t('taskItem.dueYesterday')
+  if (diffDays < -1) return i18n.t('taskItem.dueDaysOverdue', { n: Math.abs(diffDays) })
   if (diffDays > 1 && diffDays < 7) {
-    return ['일', '월', '화', '수', '목', '금', '토'][due.getDay()]
+    const weekdayKeys = [
+      'taskItem.dueWeekdaySun',
+      'taskItem.dueWeekdayMon',
+      'taskItem.dueWeekdayTue',
+      'taskItem.dueWeekdayWed',
+      'taskItem.dueWeekdayThu',
+      'taskItem.dueWeekdayFri',
+      'taskItem.dueWeekdaySat',
+    ]
+    return i18n.t(weekdayKeys[due.getDay()])
   }
-  return `${due.getMonth() + 1}월 ${due.getDate()}일`
+  return i18n.t('taskItem.dueMonthDay', { month: due.getMonth() + 1, day: due.getDate() })
 }
 
 export function TaskItem({
@@ -68,6 +79,7 @@ export function TaskItem({
   onOpenLive,
   liveSession,
 }: TaskItemProps) {
+  const { t } = useTranslation()
   const isDone = task.status === 'done'
   const isLive = task.status === 'in_progress' || Boolean(liveSession)
   const assignee = task.assignees[0]
@@ -91,8 +103,9 @@ export function TaskItem({
         boxShadow: '0 5px 16px rgba(17,40,86,.05)',
       }
 
+  const liveState = liveSession?.status === 'paused' ? t('taskItem.livePaused') : t('taskItem.live')
   const liveSubtitle = isLive
-    ? `${liveNickname ? `${liveNickname}님이 ` : ''}하는 중 · ${liveSession?.status === 'paused' ? '일시정지' : '라이브'}`
+    ? `${liveNickname ? t('taskItem.liveDoingWithName', { name: liveNickname }) : t('taskItem.liveDoing')} · ${liveState}`
     : null
 
   return (
@@ -102,7 +115,7 @@ export function TaskItem({
         type="button"
         onClick={() => onToggle(task)}
         aria-pressed={isDone}
-        aria-label={isDone ? `${task.title} 완료 취소` : `${task.title} 완료`}
+        aria-label={isDone ? t('taskItem.uncheckAria', { title: task.title }) : t('taskItem.checkAria', { title: task.title })}
         className="relative flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
         style={{
           flex: 'none',
@@ -169,7 +182,7 @@ export function TaskItem({
         <button
           type="button"
           onClick={() => onOpenLive(task)}
-          aria-label={`${task.title} 라이브 참여`}
+          aria-label={t('taskItem.joinLiveAria', { title: task.title })}
           className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           style={{
             flex: 'none',
@@ -182,7 +195,7 @@ export function TaskItem({
             fontWeight: 800,
           }}
         >
-          참여
+          {t('taskItem.join')}
         </button>
       ) : assignee ? (
         <div className="flex items-center" style={{ flex: 'none', gap: 8 }}>
@@ -191,7 +204,7 @@ export function TaskItem({
             <button
               type="button"
               onClick={() => onStartLive(task)}
-              aria-label={`${task.title} 지금 시작`}
+              aria-label={t('taskItem.startNowAria', { title: task.title })}
               className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
               style={{ width: 30, height: 30, borderRadius: '50%', background: '#EAF2FE', flex: 'none' }}
             >
@@ -200,7 +213,7 @@ export function TaskItem({
               </svg>
             </button>
           )}
-          <div aria-label={`담당 ${assignee.nickname}`}>
+          <div aria-label={t('taskItem.assigneeAria', { name: assignee.nickname })}>
             <Avatar
               initial={(assignee.nickname || assignee.username).charAt(0)}
               color={PROFILE_COLOR_TO_AVATAR[assignee.profileColor]}
@@ -228,7 +241,7 @@ export function TaskItem({
           <svg width="12" height="12" viewBox="0 0 24 24" fill="#fff" stroke="none">
             <path d="M13 2 4 14h6l-1 8 9-12h-6z" />
           </svg>
-          {assigning ? '담당 중…' : '내가 할게요'}
+          {assigning ? t('taskItem.assigning') : t('taskItem.claim')}
         </button>
       ) : null}
     </div>

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Avatar, Card, FAB, ProgressBar, StatusBar, Skeleton, SkeletonList } from '../shared/ui'
 import { PROFILE_COLOR_TO_AVATAR } from '../features/auth/types'
 import { useAuthStore } from '../features/auth/store'
@@ -7,17 +8,19 @@ import type { NeedsAttentionItem } from '../features/tasks'
 import { LiveNowCard } from '../features/live'
 import { useCreateRoom } from '../features/rooms'
 import { NotificationCenter } from '../features/notifications'
+import i18n from '../shared/i18n/i18n'
 
 const HEADER_GRADIENT = 'linear-gradient(180deg,#E2EEFD 0%,#F2F6FC 100%)'
 
 function dueLabel(item: NeedsAttentionItem): string {
-  if (item.level === 'danger') return `${item.groupName} · 오늘 마감`
+  if (item.level === 'danger') return i18n.t('home.dueToday', { groupName: item.groupName })
   const days = item.daysOverdue ?? 1
-  return `${item.groupName} · ${days}일 지남`
+  return i18n.t('home.dueOverdue', { groupName: item.groupName, days })
 }
 
 export default function Home() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
   const { data, isLoading } = useHomeSummary()
   const createRoom = useCreateRoom()
@@ -49,10 +52,10 @@ export default function Home() {
           <div className="flex items-start justify-between" style={{ marginBottom: 20 }}>
             <div>
               <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)' }}>
-                {greeting?.phrase ?? '좋은 하루예요'}
+                {greeting?.phrase ?? t('home.greetingFallback')}
               </div>
               <h1 style={{ fontSize: 26, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.5px' }}>
-                {greetName ? `${greetName}님` : ''}
+                {greetName ? t('home.greetName', { name: greetName }) : ''}
               </h1>
               {greeting?.date && (
                 <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-subtle)', marginTop: 2 }}>
@@ -86,7 +89,7 @@ export default function Home() {
               aria-hidden="true"
             />
             <span style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: '.5px', color: anyLive ? '#159B89' : 'var(--color-text-subtle)' }}>
-              지금 활동 중
+              {t('home.activeNow')}
             </span>
           </div>
           <Card style={{ borderRadius: 24, padding: anyLive ? 16 : 22, marginBottom: 24 }}>
@@ -97,7 +100,7 @@ export default function Home() {
                     {i > 0 && <div style={{ height: 1, background: '#F0F3F8', margin: '14px 0' }} />}
                     <LiveNowCard
                       entry={entry}
-                      actionLabel={entry.userId === user?.id ? '진행 중' : '참여'}
+                      actionLabel={entry.userId === user?.id ? t('home.inProgress') : t('home.join')}
                       onAction={
                         entry.taskId
                           ? entry.userId === user?.id
@@ -125,10 +128,10 @@ export default function Home() {
                   </svg>
                 </div>
                 <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-text-muted)' }}>
-                  지금은 모두 쉬는 중이에요
+                  {t('home.allResting')}
                 </div>
                 <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-subtle)' }}>
-                  누군가 시작하면 여기에 보여드릴게요
+                  {t('home.allRestingSubtitle')}
                 </div>
               </div>
             )}
@@ -146,7 +149,7 @@ export default function Home() {
           {needsAttention.length > 0 && (
             <>
               <h2 style={{ fontSize: 16, fontWeight: 800, color: 'var(--color-text)', margin: '0 2px 12px' }}>
-                확인이 필요해요
+                {t('home.needsAttention')}
               </h2>
               <div className="flex flex-col" style={{ gap: 12, marginBottom: 24 }}>
                 {needsAttention.map((item) => (
@@ -191,7 +194,7 @@ export default function Home() {
           {groupProgress.length > 0 && (
             <>
               <h2 style={{ fontSize: 16, fontWeight: 800, color: 'var(--color-text)', margin: '0 2px 12px' }}>
-                함께한 진행률
+                {t('home.sharedProgress')}
               </h2>
               <div className="flex flex-col" style={{ gap: 12 }}>
                 {groupProgress.map((g) => (
@@ -225,7 +228,7 @@ export default function Home() {
                         ))}
                       </div>
                       <div style={{ fontSize: 11.5, fontWeight: 600, color: 'var(--color-text-subtle)' }}>
-                        {g.progress.total}개 중 {g.progress.done}개 완료
+                        {t('home.progressDone', { total: g.progress.total, done: g.progress.done })}
                       </div>
                     </div>
                   </button>
@@ -241,21 +244,21 @@ export default function Home() {
               style={{ border: '1.5px dashed #D6DEEA', borderRadius: 20, padding: '40px 20px', marginTop: 4 }}
             >
               <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text-muted)', marginBottom: 16 }}>
-                아직 함께하는 투두가 없어요
+                {t('home.emptyTitle')}
               </p>
               <button
                 type="button"
                 onClick={() => navigate('/groups/new')}
                 style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-primary-strong)' }}
               >
-                + 그룹 만들기
+                {t('home.createGroup')}
               </button>
             </div>
           )}
         </div>
       </div>
 
-      <FAB onClick={() => navigate('/tasks/new')} aria-label="투두 추가" />
+      <FAB onClick={() => navigate('/tasks/new')} aria-label={t('home.addTask')} />
     </div>
   )
 }

@@ -3,22 +3,24 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useTranslation } from 'react-i18next'
 import { AuthScreen, Button, OAuthButtons, PasswordToggle, TextField, Wordmark } from '../shared/ui'
 import { getApiErrorMessage, useLogin } from '../features/auth'
 
-const schema = z.object({
-  email: z.string().min(1, '이메일을 입력해 주세요').email('올바른 이메일 형식이 아니에요'),
-  password: z.string().min(1, '비밀번호를 입력해 주세요'),
-})
-
-type FormValues = z.infer<typeof schema>
-
 export default function Login() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
   const login = useLogin()
   const [showPassword, setShowPassword] = useState(false)
   const from = (location.state as { from?: string } | null)?.from ?? '/'
+
+  const schema = z.object({
+    email: z.string().min(1, t('login.emailRequired')).email(t('login.emailInvalid')),
+    password: z.string().min(1, t('login.passwordRequired')),
+  })
+
+  type FormValues = z.infer<typeof schema>
 
   const {
     register,
@@ -41,15 +43,15 @@ export default function Login() {
             <Wordmark size={40} />
           </div>
           <h1 style={{ fontSize: 28, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.6px' }}>
-            다시 오신 걸 환영해요
+            {t('login.title')}
           </h1>
           <p style={{ fontSize: 14, fontWeight: 600, color: '#7C8AA0', marginTop: 6 }}>
-            함께 살아가는 하루를 이어가요
+            {t('login.subtitle')}
           </p>
         </div>
 
         <TextField
-          label="이메일"
+          label={t('login.emailLabel')}
           type="email"
           inputMode="email"
           autoComplete="email"
@@ -60,7 +62,7 @@ export default function Login() {
         />
 
         <TextField
-          label="비밀번호"
+          label={t('login.passwordLabel')}
           type={showPassword ? 'text' : 'password'}
           autoComplete="current-password"
           placeholder="••••••••"
@@ -71,7 +73,7 @@ export default function Login() {
 
         <div style={{ textAlign: 'right', marginTop: 14, marginBottom: 20 }}>
           <Link to="/reset-password" style={{ fontSize: 12.5, fontWeight: 700, color: '#7C8AA0' }}>
-            비밀번호를 잊으셨나요?
+            {t('login.forgotPassword')}
           </Link>
         </div>
 
@@ -86,21 +88,21 @@ export default function Login() {
           disabled={login.isPending}
           style={{ boxShadow: '0 10px 24px rgba(19,102,206,.26)', marginBottom: 22 }}
         >
-          {login.isPending ? '로그인 중…' : '로그인'}
+          {login.isPending ? t('login.submitting') : t('login.submit')}
         </Button>
 
         <div className="flex items-center" style={{ gap: 12, marginBottom: 20 }}>
           <div style={{ flex: 1, height: 1, background: '#E0E6EF' }} />
-          <span style={{ fontSize: 12, fontWeight: 600, color: '#AEB9CC' }}>또는</span>
+          <span style={{ fontSize: 12, fontWeight: 600, color: '#AEB9CC' }}>{t('login.or')}</span>
           <div style={{ flex: 1, height: 1, background: '#E0E6EF' }} />
         </div>
 
         <OAuthButtons disabled={login.isPending} />
 
         <div style={{ textAlign: 'center', fontSize: 13.5, fontWeight: 600, color: '#7C8AA0', padding: '24px 0 30px' }}>
-          계정이 없으신가요?{' '}
+          {t('login.noAccount')}{' '}
           <Link to="/signup" style={{ color: '#1366CE', fontWeight: 800 }}>
-            회원가입
+            {t('login.signupLink')}
           </Link>
         </div>
       </form>

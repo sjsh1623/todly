@@ -10,6 +10,8 @@
  * (and aria-label) for accessibility.
  */
 
+import { useTranslation } from 'react-i18next'
+
 export type HeatmapDay = {
   /** ISO date (YYYY-MM-DD), used for the per-cell title when present. */
   day?: string
@@ -57,8 +59,6 @@ function clampLevel(n: number): number {
   return Math.round(n)
 }
 
-const LEVEL_LABEL = ['활동 없음', '활동 적음', '활동 보통', '활동 많음', '활동 매우 많음']
-
 export function Heatmap({
   days,
   weeks = 16,
@@ -68,6 +68,14 @@ export function Heatmap({
   legend = false,
   className = '',
 }: HeatmapProps) {
+  const { t } = useTranslation()
+  const LEVEL_LABEL = [
+    t('heatmap.levelNone'),
+    t('heatmap.levelLow'),
+    t('heatmap.levelMedium'),
+    t('heatmap.levelHigh'),
+    t('heatmap.levelVeryHigh'),
+  ]
   const total = weeks * 7
   // Pad the front with empties so partial data still right-aligns to "today".
   const tail = days.slice(-total)
@@ -96,7 +104,7 @@ export function Heatmap({
 
   return (
     <div className={className}>
-      <div role="img" aria-label={`최근 ${weeks}주 동안의 활동`} style={gridStyle}>
+      <div role="img" aria-label={t('heatmap.ariaLabel', { weeks })} style={gridStyle}>
         {padded.map((d, i) => {
           const level = d ? getLevel(d) : 0
           const title = d?.day
@@ -118,13 +126,13 @@ export function Heatmap({
           style={{ gap: 5, marginTop: 14 }}
         >
           <span style={{ fontSize: 10, fontWeight: 600, color: '#AEB9CC', marginRight: 2 }}>
-            적음
+            {t('heatmap.legendLess')}
           </span>
           {HEATMAP_LEVEL_COLORS.map((c) => (
             <div key={c} style={{ width: 11, height: 11, borderRadius: 3, background: c }} />
           ))}
           <span style={{ fontSize: 10, fontWeight: 600, color: '#AEB9CC', marginLeft: 2 }}>
-            많음
+            {t('heatmap.legendMore')}
           </span>
         </div>
       )}

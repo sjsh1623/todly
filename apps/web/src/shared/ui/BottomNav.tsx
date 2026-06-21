@@ -79,7 +79,7 @@ export function BottomNav() {
   const { t } = useTranslation()
   return (
     <nav
-      aria-label="주요"
+      aria-label={t('nav.primary')}
       className="absolute bottom-0 left-0 right-0 h-[92px] flex items-start justify-around px-2 pt-2 border-t"
       style={{
         background: 'rgba(255,255,255,0.82)',

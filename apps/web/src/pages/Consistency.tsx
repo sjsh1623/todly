@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Card, Heatmap, PushHeader } from '../shared/ui'
 import { useRoutineConsistency, useStats } from '../features/stats'
 import type { RoutineConsistency } from '../features/stats'
@@ -12,6 +13,7 @@ function metaLine(r: RoutineConsistency): string {
 }
 
 function RoutineRow({ r }: { r: RoutineConsistency }) {
+  const { t } = useTranslation()
   return (
     <Card style={{ borderRadius: 20, padding: 16, marginBottom: 14 }}>
       <div className="flex items-center" style={{ gap: 12, marginBottom: 14 }}>
@@ -42,7 +44,7 @@ function RoutineRow({ r }: { r: RoutineConsistency }) {
             flex: 'none',
           }}
         >
-          {r.streak.current}일
+          {t('consistency.streakDays', { count: r.streak.current })}
         </div>
       </div>
       <Heatmap days={r.heatmap ?? []} weeks={14} radius={2.5} />
@@ -52,6 +54,7 @@ function RoutineRow({ r }: { r: RoutineConsistency }) {
 
 export default function Consistency() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const stats = useStats()
   const routines = useRoutineConsistency()
 
@@ -60,20 +63,20 @@ export default function Consistency() {
 
   return (
     <div>
-      <PushHeader title="꾸준함" onBack={() => navigate(-1)} />
+      <PushHeader title={t('consistency.heading')} onBack={() => navigate(-1)} />
       <div style={{ padding: '8px 22px 24px' }}>
         <div style={{ fontSize: 13, fontWeight: 600, color: '#9AA7BC', marginBottom: 4 }}>
-          루틴별 꾸준함
+          {t('consistency.perRoutine')}
         </div>
         <div style={{ fontSize: 21, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.3px', marginBottom: 18 }}>
-          올해 {yearly}회 · 최고 {best}일 연속
+          {t('consistency.summary', { yearly, best })}
         </div>
 
         {routines.isLoading && (
-          <div style={{ fontSize: 13, fontWeight: 600, color: '#9AA7BC' }}>불러오는 중…</div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#9AA7BC' }}>{t('consistency.loading')}</div>
         )}
         {routines.data?.length === 0 && (
-          <div style={{ fontSize: 13, fontWeight: 600, color: '#9AA7BC' }}>아직 루틴이 없어요</div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#9AA7BC' }}>{t('consistency.empty')}</div>
         )}
         {routines.data?.map((r) => <RoutineRow key={r.id} r={r} />)}
       </div>

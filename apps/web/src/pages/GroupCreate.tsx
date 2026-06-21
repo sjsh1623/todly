@@ -2,21 +2,27 @@ import { useNavigate } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useTranslation } from 'react-i18next'
 import { Button, PushHeader, StatusBar, TextField } from '../shared/ui'
 import { getGroupErrorMessage, useCreateGroup } from '../features/groups'
 import type { GroupType } from '../features/groups'
+import i18n from '../shared/i18n/i18n'
 
 const COLORS = ['#1366CE', '#0FB5A0', '#6B5BD0', '#FF7A6B', '#FF9D52'] as const
 
-const TYPES: { value: GroupType; label: string }[] = [
-  { value: 'group', label: '그룹' },
-  { value: 'couple', label: '커플' },
-  { value: 'travel', label: '여행' },
-  { value: 'list', label: '리스트' },
+const TYPES: { value: GroupType; labelKey: string }[] = [
+  { value: 'group', labelKey: 'groupCreate.typeGroup' },
+  { value: 'couple', labelKey: 'groupCreate.typeCouple' },
+  { value: 'travel', labelKey: 'groupCreate.typeTravel' },
+  { value: 'list', labelKey: 'groupCreate.typeList' },
 ]
 
 const schema = z.object({
-  name: z.string().trim().min(1, '그룹 이름을 입력해 주세요').max(60, '60자 이내로 입력해 주세요'),
+  name: z
+    .string()
+    .trim()
+    .min(1, i18n.t('groupCreate.nameRequired'))
+    .max(60, i18n.t('groupCreate.nameMax')),
   type: z.enum(['group', 'couple', 'travel', 'list']),
   color: z.string().min(1),
 })
@@ -25,6 +31,7 @@ type FormValues = z.infer<typeof schema>
 
 export default function GroupCreate() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const createGroup = useCreateGroup()
 
   const {
@@ -53,7 +60,7 @@ export default function GroupCreate() {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'var(--color-bg-2)' }}>
       <StatusBar />
-      <PushHeader title="그룹 만들기" onBack={() => navigate('/groups')} />
+      <PushHeader title={t('groupCreate.title')} onBack={() => navigate('/groups')} />
 
       <form onSubmit={onSubmit} className="flex-1 flex flex-col">
         <div style={{ padding: '14px 22px 24px' }}>
@@ -72,8 +79,8 @@ export default function GroupCreate() {
           </div>
 
           <TextField
-            label="그룹 이름"
-            placeholder="예) 이사 준비"
+            label={t('groupCreate.nameLabel')}
+            placeholder={t('groupCreate.namePlaceholder')}
             autoFocus
             maxLength={60}
             error={errors.name?.message}
@@ -86,22 +93,22 @@ export default function GroupCreate() {
 
           {/* Type chips */}
           <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', margin: '0 0 11px 2px' }}>
-            종류
+            {t('groupCreate.typeLabel')}
           </div>
           <Controller
             control={control}
             name="type"
             render={({ field }) => (
-              <div role="radiogroup" aria-label="그룹 종류" className="flex flex-wrap" style={{ gap: 8, marginBottom: 24 }}>
-                {TYPES.map((t) => {
-                  const selected = field.value === t.value
+              <div role="radiogroup" aria-label={t('groupCreate.typeLabel')} className="flex flex-wrap" style={{ gap: 8, marginBottom: 24 }}>
+                {TYPES.map((item) => {
+                  const selected = field.value === item.value
                   return (
                     <button
-                      key={t.value}
+                      key={item.value}
                       type="button"
                       role="radio"
                       aria-checked={selected}
-                      onClick={() => field.onChange(t.value)}
+                      onClick={() => field.onChange(item.value)}
                       className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                       style={{
                         padding: '10px 18px',
@@ -113,7 +120,7 @@ export default function GroupCreate() {
                         border: `1.5px solid ${selected ? '#1366CE' : '#E6ECF4'}`,
                       }}
                     >
-                      {t.label}
+                      {t(item.labelKey)}
                     </button>
                   )
                 })}
@@ -123,13 +130,13 @@ export default function GroupCreate() {
 
           {/* Color picker */}
           <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', margin: '0 0 11px 2px' }}>
-            색상
+            {t('groupCreate.colorLabel')}
           </div>
           <Controller
             control={control}
             name="color"
             render={({ field }) => (
-              <div role="radiogroup" aria-label="그룹 색상" className="flex" style={{ gap: 12, marginBottom: 22 }}>
+              <div role="radiogroup" aria-label={t('groupCreate.colorLabel')} className="flex" style={{ gap: 12, marginBottom: 22 }}>
                 {COLORS.map((c) => {
                   const selected = field.value === c
                   return (
@@ -138,7 +145,7 @@ export default function GroupCreate() {
                       type="button"
                       role="radio"
                       aria-checked={selected}
-                      aria-label={`색상 ${c}`}
+                      aria-label={t('groupCreate.colorOption', { color: c })}
                       onClick={() => field.onChange(c)}
                       className="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                       style={{
@@ -166,7 +173,7 @@ export default function GroupCreate() {
               <path d="M12 16v-4M12 8h.01" />
             </svg>
             <p style={{ fontSize: 13, fontWeight: 700, color: '#1257C4', lineHeight: 1.5 }}>
-              그룹을 만들면 초대 링크가 생성돼요. 다음 화면에서 링크를 복사하거나 친구를 바로 초대해 보세요.
+              {t('groupCreate.inviteHint')}
             </p>
           </div>
 
@@ -179,7 +186,7 @@ export default function GroupCreate() {
 
         <div style={{ marginTop: 'auto', padding: '14px 22px 26px' }}>
           <Button type="submit" disabled={createGroup.isPending} style={{ boxShadow: '0 10px 24px rgba(19,102,206,.26)' }}>
-            {createGroup.isPending ? '만드는 중…' : '그룹 만들기'}
+            {createGroup.isPending ? t('groupCreate.creating') : t('groupCreate.title')}
           </Button>
         </div>
       </form>

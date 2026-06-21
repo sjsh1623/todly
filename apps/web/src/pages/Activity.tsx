@@ -8,37 +8,59 @@ import { useActivities } from '../features/activity'
 import type { Activity } from '../features/activity'
 import { useCreateRoom } from '../features/rooms'
 import { relativeTime } from '../shared/lib/relativeTime'
+import i18n from '../shared/i18n/i18n'
 
-/** Builds the "{nickname}님이 {object}을 {verb}" sentence per activity type. */
-function describe(a: Activity): { lead: string; object?: string; tail: string } {
-  const name = a.actor?.nickname ?? '누군가'
+/**
+ * Builds one activity sentence per type, rendered as
+ * `<b>lead</b> + connector + <b>object</b> + tail`. Korean keeps the verb in the
+ * tail (SOV); English keeps it in the connector (SVO). See parts/social.ts.
+ */
+function describe(a: Activity): { lead: string; connector?: string; object?: string; tail: string } {
+  const name = a.actor?.nickname ?? i18n.t('activity.someone')
   const title = a.targetTitle ?? a.groupName ?? ''
+  const lead = i18n.t('activity.lead', { name })
+  const named = (conn: string, tail: string, object = title) => ({
+    lead,
+    connector: i18n.t(conn),
+    object,
+    tail: i18n.t(tail),
+  })
   switch (a.type) {
-    case 'task.completed':
-      return { lead: `${name}님이 `, object: title, tail: '를 끝냈어요' }
-    case 'task.created':
-      return { lead: `${name}님이 `, object: title, tail: '를 추가했어요' }
-    case 'live.started':
-      return { lead: `${name}님이 `, object: title, tail: '을 시작했어요' }
-    case 'live.ended':
-      return { lead: `${name}님이 `, object: title, tail: '을 마쳤어요' }
-    case 'milestone': {
+    case 'task_completed':
+      return named('activity.connTaskCompleted', 'activity.tailTaskCompleted')
+    case 'task_created':
+      return named('activity.connTaskCreated', 'activity.tailTaskCreated')
+    case 'task_reopened':
+      return named('activity.connTaskReopened', 'activity.tailTaskReopened')
+    case 'live_started':
+      return named('activity.connLiveStarted', 'activity.tailLiveStarted')
+    case 'live_ended':
+      return named('activity.connLiveEnded', 'activity.tailLiveEnded')
+    case 'comment_added':
+      return named('activity.connCommentAdded', 'activity.tailCommentAdded')
+    case 'photo_shared':
+      return named('activity.connPhotoShared', 'activity.tailPhotoShared')
+    case 'routine_done':
+      return named('activity.connRoutineDone', 'activity.tailRoutineDone')
+    case 'milestone_reached': {
       const percent = (a.meta?.percent as number | undefined) ?? undefined
       return {
         lead: '',
         object: a.groupName ?? title,
-        tail: percent != null ? `가 ${percent}%에 도달했어요` : '에 도달했어요',
+        tail: percent != null ? i18n.t('activity.tailMilestonePercent', { percent }) : i18n.t('activity.tailMilestoneReached'),
       }
     }
-    case 'member.joined':
-      return { lead: `${name}님이 `, object: a.groupName ?? title, tail: '에 참여했어요' }
+    case 'member_joined':
+      return named('activity.connMemberJoined', 'activity.tailMemberJoined', a.groupName ?? title)
+    case 'friend_joined_room':
+      return named('activity.connFriendJoinedRoom', 'activity.tailFriendJoinedRoom')
     default:
-      return { lead: `${name}님이 `, object: title, tail: ' 활동했어요' }
+      return named('activity.connDefault', 'activity.tailDefault')
   }
 }
 
 function isLive(a: Activity): boolean {
-  return a.type === 'live.started' && a.meta?.live !== false
+  return a.type === 'live_started' && a.meta?.live !== false
 }
 
 export default function Activity() {
@@ -100,13 +122,13 @@ export default function Activity() {
       <StatusBar />
       <div style={{ padding: '10px 22px 90px' }}>
         <h1 style={{ fontSize: 27, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.5px', marginBottom: 16 }}>
-          활동
+          {t('activity.heading')}
         </h1>
 
         {/* Filter chips */}
-        <div className="flex" style={{ gap: 8, marginBottom: 24, overflowX: 'auto' }} role="tablist" aria-label="활동 필터">
+        <div className="flex" style={{ gap: 8, marginBottom: 24, overflowX: 'auto' }} role="tablist" aria-label={t('activity.filterLabel')}>
           <button type="button" role="tab" aria-selected={!groupFilter} onClick={() => setGroupFilter(undefined)} style={chipStyle(!groupFilter)}>
-            전체
+            {t('activity.filterAll')}
           </button>
           {(groups ?? []).map((g) => (
             <button
@@ -159,19 +181,19 @@ export default function Activity() {
                   {/* Body */}
                   <div style={{ flex: 1, paddingTop: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 14, color: 'var(--color-text)', fontWeight: 600 }}>
-                      {sentence.lead && <b style={{ fontWeight: 800 }}>{sentence.lead.replace('님이 ', '')}</b>}
-                      {sentence.lead && '님이 '}
+                      {sentence.lead && <b style={{ fontWeight: 800 }}>{sentence.lead}</b>}
+                      {sentence.lead && sentence.connector}
                       {sentence.object && <b style={{ fontWeight: 800 }}>{sentence.object}</b>}
                       {sentence.tail}
                     </div>
 
                     {/* Completed badge */}
-                    {a.type === 'task.completed' && completedCount != null && (
+                    {a.type === 'task_completed' && completedCount != null && (
                       <div className="inline-flex items-center" style={{ gap: 6, marginTop: 6, background: '#E2F8F4', padding: '5px 11px', borderRadius: 11 }}>
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#159B89" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
                           <path d="M5 12.5l4.5 4.5L19 6.5" />
                         </svg>
-                        <span style={{ fontSize: 11, fontWeight: 800, color: '#159B89' }}>{completedCount}개 완료</span>
+                        <span style={{ fontSize: 11, fontWeight: 800, color: '#159B89' }}>{t('activity.completedCount', { count: completedCount })}</span>
                       </div>
                     )}
 
@@ -185,12 +207,12 @@ export default function Activity() {
                         style={{ gap: 6, marginTop: 6, background: '#EAF2FE', padding: '5px 11px', borderRadius: 11 }}
                       >
                         <span aria-hidden="true" style={{ width: 6, height: 6, borderRadius: '50%', background: '#2E86E6', animation: 'tdlDot 1.4s infinite' }} />
-                        <span style={{ fontSize: 11, fontWeight: 800, color: '#1366CE' }}>지금 라이브 · 참여</span>
+                        <span style={{ fontSize: 11, fontWeight: 800, color: '#1366CE' }}>{t('activity.liveJoin')}</span>
                       </button>
                     )}
 
                     {/* Milestone progress bar */}
-                    {a.type === 'milestone' && percent != null && (
+                    {a.type === 'milestone_reached' && percent != null && (
                       <div style={{ height: 6, borderRadius: 4, background: '#EDF1F7', overflow: 'hidden', marginTop: 9, maxWidth: 170 }}>
                         <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg,#34D9C4,#1366CE)', borderRadius: 4 }} />
                       </div>
@@ -208,7 +230,7 @@ export default function Activity() {
             <div ref={sentinelRef} style={{ height: 1 }} />
             {isFetchingNextPage && (
               <div style={{ textAlign: 'center', fontSize: 12, fontWeight: 600, color: 'var(--color-text-subtle)', padding: '16px 0' }}>
-                불러오는 중…
+                {t('activity.loading')}
               </div>
             )}
           </div>

@@ -1,9 +1,17 @@
+// Values mirror the backend NotificationType enum (snake_case, serialized via
+// Enum.name()). Keep in sync with apps/api .../notification/NotificationType.java.
 export type NotificationType =
-  | 'live.started'
-  | 'task.completed'
+  | 'due_soon'
+  | 'overdue'
+  | 'assigned'
+  | 'live_started'
+  | 'milestone'
+  | 'mention'
+  | 'invite'
   | 'comment'
-  | 'friend'
-  | 'friend.request'
+  | 'friend_request'
+  | 'friend_accepted'
+  | 'room_cheer'
   | string
 
 export type Notification = {

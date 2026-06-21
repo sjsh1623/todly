@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Avatar, Card, FAB, ProgressBar, useToast } from '../shared/ui'
 import {
   getGroupErrorMessage,
@@ -41,6 +42,7 @@ function inviteUrl(code: string) {
 export default function GroupDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const location = useLocation()
   const locState = location.state as { justCreated?: boolean; inviteToast?: string } | null
   const justCreated = locState?.justCreated ?? false
@@ -107,7 +109,7 @@ export default function GroupDetail() {
     createInvite.mutate(undefined, {
       onSuccess: (inv) => {
         setInviteLink(inviteUrl(inv.code))
-        toast.success('초대 링크를 만들었어요')
+        toast.success(t('groupDetail.inviteLinkCreated'))
       },
       onError: (err) => toast.error(getGroupErrorMessage(err)),
     })
@@ -116,15 +118,15 @@ export default function GroupDetail() {
   const handleCopy = async (link: string) => {
     try {
       await navigator.clipboard.writeText(link)
-      toast.success('링크를 복사했어요')
+      toast.success(t('groupDetail.linkCopied'))
     } catch {
-      toast.error('복사에 실패했어요')
+      toast.error(t('groupDetail.copyFailed'))
     }
   }
 
   const handleDelete = () => {
     if (!id) return
-    if (!window.confirm('이 그룹을 삭제할까요? 되돌릴 수 없어요.')) return
+    if (!window.confirm(t('groupDetail.deleteConfirm'))) return
     deleteGroup.mutate(id, {
       onSuccess: () => navigate('/groups', { replace: true }),
       onError: (err) => toast.error(getGroupErrorMessage(err)),
@@ -133,7 +135,7 @@ export default function GroupDetail() {
 
   const handleLeave = () => {
     if (!id) return
-    if (!window.confirm('이 그룹에서 나갈까요?')) return
+    if (!window.confirm(t('groupDetail.leaveConfirm'))) return
     leaveGroup.mutate(id, {
       onSuccess: () => navigate('/groups', { replace: true }),
       onError: (err) => toast.error(getGroupErrorMessage(err)),
@@ -153,7 +155,7 @@ export default function GroupDetail() {
     assignSelf.mutate(
       { taskId: task.id, groupId: id, userId: currentUserId },
       {
-        onSuccess: () => toast.success("내가 담당하기로 했어요"),
+        onSuccess: () => toast.success(t('groupDetail.assignedSelf')),
         onError: (err) => toast.error(getTaskErrorMessage(err)),
       },
     )
@@ -194,13 +196,13 @@ export default function GroupDetail() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center" style={{ background: 'var(--color-bg-2)', padding: 24 }}>
         <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-text)', marginBottom: 16 }}>
-          그룹을 불러오지 못했어요
+          {t('groupDetail.loadError')}
         </p>
         <button
           onClick={() => navigate('/groups')}
           style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-primary-strong)' }}
         >
-          그룹 목록으로
+          {t('groupDetail.toGroupList')}
         </button>
       </div>
     )
@@ -242,7 +244,7 @@ export default function GroupDetail() {
           <button
             type="button"
             onClick={() => navigate('/groups')}
-            aria-label="뒤로"
+            aria-label={t('groupDetail.back')}
             className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
             style={{ width: 38, height: 38, borderRadius: 13, background: 'rgba(255,255,255,.16)' }}
           >
@@ -255,7 +257,7 @@ export default function GroupDetail() {
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
-              aria-label="더보기"
+              aria-label={t('groupDetail.more')}
               aria-haspopup="menu"
               aria-expanded={menuOpen}
               className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
@@ -287,7 +289,7 @@ export default function GroupDetail() {
                       className="w-full text-left"
                       style={{ padding: '11px 12px', borderRadius: 10, fontSize: 14, fontWeight: 700, color: 'var(--color-due)' }}
                     >
-                      그룹 삭제
+                      {t('groupDetail.deleteGroup')}
                     </button>
                   ) : (
                     <button
@@ -300,7 +302,7 @@ export default function GroupDetail() {
                       className="w-full text-left"
                       style={{ padding: '11px 12px', borderRadius: 10, fontSize: 14, fontWeight: 700, color: 'var(--color-due)' }}
                     >
-                      그룹 나가기
+                      {t('groupDetail.leaveGroup')}
                     </button>
                   )}
                 </div>
@@ -327,7 +329,7 @@ export default function GroupDetail() {
               ))}
             </div>
             <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,.85)' }}>
-              멤버 {group.memberCount}명 · {liveOnlineCount ?? group.onlineCount}명 접속 중
+              {t('groupDetail.memberOnline', { members: group.memberCount, online: liveOnlineCount ?? group.onlineCount })}
             </span>
           </div>
         </div>
@@ -343,13 +345,13 @@ export default function GroupDetail() {
             {inviteLink ? (
               <div>
                 <div style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--color-text-subtle)', marginBottom: 8 }}>
-                  초대 링크
+                  {t('groupDetail.inviteLink')}
                 </div>
                 <div className="flex items-center" style={{ gap: 8 }}>
                   <input
                     readOnly
                     value={inviteLink}
-                    aria-label="초대 링크"
+                    aria-label={t('groupDetail.inviteLink')}
                     onFocus={(e) => e.currentTarget.select()}
                     className="flex-1 min-w-0"
                     style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--color-text)', background: '#F2F6FC', border: '1px solid #E6ECF4', borderRadius: 12, padding: '11px 12px' }}
@@ -359,7 +361,7 @@ export default function GroupDetail() {
                     onClick={() => handleCopy(inviteLink)}
                     style={{ flex: 'none', padding: '11px 16px', borderRadius: 12, background: '#1366CE', color: '#fff', fontSize: 13, fontWeight: 800 }}
                   >
-                    복사
+                    {t('groupDetail.copy')}
                   </button>
                 </div>
               </div>
@@ -374,7 +376,7 @@ export default function GroupDetail() {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 5v14M5 12h14" />
                 </svg>
-                {createInvite.isPending ? '링크 만드는 중…' : '초대 링크 만들기'}
+                {createInvite.isPending ? t('groupDetail.creatingLink') : t('groupDetail.createInviteLink')}
               </button>
             )}
 
@@ -390,7 +392,7 @@ export default function GroupDetail() {
                 <path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5" />
                 <path d="M18 8v6M21 11h-6" />
               </svg>
-              친구 초대
+              {t('groupDetail.inviteFriends')}
             </button>
           </Card>
         )}
@@ -399,8 +401,8 @@ export default function GroupDetail() {
         <Card style={{ borderRadius: 24, padding: 18, marginBottom: 22 }}>
           <div className="flex items-center justify-between" style={{ marginBottom: sections.length ? 16 : 0 }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)' }}>전체 진행률</div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--color-text)' }}>{percent}% 완료</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)' }}>{t('groupDetail.overallProgress')}</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--color-text)' }}>{t('groupDetail.percentComplete', { percent })}</div>
             </div>
             <div style={{ fontSize: 12, fontWeight: 700, color: '#1366CE', background: '#EAF2FE', padding: '7px 12px', borderRadius: 12 }}>
               {done} / {total}
@@ -466,9 +468,9 @@ export default function GroupDetail() {
             {unsectioned.length > 0 && (
               <div>
                 <div className="flex items-center justify-between" style={{ margin: '0 2px 12px' }}>
-                  <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--color-text)' }}>기타</div>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--color-text)' }}>{t('groupDetail.other')}</div>
                   <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-text-subtle)' }}>
-                    {unsectioned.length}개
+                    {t('groupDetail.countItems', { count: unsectioned.length })}
                   </div>
                 </div>
                 <div className="flex flex-col" style={{ gap: 11 }}>
@@ -502,21 +504,21 @@ export default function GroupDetail() {
               <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
             </svg>
             <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text-muted)', marginBottom: 16 }}>
-              아직 투두가 없어요
+              {t('groupDetail.emptyTitle')}
             </p>
             <button
               type="button"
               onClick={() => goToAddTask()}
               style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-primary-strong)' }}
             >
-              + 첫 투두 추가하기
+              {t('groupDetail.addFirstTask')}
             </button>
           </div>
         )}
       </div>
 
       {/* FAB → add task in this group */}
-      <FAB onClick={() => goToAddTask()} aria-label="투두 추가" style={{ bottom: 40 }} />
+      <FAB onClick={() => goToAddTask()} aria-label={t('groupDetail.addTask')} style={{ bottom: 40 }} />
     </div>
   )
 }
@@ -544,12 +546,13 @@ function TaskSection({
   onOpen,
   sessions,
 }: TaskSectionProps) {
+  const { t } = useTranslation()
   return (
     <div>
       <div className="flex items-center justify-between" style={{ margin: '0 2px 12px' }}>
         <h2 style={{ fontSize: 16, fontWeight: 800, color: 'var(--color-text)' }}>{section.title}</h2>
         <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-text-subtle)' }}>
-          {section.progress.total}개 중 {section.progress.done}개
+          {t('groupDetail.sectionProgress', { total: section.progress.total, done: section.progress.done })}
         </div>
       </div>
       <div className="flex flex-col" style={{ gap: 11 }}>
@@ -586,7 +589,7 @@ function TaskSection({
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round">
             <path d="M12 5v14M5 12h14" />
           </svg>
-          투두
+          {t('groupDetail.task')}
         </button>
       </div>
     </div>

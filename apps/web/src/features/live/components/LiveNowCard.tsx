@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { PROFILE_COLOR_TO_AVATAR } from '../../auth/types'
 import type { LiveNowEntry } from '../../tasks/types'
 import { useElapsed } from '../hooks'
@@ -26,7 +27,9 @@ type LiveNowCardProps = {
 }
 
 /** SCR-03 home "지금 활동 중" card: pulsing ring avatar + live elapsed timer. */
-export function LiveNowCard({ entry, actionLabel = '참여', onAction, pulseDelay = 0 }: LiveNowCardProps) {
+export function LiveNowCard({ entry, actionLabel, onAction, pulseDelay = 0 }: LiveNowCardProps) {
+  const { t } = useTranslation()
+  const label = actionLabel ?? t('liveNowCard.join')
   const avatarColor = PROFILE_COLOR_TO_AVATAR[entry.profileColor]
   const elapsed = useElapsed(entry.startedAt, 0, entry.status, 'since')
   const subtitlePrefix = entry.sectionTitle || entry.groupName || entry.taskTitle
@@ -61,7 +64,7 @@ export function LiveNowCard({ entry, actionLabel = '참여', onAction, pulseDela
       </div>
       <div className="flex-1 min-w-0">
         <div className="truncate" style={{ fontSize: 15, fontWeight: 800, color: 'var(--color-text)' }}>
-          {entry.nickname}님이 {entry.taskTitle} 하는 중
+          {t('liveNowCard.doing', { nickname: entry.nickname, taskTitle: entry.taskTitle })}
         </div>
         <div className="truncate" style={{ fontSize: 12.5, fontWeight: 600, color: '#8B98AD' }}>
           {subtitlePrefix} · {elapsed}
@@ -82,7 +85,7 @@ export function LiveNowCard({ entry, actionLabel = '참여', onAction, pulseDela
             fontWeight: 800,
           }}
         >
-          {actionLabel}
+          {label}
         </button>
       )}
     </div>

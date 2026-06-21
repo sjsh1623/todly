@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Avatar, PushHeader, StatusBar } from '../shared/ui'
 import { PROFILE_COLOR_TO_AVATAR } from '../features/auth/types'
 import {
@@ -22,6 +23,7 @@ type Candidate = {
 export default function InviteFriends() {
   const { id: groupId } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState<Set<string>>(new Set())
@@ -86,8 +88,8 @@ export default function InviteFriends() {
         const skippedN = res.skipped.length
         const msg =
           skippedN > 0
-            ? `${addedN}명 초대 완료 · ${skippedN}명은 이미 멤버예요`
-            : `${addedN}명을 초대했어요`
+            ? t('inviteFriends.invitedWithSkipped', { added: addedN, skipped: skippedN })
+            : t('inviteFriends.invited', { added: addedN })
         navigate(`/groups/${groupId}`, { state: { inviteToast: msg } })
       },
       onError: (err) => showToast(getFriendErrorMessage(err)),
@@ -97,7 +99,7 @@ export default function InviteFriends() {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'var(--color-bg-2)' }}>
       <StatusBar />
-      <PushHeader title="친구 초대" onBack={() => navigate(-1)} />
+      <PushHeader title={t('inviteFriends.title')} onBack={() => navigate(-1)} />
 
       <div className="flex-1" style={{ padding: '8px 22px 24px' }}>
         {/* Search field */}
@@ -111,8 +113,8 @@ export default function InviteFriends() {
           </svg>
           <input
             type="search"
-            aria-label="친구 검색"
-            placeholder="이름 또는 아이디 검색"
+            aria-label={t('inviteFriends.searchLabel')}
+            placeholder={t('inviteFriends.searchPlaceholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="flex-1 min-w-0 bg-transparent outline-none placeholder:text-[#B4BFCE]"
@@ -121,18 +123,18 @@ export default function InviteFriends() {
         </div>
 
         <div className="flex items-center justify-between" style={{ margin: '0 4px 11px' }}>
-          <span style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0' }}>내 친구</span>
+          <span style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0' }}>{t('inviteFriends.myFriends')}</span>
           {count > 0 && (
-            <span style={{ fontSize: 11.5, fontWeight: 800, color: '#1366CE' }}>{count}명 선택됨</span>
+            <span style={{ fontSize: 11.5, fontWeight: 800, color: '#1366CE' }}>{t('inviteFriends.selectedCount', { count })}</span>
           )}
         </div>
 
         {isLoading ? (
-          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)', padding: '8px 4px' }}>불러오는 중…</div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-subtle)', padding: '8px 4px' }}>{t('inviteFriends.loading')}</div>
         ) : candidates.length === 0 ? (
           <div className="flex flex-col items-center text-center" style={{ padding: '36px 20px' }}>
             <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text-muted)' }}>
-              {showingSearch ? '검색 결과가 없어요' : '초대할 친구가 없어요'}
+              {showingSearch ? t('inviteFriends.noResults') : t('inviteFriends.noFriends')}
             </p>
           </div>
         ) : (
@@ -159,10 +161,10 @@ export default function InviteFriends() {
                       {c.nickname}
                     </div>
                     <div className="truncate" style={{ fontSize: 11.5, fontWeight: 600, color: '#9AA7BC' }}>
-                      @{c.username} · 함께한 그룹 {c.sharedGroups}개
+                      {t('inviteFriends.userMeta', { username: c.username, count: c.sharedGroups })}
                     </div>
                   </div>
-                  <span className="sr-only">{isSelected ? '선택됨' : '선택 안 됨'}</span>
+                  <span className="sr-only">{isSelected ? t('inviteFriends.selected') : t('inviteFriends.notSelected')}</span>
                   {isSelected ? (
                     <span
                       className="flex items-center justify-center"
@@ -203,7 +205,7 @@ export default function InviteFriends() {
             <path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5" />
             <path d="M18 8v6M21 11h-6" />
           </svg>
-          {invite.isPending ? '초대하는 중…' : `${count}명 초대하기`}
+          {invite.isPending ? t('inviteFriends.inviting') : t('inviteFriends.inviteCta', { count })}
         </button>
       </div>
 

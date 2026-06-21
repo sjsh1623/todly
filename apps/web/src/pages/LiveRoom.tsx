@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { PROFILE_COLOR_TO_AVATAR, type ProfileColor } from '../features/auth/types'
 import { useAuthStore } from '../features/auth/store'
 import { useElapsed } from '../features/live'
@@ -53,6 +54,7 @@ function initialOf(name: string): string {
 
 /** SCR-07 "라이브 룸" — multi-participant room with cheers, photos, presence. */
 export default function LiveRoom() {
+  const { t } = useTranslation()
   const { id: roomId } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const currentUserId = useAuthStore((s) => s.user?.id)
@@ -168,7 +170,7 @@ export default function LiveRoom() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: SCREEN_BG }}>
-        <span style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,.8)' }}>불러오는 중…</span>
+        <span style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,.8)' }}>{t('liveRoom.loading')}</span>
       </div>
     )
   }
@@ -180,17 +182,17 @@ export default function LiveRoom() {
         style={{ background: SCREEN_BG, padding: 30 }}
       >
         <div style={{ fontSize: 16, fontWeight: 800, color: '#fff', marginBottom: 8 }}>
-          라이브 룸을 찾을 수 없어요
+          {t('liveRoom.notFoundTitle')}
         </div>
         <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,.7)', marginBottom: 24 }}>
-          이미 종료되었거나 접근할 수 없어요
+          {t('liveRoom.notFoundSubtitle')}
         </div>
         <button
           type="button"
           onClick={goBack}
           style={{ padding: '12px 22px', borderRadius: 16, background: 'rgba(255,255,255,.16)', color: '#fff', fontSize: 14, fontWeight: 800 }}
         >
-          돌아가기
+          {t('liveRoom.back')}
         </button>
       </div>
     )
@@ -209,7 +211,7 @@ export default function LiveRoom() {
         <button
           type="button"
           onClick={goBack}
-          aria-label="뒤로"
+          aria-label={t('liveRoom.backAria')}
           className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
           style={{ width: 34, height: 34, borderRadius: '50%', background: 'rgba(255,255,255,.14)' }}
         >
@@ -222,14 +224,14 @@ export default function LiveRoom() {
           style={{ gap: 7, background: 'rgba(255,255,255,.16)', padding: '6px 13px', borderRadius: 20 }}
         >
           <span aria-hidden="true" style={{ width: 7, height: 7, borderRadius: '50%', background: '#5FE3F0', animation: ended ? undefined : 'tdlDot 1.2s infinite' }} />
-          <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.4px', color: '#fff' }}>라이브 룸</span>
+          <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.4px', color: '#fff' }}>{t('liveRoom.badge')}</span>
         </div>
         {isHost && !ended ? (
           <button
             type="button"
             onClick={handleEnd}
             disabled={endRoom.isPending}
-            aria-label="라이브 종료"
+            aria-label={t('liveRoom.endLive')}
             className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:opacity-60"
             style={{ width: 34, height: 34, borderRadius: '50%', background: 'rgba(255,255,255,.14)' }}
           >
@@ -247,7 +249,7 @@ export default function LiveRoom() {
         <div style={{ color: '#fff' }}>
           <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: '-.5px' }}>{room.title}</div>
           <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,.7)' }}>
-            {room.participantCount}명이 함께 달리는 중{elapsed ? ` · ${elapsed}` : ''}
+            {t('liveRoom.runningTogether', { count: room.participantCount })}{elapsed ? ` · ${elapsed}` : ''}
           </div>
         </div>
       </div>
@@ -282,14 +284,14 @@ export default function LiveRoom() {
           >
             <img
               src={latestPhoto.thumbUrl || latestPhoto.url}
-              alt={`${latestPhoto.nickname}님이 공유한 사진`}
+              alt={t('liveRoom.photoAlt', { nickname: latestPhoto.nickname })}
               style={{ width: 50, height: 50, borderRadius: 13, objectFit: 'cover', flex: 'none', background: '#1d4f8c' }}
             />
             <div className="flex-1 min-w-0" style={{ color: '#fff' }}>
               <div className="truncate" style={{ fontSize: 13, fontWeight: 800 }}>
-                {latestPhoto.nickname}님이 지금 모습을 공유했어요
+                {t('liveRoom.photoShared', { nickname: latestPhoto.nickname })}
               </div>
-              <div style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,.6)' }}>탭하여 보기</div>
+              <div style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,.6)' }}>{t('liveRoom.tapToView')}</div>
             </div>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 6l6 6-6 6" />
@@ -338,13 +340,13 @@ export default function LiveRoom() {
             className="flex flex-col items-center text-center"
             style={{ padding: '24px 16px', marginBottom: 14, background: 'rgba(255,255,255,.08)', borderRadius: 18 }}
           >
-            <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', marginBottom: 14 }}>라이브가 종료되었어요</div>
+            <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', marginBottom: 14 }}>{t('liveRoom.ended')}</div>
             <button
               type="button"
               onClick={goBack}
               style={{ padding: '11px 20px', borderRadius: 14, background: '#fff', color: '#1366CE', fontSize: 13.5, fontWeight: 800 }}
             >
-              돌아가기
+              {t('liveRoom.back')}
             </button>
           </div>
         )}
@@ -358,7 +360,7 @@ export default function LiveRoom() {
               <button
                 type="button"
                 onClick={handlePickPhoto}
-                aria-label="사진 공유"
+                aria-label={t('liveRoom.sharePhoto')}
                 className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                 style={{ width: 46, height: 46, borderRadius: 16, background: '#5FE3F0', flex: 'none' }}
               >
@@ -372,7 +374,7 @@ export default function LiveRoom() {
                   key={emoji}
                   type="button"
                   onClick={() => handleEmoji(emoji)}
-                  aria-label={`${emoji} 응원 보내기`}
+                  aria-label={t('liveRoom.sendCheerEmoji', { emoji })}
                   className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                   style={{ width: 46, height: 46, borderRadius: 16, background: 'rgba(255,255,255,.14)', fontSize: 22, flex: 'none' }}
                 >
@@ -383,7 +385,7 @@ export default function LiveRoom() {
           </div>
           <div className="flex items-center" style={{ gap: 9, marginTop: 9, paddingBottom: 18 }}>
             <label htmlFor="cheer-input" className="sr-only">
-              응원 메시지
+              {t('liveRoom.cheerLabel')}
             </label>
             <input
               id="cheer-input"
@@ -393,7 +395,7 @@ export default function LiveRoom() {
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleSend()
               }}
-              placeholder="응원 메시지 보내기…"
+              placeholder={t('liveRoom.cheerPlaceholder')}
               className="flex-1"
               style={{
                 height: 46,
@@ -411,7 +413,7 @@ export default function LiveRoom() {
               type="button"
               onClick={handleSend}
               disabled={!draft.trim()}
-              aria-label="보내기"
+              aria-label={t('liveRoom.send')}
               className="flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:opacity-50"
               style={{ width: 46, height: 46, borderRadius: 16, background: '#1366CE', flex: 'none', boxShadow: '0 8px 20px rgba(19,102,206,.4)' }}
             >
@@ -439,7 +441,7 @@ export default function LiveRoom() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="공유된 사진"
+          aria-label={t('liveRoom.sharedPhoto')}
           onClick={() => setViewerPhoto(null)}
           className="fixed inset-0 flex items-center justify-center"
           style={{ background: 'rgba(0,0,0,.86)', zIndex: 60, padding: 20 }}
@@ -447,7 +449,7 @@ export default function LiveRoom() {
           <button
             type="button"
             onClick={() => setViewerPhoto(null)}
-            aria-label="닫기"
+            aria-label={t('liveRoom.close')}
             className="absolute focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
             style={{ top: 24, right: 24, width: 40, height: 40, borderRadius: '50%', background: 'rgba(255,255,255,.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
@@ -457,7 +459,7 @@ export default function LiveRoom() {
           </button>
           <img
             src={viewerPhoto.url}
-            alt={`${viewerPhoto.nickname}님이 공유한 사진`}
+            alt={t('liveRoom.photoAlt', { nickname: viewerPhoto.nickname })}
             onClick={(e) => e.stopPropagation()}
             style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: 16, objectFit: 'contain' }}
           />
@@ -476,6 +478,7 @@ function ParticipantAvatar({
   big?: boolean
   pulseDelay?: number
 }) {
+  const { t } = useTranslation()
   const size = big ? 88 : 64
   const fontSize = big ? 30 : 24
   return (
@@ -509,7 +512,7 @@ function ParticipantAvatar({
       </div>
       {participant.isHost ? (
         <div style={{ background: 'rgba(0,0,0,.25)', padding: '4px 12px', borderRadius: 14, fontSize: 12, fontWeight: 700, color: '#fff' }}>
-          {participant.nickname} · 호스트
+          {t('liveRoom.host', { nickname: participant.nickname })}
         </div>
       ) : (
         <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,.85)' }}>{participant.nickname}</div>

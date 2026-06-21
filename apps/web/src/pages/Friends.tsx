@@ -6,6 +6,7 @@ import { PROFILE_COLOR_TO_AVATAR } from '../features/auth/types'
 import {
   getFriendErrorMessage,
   presenceText,
+  presenceKind,
   useAcceptRequest,
   useBlock,
   useDeclineRequest,
@@ -51,7 +52,7 @@ export default function Friends() {
   const handleSend = (username: string) => {
     sendRequest.mutate(username, {
       onSuccess: (res) =>
-        showToast('status' in res && res.status === 'accepted' ? '친구가 되었어요' : '친구 요청을 보냈어요'),
+        showToast('status' in res && res.status === 'accepted' ? t('friends.toastBecameFriends') : t('friends.toastRequestSent')),
       onError: (err) => showToast(getFriendErrorMessage(err)),
     })
   }
@@ -60,7 +61,7 @@ export default function Friends() {
     <div className="min-h-screen flex flex-col" style={{ background: 'var(--color-bg-2)' }}>
       <StatusBar />
       <PushHeader
-        title="친구"
+        title={t('friends.title')}
         onBack={() => navigate(-1)}
         trailing={
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1366CE" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -83,8 +84,8 @@ export default function Friends() {
           </svg>
           <input
             type="search"
-            aria-label="친구 검색"
-            placeholder="친구 검색 또는 아이디로 추가"
+            aria-label={t('friends.searchLabel')}
+            placeholder={t('friends.searchPlaceholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="flex-1 min-w-0 bg-transparent outline-none placeholder:text-[#B4BFCE]"
@@ -106,7 +107,7 @@ export default function Friends() {
             {incoming.length > 0 && (
               <section style={{ marginBottom: 22 }}>
                 <div className="flex items-center" style={{ gap: 7, margin: '0 0 11px 4px' }}>
-                  <span style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0' }}>친구 요청</span>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0' }}>{t('friends.requestsHeading')}</span>
                   <span style={{ fontSize: 11, fontWeight: 800, color: '#fff', background: '#FF6B6B', padding: '1px 7px', borderRadius: 9 }}>
                     {incoming.length}
                   </span>
@@ -140,11 +141,11 @@ export default function Friends() {
                           disabled={accept.isPending}
                           style={{ padding: '0 16px', height: 34, borderRadius: 12, background: '#1366CE', color: '#fff', fontSize: 12, fontWeight: 800 }}
                         >
-                          수락
+                          {t('friends.accept')}
                         </button>
                         <button
                           type="button"
-                          aria-label={`${req.fromUser.nickname} 요청 거절`}
+                          aria-label={t('friends.declineAria', { name: req.fromUser.nickname })}
                           onClick={() =>
                             decline.mutate(req.id, { onError: (err) => showToast(getFriendErrorMessage(err)) })
                           }
@@ -165,14 +166,14 @@ export default function Friends() {
 
             {/* Friend list */}
             <div style={{ fontSize: 13, fontWeight: 800, color: '#7C8AA0', margin: '8px 0 13px 4px' }}>
-              내 친구 {friendList.length}
+              {t('friends.myFriends', { count: friendList.length })}
             </div>
             {friends.isLoading ? (
               <SkeletonList rows={3} />
             ) : friendList.length === 0 ? (
               <EmptyState
                 title={t('empty.friendsTitle')}
-                subtitle="위에서 아이디로 친구를 찾아보세요"
+                subtitle={t('friends.emptySubtitle')}
               />
             ) : (
               <div style={{ background: '#fff', borderRadius: 22, padding: '8px 18px', boxShadow: '0 6px 20px rgba(17,40,86,.06)' }}>
@@ -183,13 +184,13 @@ export default function Friends() {
                     last={i === friendList.length - 1}
                     onUnfriend={() =>
                       unfriend.mutate(f.userId, {
-                        onSuccess: () => showToast('친구를 삭제했어요'),
+                        onSuccess: () => showToast(t('friends.toastUnfriended')),
                         onError: (err) => showToast(getFriendErrorMessage(err)),
                       })
                     }
                     onBlock={() =>
                       block.mutate(f.userId, {
-                        onSuccess: () => showToast('차단했어요'),
+                        onSuccess: () => showToast(t('friends.toastBlocked')),
                         onError: (err) => showToast(getFriendErrorMessage(err)),
                       })
                     }
@@ -226,9 +227,10 @@ function FriendRow({
   onUnfriend: () => void
   onBlock: () => void
 }) {
+  const { t } = useTranslation()
   const [menuOpen, setMenuOpen] = useState(false)
   const status = presenceText(friend.online, friend.lastActiveAt)
-  const isActive = status === '지금 활동 중' || status === '온라인'
+  const isActive = presenceKind(friend.online, friend.lastActiveAt) !== 'offline'
 
   return (
     <div
@@ -259,7 +261,7 @@ function FriendRow({
       <div className="relative" style={{ flex: 'none' }}>
         <button
           type="button"
-          aria-label={`${friend.nickname} 더보기`}
+          aria-label={t('friends.moreAria', { name: friend.nickname })}
           aria-haspopup="menu"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
@@ -289,7 +291,7 @@ function FriendRow({
                 className="w-full text-left"
                 style={{ padding: '11px 12px', borderRadius: 10, fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}
               >
-                친구 삭제
+                {t('friends.unfriend')}
               </button>
               <button
                 role="menuitem"
@@ -300,7 +302,7 @@ function FriendRow({
                 className="w-full text-left"
                 style={{ padding: '11px 12px', borderRadius: 10, fontSize: 14, fontWeight: 700, color: 'var(--color-due)' }}
               >
-                차단
+                {t('friends.block')}
               </button>
             </div>
           </>
@@ -324,18 +326,19 @@ function SearchResults({
   onSend: (username: string) => void
   pendingUsername?: string
 }) {
+  const { t } = useTranslation()
   if (isLoading) {
     return <SkeletonList rows={3} />
   }
   if (isError) {
-    return <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-due)', padding: '8px 4px' }}>검색에 실패했어요</div>
+    return <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-due)', padding: '8px 4px' }}>{t('friends.searchFailed')}</div>
   }
   if (!results || results.length === 0) {
     return (
       <EmptyState
         bordered={false}
-        title="검색 결과가 없어요"
-        subtitle="다른 검색어로 다시 시도해 보세요"
+        title={t('friends.searchEmptyTitle')}
+        subtitle={t('friends.searchEmptySubtitle')}
       />
     )
   }
@@ -359,7 +362,7 @@ function SearchResults({
             </div>
             <div className="truncate" style={{ fontSize: 11.5, fontWeight: 600, color: '#9AA7BC' }}>
               @{u.username}
-              {u.sharedGroups > 0 ? ` · 함께한 그룹 ${u.sharedGroups}개` : ''}
+              {u.sharedGroups > 0 ? t('friends.sharedGroups', { count: u.sharedGroups }) : ''}
             </div>
           </div>
           <RelationButton
@@ -383,19 +386,20 @@ function RelationButton({
   onSend: () => void
   pending: boolean
 }) {
+  const { t } = useTranslation()
   const base = { flex: 'none' as const, padding: '0 16px', height: 34, borderRadius: 12, fontSize: 12, fontWeight: 800 }
 
   if (user.relation === 'friend') {
     return (
       <span style={{ ...base, display: 'inline-flex', alignItems: 'center', background: '#EAF7F2', color: '#159B89' }}>
-        친구
+        {t('friends.relationFriend')}
       </span>
     )
   }
   if (user.relation === 'outgoing') {
     return (
       <button type="button" disabled style={{ ...base, background: '#F0F3F8', color: '#9AA7BC' }}>
-        요청됨
+        {t('friends.relationRequested')}
       </button>
     )
   }
@@ -409,14 +413,14 @@ function RelationButton({
         disabled={pending}
         style={{ ...base, background: '#1366CE', color: '#fff' }}
       >
-        수락
+        {t('friends.accept')}
       </button>
     )
   }
   if (user.relation === 'blocked') {
     return (
       <span style={{ ...base, display: 'inline-flex', alignItems: 'center', background: '#F0F3F8', color: '#9AA7BC' }}>
-        차단됨
+        {t('friends.relationBlocked')}
       </span>
     )
   }
@@ -428,7 +432,7 @@ function RelationButton({
       disabled={pending}
       style={{ ...base, background: '#1366CE', color: '#fff' }}
     >
-      {pending ? '요청 중…' : '추가'}
+      {pending ? t('friends.requesting') : t('friends.add')}
     </button>
   )
 }
