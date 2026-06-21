@@ -1,0 +1,60 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: todly-api
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/todly}
+    username: ${SPRING_DATASOURCE_USERNAME:todly}
+    password: ${SPRING_DATASOURCE_PASSWORD:todly_dev_pw}
+  jpa:
+    hibernate:
+      ddl-auto: validate   # Flyway owns the schema; Hibernate validates mappings
+    open-in-view: false
+    show-sql: false
+  flyway:
+    enabled: true
+  data:
+    redis:
+      url: ${SPRING_DATA_REDIS_URL:redis://localhost:6379}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 12MB
+      max-request-size: 12MB
+
+todly:
+  storage:
+    # local (default, filesystem) or s3 (stub, IMP-25). Point `dir` at a mounted
+    # volume (e.g. /app/data/photos) for persistence across container restarts.
+    provider: ${TODLY_STORAGE_PROVIDER:local}
+    dir: ${TODLY_STORAGE_DIR:${java.io.tmpdir}/todly-photos}
+    s3-bucket: ${TODLY_STORAGE_S3_BUCKET:}
+  rooms:
+    idle-minutes: ${TODLY_ROOMS_IDLE_MINUTES:30}
+    idle-sweep-ms: ${TODLY_ROOMS_IDLE_SWEEP_MS:60000}
+  jwt:
+    # HS256 requires a key of at least 256 bits (32 bytes). Override in production.
+    secret: ${JWT_SECRET:dev-todly-jwt-secret-change-me-please-0123456789}
+    access-ttl-seconds: ${JWT_ACCESS_TTL:900}
+    refresh-ttl-seconds: ${JWT_REFRESH_TTL:1209600}
+  oidc:
+    google-client-id: ${GOOGLE_CLIENT_ID:}
+    apple-client-id: ${APPLE_CLIENT_ID:}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true

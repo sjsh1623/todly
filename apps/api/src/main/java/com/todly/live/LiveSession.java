@@ -1,0 +1,73 @@
+package com.todly.live;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
+@Entity
+@Table(name = "live_sessions")
+public class LiveSession {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
+
+    @Column(name = "task_id", nullable = false)
+    private UUID taskId;
+
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
+
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, columnDefinition = "live_status")
+    private LiveStatus status = LiveStatus.running;
+
+    @Column(name = "started_at", nullable = false)
+    private OffsetDateTime startedAt;
+
+    @Column(name = "paused_seconds", nullable = false)
+    private int pausedSeconds = 0;
+
+    @Column(name = "ended_at")
+    private OffsetDateTime endedAt;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private OffsetDateTime createdAt;
+
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
+
+    public UUID getTaskId() { return taskId; }
+    public void setTaskId(UUID taskId) { this.taskId = taskId; }
+
+    public UUID getUserId() { return userId; }
+    public void setUserId(UUID userId) { this.userId = userId; }
+
+    public LiveStatus getStatus() { return status; }
+    public void setStatus(LiveStatus status) { this.status = status; }
+
+    public OffsetDateTime getStartedAt() { return startedAt; }
+    public void setStartedAt(OffsetDateTime startedAt) { this.startedAt = startedAt; }
+
+    public int getPausedSeconds() { return pausedSeconds; }
+    public void setPausedSeconds(int pausedSeconds) { this.pausedSeconds = pausedSeconds; }
+
+    public OffsetDateTime getEndedAt() { return endedAt; }
+    public void setEndedAt(OffsetDateTime endedAt) { this.endedAt = endedAt; }
+
+    public OffsetDateTime getCreatedAt() { return createdAt; }
+}

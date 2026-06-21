@@ -1,0 +1,20 @@
+:root{
+  --color-primary:#2E86E6; --color-primary-strong:#1366CE; --color-primary-deep:#1257C4;
+  --color-primary-soft:#7DB4ED; --color-primary-tint:#C8E0FA;
+  /* text-subtle nudged #9AA7BC -> #6B7890 to reach ~4.5:1 on white (WCAG AA body). */
+  --color-text:#14233A; --color-text-muted:#5A6B82; --color-text-subtle:#6B7890;
+  --color-nav-inactive:#AEB9CC;
+  --color-bg:#EDF1F7; --color-bg-2:#F2F6FC; --color-card:#FFFFFF;
+  --color-due:#FF7A6B; --color-overdue:#FFB23E; --color-success:#46D38A;
+  --avatar-blue:#2E86E6; --avatar-mint:#2BC4B0; --avatar-orange:#FF9D52; --avatar-purple:#6B5BD0;
+  --radius-phone:28px; --radius-card:18px; --radius-card-lg:22px; --radius-chip:14px; --radius-pill:999px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --font:"Pretendard","Pretendard Variable",-apple-system,sans-serif;
+  --font-display:"Sora",sans-serif;
+}
+[data-theme="ocean"]{ --color-primary:#2E86E6; --color-primary-strong:#1366CE; }
+[data-theme="mint"]{ --color-primary:#2BC4B0; --color-primary-strong:#159B89; }
+[data-theme="violet"]{ --color-primary:#6B5BD0; --color-primary-strong:#5346A8; }
+[data-theme="coral"]{ --color-primary:#FF7A6B; --color-primary-strong:#E0584A; }
+[data-theme="sunset"]{ --color-primary:#FF9D52; --color-primary-strong:#E07B2E; }
+[data-dark="true"]{ --color-bg:#0F1722; --color-bg-2:#14202E; --color-card:#1B2838; --color-text:#EAF1F9; --color-text-muted:#9DB0C7; }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="height:92px;display:flex;align-items:flex-start;justify-content:space-around;padding:13px 12px 0;background:rgba(255,255,255,0.82);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-top:1px solid rgba(20,35,58,0.05);box-sizing:border-box;font-family:'Pretendard','Pretendard Variable',-apple-system,sans-serif;">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="{{ homeColor }}" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.6 10v9.4h12.8V10"/></svg>
+    <span style="font-size:10px;font-weight:700;color:{{ homeColor }};">홈</span>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="{{ groupsColor }}" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.4" height="6.4" rx="2"/><rect x="13.6" y="4" width="6.4" height="6.4" rx="2"/><rect x="4" y="13.6" width="6.4" height="6.4" rx="2"/><rect x="13.6" y="13.6" width="6.4" height="6.4" rx="2"/></svg>
+    <span style="font-size:10px;font-weight:700;color:{{ groupsColor }};">그룹</span>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="{{ activityColor }}" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3.4l2.2-6 3.6 12 2.2-6H21"/></svg>
+    <span style="font-size:10px;font-weight:700;color:{{ activityColor }};">활동</span>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="{{ routineColor }}" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M17.4 3.7v3.4h-3.4"/></svg>
+    <span style="font-size:10px;font-weight:700;color:{{ routineColor }};">루틴</span>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="{{ profileColor }}" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.4" r="3.4"/><path d="M5.5 19.6c0-3.5 2.9-5.6 6.5-5.6s6.5 2.1 6.5 5.6"/></svg>
+    <span style="font-size:10px;font-weight:700;color:{{ profileColor }};">프로필</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:92},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;groups&quot;,&quot;activity&quot;,&quot;routine&quot;,&quot;profile&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const a = this.props.active || 'home';
+    const on = '#1366CE', off = '#AEB9CC';
+    return {
+      homeColor: a === 'home' ? on : off,
+      groupsColor: a === 'groups' ? on : off,
+      activityColor: a === 'activity' ? on : off,
+      routineColor: a === 'routine' ? on : off,
+      profileColor: a === 'profile' ? on : off,
+    };
+  }
+}
+</script>
+</body>
+</html>

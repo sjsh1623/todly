@@ -1,0 +1,6 @@
+# Demo profile: also loads the demo seed migrations.
+# Activate with: SPRING_PROFILES_ACTIVE=demo
+# The seed lives under classpath:db/seed and is NOT loaded by default/test profiles.
+spring:
+  flyway:
+    locations: classpath:db/migration,classpath:db/seed

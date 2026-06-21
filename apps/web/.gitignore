@@ -1,0 +1,11 @@
+node_modules
+dist
+dist-ssr
+dist-tsnode
+*.local
+.DS_Store
+*.log
+coverage
+playwright-report
+test-results
+*.tsbuildinfo

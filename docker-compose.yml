@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-todly}
+      POSTGRES_USER: ${POSTGRES_USER:-todly}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-todly_dev_pw}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-todly}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: ./apps/api
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: ${DB_URL:-jdbc:postgresql://db:5432/todly}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-todly}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-todly_dev_pw}
+      SPRING_DATA_REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-prod-please-32bytes-minimum}
+      TODLY_STORAGE_DIR: /app/data/photos
+    volumes:
+      - photos:/app/data/photos
+    ports:
+      - "8080:8080"
+
+  web:
+    build: ./apps/web
+    depends_on:
+      - api
+    ports:
+      - "5173:80"
+
+volumes:
+  pgdata:
+  photos:

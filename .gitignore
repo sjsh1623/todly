@@ -1,0 +1,27 @@
+# OS
+.DS_Store
+
+# Node / web
+node_modules/
+apps/web/dist/
+apps/web/dev-dist/
+*.local
+
+# Java / Spring
+apps/api/build/
+apps/api/.gradle/
+apps/api/bin/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.iml

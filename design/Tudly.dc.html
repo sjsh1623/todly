@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Pretendard','Pretendard Variable',-apple-system,sans-serif; -webkit-font-smoothing: antialiased; }
+  @keyframes tdlPulse { 0% { transform: scale(.7); opacity: .5; } 80% { opacity: 0; } 100% { transform: scale(2.5); opacity: 0; } }
+  @keyframes tdlGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(95,227,240,.5); } 50% { box-shadow: 0 0 0 16px rgba(95,227,240,0); } }
+  @keyframes tdlFloat { 0% { transform: translateY(0) scale(.7); opacity: 0; } 18% { opacity: 1; } 100% { transform: translateY(-150px) scale(1.1); opacity: 0; } }
+  @keyframes tdlSlide { 0% { transform: translateY(-18px); opacity: 0; } 14% { transform: translateY(0); opacity: 1; } 100% { opacity: 1; } }
+  @keyframes tdlDot { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+</style>
+</helmet>
+
+<div style="min-width:100%;min-height:100vh;width:max-content;box-sizing:border-box;padding:56px;background:linear-gradient(160deg,#EAECF1,#E3E6EC);font-family:'Pretendard','Pretendard Variable',-apple-system,sans-serif;">
+
+  <div style="margin:0 0 44px 4px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div>
+        <div style="font-family:'Sora',sans-serif;font-size:27px;font-weight:800;color:#1366CE;letter-spacing:-.04em;">todly</div>
+        <div style="font-size:14px;font-weight:600;color:#6B7A91;">우리, 함께 살아가요.</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:9px;margin-top:20px;">
+      <div style="width:34px;height:34px;border-radius:10px;background:#0E4FA8;"></div>
+      <div style="width:34px;height:34px;border-radius:10px;background:#1366CE;"></div>
+      <div style="width:34px;height:34px;border-radius:10px;background:#3B97F0;"></div>
+      <div style="width:34px;height:34px;border-radius:10px;background:#34D9C4;"></div>
+      <div style="width:34px;height:34px;border-radius:10px;background:#5FE3F0;"></div>
+      <div style="width:34px;height:34px;border-radius:10px;background:#FF9D52;"></div>
+      <div style="width:34px;height:34px;border-radius:10px;background:#46D38A;"></div>
+      <div style="width:1px;height:34px;background:#CCD2DC;margin:0 4px;"></div>
+      <div style="display:flex;align-items:center;font-size:12.5px;font-weight:600;color:#7C8AA0;">Pretendard</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:60px;align-items:flex-start;">
+
+    <!-- ===================== 01 · 로그인 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">01</span>&nbsp;&nbsp;로그인</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:absolute;inset:0 0 auto 0;height:300px;background:linear-gradient(180deg,#E2EEFD 0%,#F2F6FC 100%);"></div>
+          <div style="position:relative;padding:24px 26px 32px;display:flex;flex-direction:column;">
+            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:54px;margin-bottom:38px;">
+              <div style="font-family:'Sora',sans-serif;font-size:40px;font-weight:800;letter-spacing:-.05em;color:#1366CE;margin-bottom:20px;">todly</div>
+              <div style="font-size:28px;font-weight:800;color:#14233A;letter-spacing:-.6px;">다시 오신 걸 환영해요</div>
+              <div style="font-size:14px;font-weight:600;color:#7C8AA0;margin-top:6px;">함께 살아가는 하루를 이어가요</div>
+            </div>
+
+            <div style="font-size:12.5px;font-weight:700;color:#7C8AA0;margin:0 0 8px 2px;">이메일</div>
+            <div style="background:#fff;border:1.5px solid #E6ECF4;border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 4px 12px rgba(20,50,90,.04);"><span style="font-size:15px;font-weight:600;color:#B4BFCE;">name@email.com</span></div>
+            <div style="font-size:12.5px;font-weight:700;color:#7C8AA0;margin:0 0 8px 2px;">비밀번호</div>
+            <div style="background:#fff;border:1.5px solid #E6ECF4;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 4px 12px rgba(20,50,90,.04);display:flex;align-items:center;justify-content:space-between;"><span style="font-size:18px;letter-spacing:3px;color:#14233A;">••••••••</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#AEB9CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/></svg></div>
+            <div style="text-align:right;font-size:12.5px;font-weight:700;color:#7C8AA0;margin-bottom:20px;">비밀번호를 잊으셨나요?</div>
+
+            <div style="height:56px;border-radius:18px;background:#1366CE;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 24px rgba(19,102,206,.26);margin-bottom:22px;">로그인</div>
+
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;"><div style="flex:1;height:1px;background:#E0E6EF;"></div><span style="font-size:12px;font-weight:600;color:#AEB9CC;">또는</span><div style="flex:1;height:1px;background:#E0E6EF;"></div></div>
+            <div style="display:flex;flex-direction:column;gap:11px;">
+              <div style="height:52px;border-radius:16px;background:#14233A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14.5px;font-weight:700;">Apple로 계속하기</div>
+              <div style="height:52px;border-radius:16px;background:#fff;border:1.5px solid #E6ECF4;display:flex;align-items:center;justify-content:center;color:#14233A;font-size:14.5px;font-weight:700;">Google로 계속하기</div>
+            </div>
+            <div style="text-align:center;font-size:13.5px;font-weight:600;color:#7C8AA0;margin-top:auto;padding:24px 0 30px;">계정이 없으신가요? <span style="color:#1366CE;font-weight:800;">회원가입</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 02 · 회원가입 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">02</span>&nbsp;&nbsp;회원가입</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;padding:14px 26px 32px;display:flex;flex-direction:column;">
+            <div style="position:relative;display:flex;align-items:center;height:40px;margin-bottom:24px;">
+              <div style="width:40px;height:40px;border-radius:14px;background:#fff;box-shadow:0 4px 12px rgba(20,50,90,.06);display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div>
+              <div style="position:absolute;left:0;right:0;text-align:center;font-family:'Sora',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.05em;color:#1366CE;pointer-events:none;">todly</div>
+            </div>
+            <div style="font-size:28px;font-weight:800;color:#14233A;letter-spacing:-.6px;">함께 시작해요</div>
+            <div style="font-size:14px;font-weight:600;color:#7C8AA0;margin-top:6px;margin-bottom:28px;">몇 가지만 알려주시면 돼요</div>
+
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:26px;">
+              <div style="width:66px;height:66px;border-radius:50%;background:linear-gradient(140deg,#5FE3F0,#2E86E6);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#fff;flex:none;box-shadow:0 10px 24px rgba(19,102,206,.26);">석</div>
+              <div>
+                <div style="font-size:12.5px;font-weight:700;color:#7C8AA0;margin-bottom:9px;">프로필 색상</div>
+                <div style="display:flex;gap:9px;">
+                  <div style="width:28px;height:28px;border-radius:50%;background:#2E86E6;border:2.5px solid #1366CE;box-shadow:0 0 0 3px #fff inset;"></div>
+                  <div style="width:28px;height:28px;border-radius:50%;background:#2BC4B0;"></div>
+                  <div style="width:28px;height:28px;border-radius:50%;background:#FF9D52;"></div>
+                  <div style="width:28px;height:28px;border-radius:50%;background:#6B5BD0;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="font-size:12.5px;font-weight:700;color:#7C8AA0;margin:0 0 8px 2px;">닉네임</div>
+            <div style="background:#fff;border:1.5px solid #E6ECF4;border-radius:16px;padding:16px;margin-bottom:15px;box-shadow:0 4px 12px rgba(20,50,90,.04);display:flex;align-items:center;justify-content:space-between;"><span style="font-size:15px;font-weight:700;color:#14233A;">석현</span><span style="font-size:12px;font-weight:600;color:#AEB9CC;">2/12</span></div>
+            <div style="font-size:12.5px;font-weight:700;color:#7C8AA0;margin:0 0 8px 2px;">이메일</div>
+            <div style="background:#fff;border:1.5px solid #E6ECF4;border-radius:16px;padding:16px;margin-bottom:15px;box-shadow:0 4px 12px rgba(20,50,90,.04);"><span style="font-size:15px;font-weight:600;color:#B4BFCE;">name@email.com</span></div>
+            <div style="font-size:12.5px;font-weight:700;color:#7C8AA0;margin:0 0 8px 2px;">비밀번호</div>
+            <div style="background:#fff;border:1.5px solid #E6ECF4;border-radius:16px;padding:16px;margin-bottom:22px;box-shadow:0 4px 12px rgba(20,50,90,.04);display:flex;align-items:center;justify-content:space-between;"><span style="font-size:18px;letter-spacing:3px;color:#14233A;">••••••</span><span style="font-size:12px;font-weight:700;color:#46D38A;">안전함</span></div>
+
+            <div style="height:56px;border-radius:18px;background:#1366CE;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 24px rgba(19,102,206,.26);margin-bottom:14px;">회원가입</div>
+            <div style="text-align:center;font-size:11.5px;font-weight:500;color:#9AA7BC;line-height:1.6;">가입하면 <span style="color:#7C8AA0;font-weight:700;">이용약관</span>과 <span style="color:#7C8AA0;font-weight:700;">개인정보처리방침</span>에<br>동의하게 됩니다.</div>
+            <div style="text-align:center;font-size:13.5px;font-weight:600;color:#7C8AA0;margin-top:auto;padding:20px 0 30px;">이미 계정이 있으신가요? <span style="color:#1366CE;font-weight:800;">로그인</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 03 · 홈 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">03</span>&nbsp;&nbsp;홈 · 대시보드</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:absolute;inset:0 0 auto 0;height:240px;background:linear-gradient(180deg,#E2EEFD 0%,#F2F6FC 100%);"></div>
+          <div style="position:relative;">
+            <div style="padding:8px 22px 120px;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#7C8AA0;">좋은 아침이에요</div>
+                  <div style="font-size:26px;font-weight:800;color:#14233A;letter-spacing:-.5px;">석현님</div>
+                  <div style="font-size:12px;font-weight:600;color:#9AA7BC;margin-top:2px;">6월 20일 금요일</div>
+                </div>
+                <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(140deg,#3B97F0,#1257C4);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;box-shadow:0 6px 16px rgba(19,87,196,.3);">석</div>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:7px;margin:0 0 11px 2px;">
+                <span style="width:7px;height:7px;border-radius:50%;background:#2BC4B0;animation:tdlDot 1.4s infinite;"></span>
+                <span style="font-size:11.5px;font-weight:800;letter-spacing:.5px;color:#159B89;">지금 활동 중</span>
+              </div>
+              <div style="background:#fff;border-radius:24px;padding:16px;box-shadow:0 8px 26px rgba(17,40,86,.06);margin-bottom:24px;">
+                <div style="display:flex;align-items:center;gap:14px;">
+                  <div style="position:relative;width:52px;height:52px;flex:none;">
+                    <span style="position:absolute;inset:0;border-radius:50%;border:2px solid #2BC4B0;animation:tdlPulse 2s infinite;"></span>
+                    <div style="position:absolute;inset:0;border-radius:50%;background:#2BC4B0;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;">서</div>
+                  </div>
+                  <div style="flex:1;min-width:0;">
+                    <div style="font-size:15px;font-weight:800;color:#14233A;">서연님이 장보는 중</div>
+                    <div style="font-size:12.5px;font-weight:600;color:#8B98AD;">장보기 · 8분 전 시작</div>
+                  </div>
+                  <div style="padding:9px 16px;border-radius:14px;background:#E2F8F4;color:#159B89;font-size:12.5px;font-weight:800;">참여</div>
+                </div>
+                <div style="height:1px;background:#F0F3F8;margin:14px 0;"></div>
+                <div style="display:flex;align-items:center;gap:14px;">
+                  <div style="position:relative;width:52px;height:52px;flex:none;">
+                    <span style="position:absolute;inset:0;border-radius:50%;border:2px solid #FF9D52;animation:tdlPulse 2s .6s infinite;"></span>
+                    <div style="position:absolute;inset:0;border-radius:50%;background:#FF9D52;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;">엄</div>
+                  </div>
+                  <div style="flex:1;min-width:0;">
+                    <div style="font-size:15px;font-weight:800;color:#14233A;">엄마가 산책 중</div>
+                    <div style="font-size:12.5px;font-weight:600;color:#8B98AD;">건강 체크 · 22분</div>
+                  </div>
+                  <div style="padding:9px 16px;border-radius:14px;background:#FFF1E6;color:#E07B2E;font-size:12.5px;font-weight:800;">인사</div>
+                </div>
+              </div>
+
+              <div style="font-size:16px;font-weight:800;color:#14233A;margin:0 2px 12px;">확인이 필요해요</div>
+              <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+                <div style="background:#fff;border-radius:20px;padding:15px 16px;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;gap:13px;">
+                  <div style="width:5px;height:40px;border-radius:3px;background:#FF7A6B;flex:none;"></div>
+                  <div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">이삿짐 업체 확정하기</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;margin-top:1px;">이사 준비 · 오늘 마감</div></div>
+                  <div style="width:30px;height:30px;border-radius:50%;background:#EAF2FE;color:#1257C4;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;">석</div>
+                </div>
+                <div style="background:#fff;border-radius:20px;padding:15px 16px;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;gap:13px;">
+                  <div style="width:5px;height:40px;border-radius:3px;background:#FFB23E;flex:none;"></div>
+                  <div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">새 집 열쇠 받기</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;margin-top:1px;">이사 준비 · 1일 지남</div></div>
+                  <div style="width:30px;height:30px;border-radius:50%;background:#EEEAFB;color:#6B5BD0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;">민</div>
+                </div>
+              </div>
+
+              <div style="font-size:16px;font-weight:800;color:#14233A;margin:0 2px 12px;">함께한 진행률</div>
+              <div style="background:#fff;border-radius:20px;padding:16px;box-shadow:0 5px 16px rgba(17,40,86,.05);margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:11px;">
+                  <div style="font-size:14.5px;font-weight:800;color:#14233A;">이사 준비</div>
+                  <div style="font-size:13px;font-weight:800;color:#1366CE;">80%</div>
+                </div>
+                <div style="height:9px;border-radius:6px;background:#EDF1F7;overflow:hidden;"><div style="width:80%;height:100%;border-radius:6px;background:linear-gradient(90deg,#34D9C4,#1366CE);"></div></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:11px;">
+                  <div style="display:flex;">
+                    <div style="width:24px;height:24px;border-radius:50%;background:#2E86E6;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;">석</div>
+                    <div style="width:24px;height:24px;border-radius:50%;background:#2BC4B0;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;margin-left:-8px;">서</div>
+                    <div style="width:24px;height:24px;border-radius:50%;background:#FF9D52;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;margin-left:-8px;">엄</div>
+                    <div style="width:24px;height:24px;border-radius:50%;background:#6B5BD0;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;margin-left:-8px;">민</div>
+                  </div>
+                  <div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">20개 중 16개 완료</div>
+                </div>
+              </div>
+              <div style="background:#fff;border-radius:20px;padding:16px;box-shadow:0 5px 16px rgba(17,40,86,.05);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:11px;">
+                  <div style="font-size:14.5px;font-weight:800;color:#14233A;">여행 · 제주</div>
+                  <div style="font-size:13px;font-weight:800;color:#1366CE;">45%</div>
+                </div>
+                <div style="height:9px;border-radius:6px;background:#EDF1F7;overflow:hidden;"><div style="width:45%;height:100%;border-radius:6px;background:linear-gradient(90deg,#5FE3F0,#3B97F0);"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="position:absolute;right:18px;bottom:108px;width:58px;height:58px;border-radius:20px;background:#1366CE;box-shadow:0 14px 30px rgba(19,102,206,.4);display:flex;align-items:center;justify-content:center;z-index:25;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>
+          </div>
+          <dc-import name="TudlyNav" active="home" hint-size="100%,92px" style="position:relative;z-index:24;"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 04 · 그룹 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">04</span>&nbsp;&nbsp;그룹 · 공유 투두</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#fff;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#fff" stroke-width="1.4" opacity=".5"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#fff"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#fff" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:absolute;inset:0 0 auto 0;height:236px;background:linear-gradient(160deg,#1257C4 0%,#0E4FA8 60%,#0B3E86 100%);"></div>
+          <div style="position:relative;">
+            <div style="padding:6px 22px 120px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+                <div style="width:38px;height:38px;border-radius:13px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+                </div>
+                <div style="width:38px;height:38px;border-radius:13px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+                </div>
+              </div>
+              <div style="color:#fff;margin-bottom:18px;">
+                <div style="font-size:27px;font-weight:800;letter-spacing:-.6px;">이사 준비</div>
+                <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
+                  <div style="display:flex;">
+                    <div style="width:30px;height:30px;border-radius:50%;background:#2E86E6;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #1257C4;">석</div>
+                    <div style="width:30px;height:30px;border-radius:50%;background:#2BC4B0;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #1257C4;margin-left:-9px;">서</div>
+                    <div style="width:30px;height:30px;border-radius:50%;background:#FF9D52;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #1257C4;margin-left:-9px;">엄</div>
+                    <div style="width:30px;height:30px;border-radius:50%;background:#6B5BD0;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #1257C4;margin-left:-9px;">민</div>
+                  </div>
+                  <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85);">멤버 4명 · 3명 접속 중</span>
+                </div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:11px;margin-bottom:20px;box-shadow:0 10px 26px rgba(11,40,86,.22);">
+                <div style="position:relative;width:40px;height:40px;flex:none;">
+                  <span style="position:absolute;inset:0;border-radius:50%;border:2px solid #5FE3F0;animation:tdlPulse 2s infinite;"></span>
+                  <div style="position:absolute;inset:0;border-radius:50%;background:#2BC4B0;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;">서</div>
+                </div>
+                <div style="flex:1;"><div style="font-size:13.5px;font-weight:800;color:#14233A;">서연님이 '주방 정리하기' 하는 중</div><div style="font-size:11.5px;font-weight:700;color:#159B89;">라이브 · 6분</div></div>
+                <div style="padding:8px 14px;border-radius:13px;background:#1366CE;color:#fff;font-size:12px;font-weight:800;">참여</div>
+              </div>
+
+              <div style="background:#fff;border-radius:24px;padding:18px;box-shadow:0 10px 28px rgba(17,40,86,.08);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                  <div><div style="font-size:13px;font-weight:600;color:#9AA7BC;">전체 진행률</div><div style="font-size:22px;font-weight:800;color:#14233A;">80% 완료</div></div>
+                  <div style="font-size:12px;font-weight:700;color:#1366CE;background:#EAF2FE;padding:7px 12px;border-radius:12px;">16 / 20</div>
+                </div>
+                <div style="display:flex;gap:8px;overflow:hidden;margin-bottom:6px;">
+                  <div style="flex:1;"><div style="font-size:11px;font-weight:700;color:#7C8AA0;margin-bottom:6px;">짐 싸기</div><div style="height:6px;border-radius:4px;background:#EDF1F7;overflow:hidden;"><div style="width:75%;height:100%;background:#34D9C4;border-radius:4px;"></div></div></div>
+                  <div style="flex:1;"><div style="font-size:11px;font-weight:700;color:#7C8AA0;margin-bottom:6px;">주소</div><div style="height:6px;border-radius:4px;background:#EDF1F7;overflow:hidden;"><div style="width:100%;height:100%;background:#46D38A;border-radius:4px;"></div></div></div>
+                  <div style="flex:1;"><div style="font-size:11px;font-weight:700;color:#7C8AA0;margin-bottom:6px;">가구</div><div style="height:6px;border-radius:4px;background:#EDF1F7;overflow:hidden;"><div style="width:60%;height:100%;background:#3B97F0;border-radius:4px;"></div></div></div>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;margin:22px 2px 12px;">
+                <div style="font-size:16px;font-weight:800;color:#14233A;">짐 싸기</div>
+                <div style="font-size:12px;font-weight:700;color:#9AA7BC;">8개 중 6개</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:11px;">
+                <div style="background:#fff;border-radius:18px;padding:14px 15px;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;gap:13px;">
+                  <div style="width:24px;height:24px;border-radius:9px;background:#46D38A;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div>
+                  <div style="flex:1;"><div style="font-size:14px;font-weight:700;color:#AEB9CC;text-decoration:line-through;">책 포장하기</div></div>
+                  <div style="width:26px;height:26px;border-radius:50%;background:#2E86E6;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;">석</div>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:14px 15px;box-shadow:0 8px 20px rgba(43,196,176,.14);border:1.5px solid #C6F1EA;display:flex;align-items:center;gap:13px;">
+                  <div style="width:24px;height:24px;border-radius:9px;border:2.5px solid #2BC4B0;flex:none;position:relative;"><span style="position:absolute;inset:-2.5px;border-radius:9px;border:2px solid #2BC4B0;animation:tdlPulse 2s infinite;"></span></div>
+                  <div style="flex:1;"><div style="font-size:14px;font-weight:800;color:#14233A;">주방 정리하기</div><div style="font-size:11px;font-weight:700;color:#159B89;">서연님이 하는 중 · 라이브</div></div>
+                  <div style="width:26px;height:26px;border-radius:50%;background:#2BC4B0;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;">서</div>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:14px 15px;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;gap:13px;">
+                  <div style="width:24px;height:24px;border-radius:9px;border:2.5px solid #DDE3EC;flex:none;"></div>
+                  <div style="flex:1;"><div style="font-size:14px;font-weight:700;color:#14233A;">박스 라벨 붙이기</div><div style="font-size:11px;font-weight:600;color:#9AA7BC;">내일</div></div>
+                  <div style="padding:8px 13px;border-radius:13px;background:#1366CE;color:#fff;font-size:11.5px;font-weight:800;display:flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>내가 할게요</div>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:14px 15px;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;gap:13px;">
+                  <div style="width:24px;height:24px;border-radius:9px;border:2.5px solid #DDE3EC;flex:none;"></div>
+                  <div style="flex:1;"><div style="font-size:14px;font-weight:700;color:#14233A;">깨지는 물건 포장하기</div><div style="font-size:11px;font-weight:600;color:#9AA7BC;">토 · 높은 우선순위</div></div>
+                  <div style="width:26px;height:26px;border-radius:50%;background:#6B5BD0;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;">민</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="position:absolute;right:18px;bottom:108px;width:58px;height:58px;border-radius:20px;background:#1366CE;box-shadow:0 14px 30px rgba(19,102,206,.4);display:flex;align-items:center;justify-content:center;z-index:25;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>
+          </div>
+          <dc-import name="TudlyNav" active="groups" hint-size="100%,92px" style="position:relative;z-index:24;"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 05 · 투두 추가 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#1366CE;margin:0 0 16px 6px;"><span style="color:#9CC2F2;">05</span>&nbsp;&nbsp;투두 추가 · 메인 기능</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#FFFFFF;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:10;">
+            <div style="width:38px;height:38px;border-radius:13px;background:#F4F7FB;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></div>
+            <div style="font-size:16px;font-weight:800;color:#14233A;">투두 추가</div>
+            <div style="width:38px;height:38px;"></div>
+          </div>
+          <div style="position:relative;">
+            <div style="padding:14px 22px 24px;">
+              <div style="border-bottom:2px solid #EDF1F7;padding-bottom:16px;margin-bottom:24px;">
+                <div style="font-size:23px;font-weight:800;color:#C2CBD8;letter-spacing:-.4px;">무엇을 할까요?</div>
+              </div>
+
+              <div style="font-size:13px;font-weight:800;color:#7C8AA0;margin:0 0 11px 2px;">그룹</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+                <div style="padding:10px 15px;border-radius:14px;background:#1366CE;color:#fff;font-size:13px;font-weight:700;">이사 준비</div>
+                <div style="padding:10px 15px;border-radius:14px;background:#F4F7FB;color:#7C8AA0;font-size:13px;font-weight:700;">커플</div>
+                <div style="padding:10px 15px;border-radius:14px;background:#F4F7FB;color:#7C8AA0;font-size:13px;font-weight:700;">장보기</div>
+                <div style="padding:10px 15px;border-radius:14px;background:#F4F7FB;color:#7C8AA0;font-size:13px;font-weight:700;">여행</div>
+              </div>
+
+              <div style="font-size:13px;font-weight:800;color:#7C8AA0;margin:0 0 11px 2px;">리스트</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+                <div style="padding:10px 15px;border-radius:14px;background:#EAF2FE;color:#1366CE;font-size:13px;font-weight:800;">짐 싸기</div>
+                <div style="padding:10px 15px;border-radius:14px;background:#F4F7FB;color:#7C8AA0;font-size:13px;font-weight:700;">주소 변경</div>
+                <div style="padding:10px 15px;border-radius:14px;background:#F4F7FB;color:#7C8AA0;font-size:13px;font-weight:700;">가구</div>
+                <div style="padding:10px 15px;border-radius:14px;background:#F4F7FB;color:#7C8AA0;font-size:13px;font-weight:700;">청소</div>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:7px;margin:0 0 11px 2px;"><span style="font-size:13px;font-weight:800;color:#7C8AA0;">마감일</span><span style="font-size:10.5px;font-weight:700;color:#AEB9CC;background:#F0F3F8;padding:3px 8px;border-radius:8px;">선택 사항</span></div>
+              <div style="display:flex;gap:7px;margin-bottom:24px;">
+                <div style="padding:10px 14px;border-radius:13px;background:#14233A;color:#fff;font-size:12.5px;font-weight:700;">없음</div>
+                <div style="padding:10px 14px;border-radius:13px;background:#F4F7FB;color:#7C8AA0;font-size:12.5px;font-weight:700;">오늘</div>
+                <div style="padding:10px 14px;border-radius:13px;background:#F4F7FB;color:#7C8AA0;font-size:12.5px;font-weight:700;">내일</div>
+                <div style="padding:10px 13px;border-radius:13px;background:#F4F7FB;color:#7C8AA0;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C8AA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>날짜</div>
+              </div>
+
+              <div style="font-size:13px;font-weight:800;color:#7C8AA0;margin:0 0 11px 2px;">우선순위</div>
+              <div style="display:flex;background:#F4F7FB;border-radius:15px;padding:4px;margin-bottom:24px;">
+                <div style="flex:1;text-align:center;padding:10px 0;font-size:13px;font-weight:700;color:#9AA7BC;">낮음</div>
+                <div style="flex:1;text-align:center;padding:10px 0;font-size:13px;font-weight:800;color:#1366CE;background:#fff;border-radius:12px;box-shadow:0 3px 10px rgba(20,50,90,.07);">보통</div>
+                <div style="flex:1;text-align:center;padding:10px 0;font-size:13px;font-weight:700;color:#9AA7BC;">높음</div>
+              </div>
+
+              <div style="background:#F8FAFD;border-radius:18px;padding:6px 16px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #EDF1F7;">
+                  <div style="display:flex;align-items:center;gap:11px;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M17.4 3.7v3.4h-3.4"/></svg><span style="font-size:14px;font-weight:700;color:#14233A;">루틴으로 반복</span></div>
+                  <div style="width:46px;height:27px;border-radius:14px;background:#1366CE;position:relative;"><div style="position:absolute;top:3px;right:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.18);"></div></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #EDF1F7;">
+                  <div style="display:flex;align-items:center;gap:11px;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 1.8"/></svg><span style="font-size:14px;font-weight:700;color:#14233A;">반복 시간</span></div>
+                  <div style="padding:7px 13px;border-radius:11px;background:#EAF2FE;color:#1366CE;font-size:13px;font-weight:800;">오전 6:30</div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #EDF1F7;">
+                  <span style="font-size:14px;font-weight:700;color:#14233A;">반복 요일</span>
+                  <div style="display:flex;gap:5px;">
+                    <div style="width:26px;height:26px;border-radius:9px;background:#1366CE;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">월</div>
+                    <div style="width:26px;height:26px;border-radius:9px;background:#1366CE;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">화</div>
+                    <div style="width:26px;height:26px;border-radius:9px;background:#1366CE;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">수</div>
+                    <div style="width:26px;height:26px;border-radius:9px;background:#1366CE;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">목</div>
+                    <div style="width:26px;height:26px;border-radius:9px;background:#1366CE;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">금</div>
+                    <div style="width:26px;height:26px;border-radius:9px;background:#EDF1F7;color:#AEB9CC;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">토</div>
+                    <div style="width:26px;height:26px;border-radius:9px;background:#EDF1F7;color:#AEB9CC;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">일</div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;">
+                  <div style="display:flex;align-items:center;gap:11px;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#2BC4B0" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span style="font-size:14px;font-weight:700;color:#14233A;">지금 바로 시작하기</span></div>
+                  <div style="width:46px;height:27px;border-radius:14px;background:#DDE3EC;position:relative;"><div style="position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.18);"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="position:relative;padding:14px 22px 26px;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 30%);">
+            <div style="height:56px;border-radius:18px;background:#1366CE;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 24px rgba(19,102,206,.26);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>투두 추가하기</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 06 · 지금 하는 중 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#1366CE;margin:0 0 16px 6px;"><span style="color:#9CC2F2;">06</span>&nbsp;&nbsp;그 순간 · "내가 할게요"</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;height:812px;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:radial-gradient(120% 80% at 50% 12%,#1B6BD6 0%,#0E4FA8 42%,#0A2E63 78%,#071E45 100%);">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#fff;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#fff" stroke-width="1.4" opacity=".5"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#fff"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#fff" opacity=".5"/></svg>
+            </div>
+          </div>
+
+          <div style="position:absolute;top:64px;left:18px;right:18px;z-index:28;animation:tdlSlide 4s ease-out infinite;">
+            <div style="background:rgba(255,255,255,.97);border-radius:20px;padding:13px 15px;display:flex;align-items:center;gap:12px;box-shadow:0 18px 40px rgba(0,0,0,.28);">
+              <div style="width:38px;height:38px;border-radius:50%;background:#2E86E6;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none;">석</div>
+              <div style="flex:1;"><div style="font-size:13.5px;font-weight:800;color:#14233A;">석현님이 아침 러닝을 시작했어요</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">방금 전</div></div>
+              <div style="width:9px;height:9px;border-radius:50%;background:#FF9D52;"></div>
+            </div>
+          </div>
+
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;">
+            <div style="position:relative;width:170px;height:170px;display:flex;align-items:center;justify-content:center;margin-bottom:38px;">
+              <span style="position:absolute;width:140px;height:140px;border-radius:50%;border:2px solid rgba(95,227,240,.5);animation:tdlPulse 2.6s infinite;"></span>
+              <span style="position:absolute;width:140px;height:140px;border-radius:50%;border:2px solid rgba(95,227,240,.5);animation:tdlPulse 2.6s .9s infinite;"></span>
+              <span style="position:absolute;width:140px;height:140px;border-radius:50%;border:2px solid rgba(95,227,240,.5);animation:tdlPulse 2.6s 1.8s infinite;"></span>
+              <div style="width:132px;height:132px;border-radius:50%;background:linear-gradient(140deg,#5FE3F0,#2E86E6);display:flex;align-items:center;justify-content:center;font-size:46px;font-weight:800;color:#fff;box-shadow:0 0 60px rgba(95,227,240,.6);animation:tdlGlow 2.6s infinite;">석</div>
+            </div>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(95,227,240,.16);border:1px solid rgba(95,227,240,.4);padding:8px 16px;border-radius:30px;margin-bottom:18px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:#5FE3F0;animation:tdlDot 1.2s infinite;"></span>
+              <span style="font-size:12px;font-weight:800;letter-spacing:.5px;color:#9EEEF7;">지금 라이브</span>
+            </div>
+            <div style="font-size:30px;font-weight:800;color:#fff;letter-spacing:-.6px;margin-bottom:6px;">아침 러닝</div>
+            <div style="font-size:14px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:34px;">12:03 시작 · 루틴</div>
+
+          </div>
+
+          <div style="position:absolute;left:24px;right:24px;bottom:46px;display:flex;gap:12px;align-items:center;">
+            <div style="width:58px;height:58px;border-radius:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
+            <div style="flex:1;height:58px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;gap:7px;color:#fff;font-size:15px;font-weight:800;"><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none"><rect x="7" y="6" width="3.4" height="12" rx="1.2"/><rect x="13.6" y="6" width="3.4" height="12" rx="1.2"/></svg>일시정지</div>
+            <div style="flex:1.2;height:58px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;gap:7px;color:#1366CE;font-size:15px;font-weight:800;box-shadow:0 14px 34px rgba(0,0,0,.3);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg>완료</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 07 · 라이브 룸 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">07</span>&nbsp;&nbsp;라이브 룸</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;height:812px;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:linear-gradient(170deg,#0A2E63 0%,#0E4FA8 50%,#10407E 100%);">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#fff;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#fff" stroke-width="1.4" opacity=".5"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#fff"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#fff" opacity=".5"/></svg>
+            </div>
+          </div>
+
+          <div style="position:absolute;inset:54px 0 0 0;padding:14px 22px 0;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.16);padding:6px 13px;border-radius:20px;">
+                <span style="width:7px;height:7px;border-radius:50%;background:#5FE3F0;animation:tdlDot 1.2s infinite;"></span>
+                <span style="font-size:11px;font-weight:800;letter-spacing:.4px;color:#fff;">라이브 룸</span>
+              </div>
+              <div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></div>
+            </div>
+            <div style="color:#fff;margin-bottom:8px;"><div style="font-size:26px;font-weight:800;letter-spacing:-.5px;">아침 러닝</div><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.7);">3명이 함께 달리는 중 · 12분</div></div>
+
+            <div style="position:relative;height:300px;margin:6px 0 0;">
+              <div style="position:absolute;top:96px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;">
+                <div style="position:relative;width:104px;height:104px;display:flex;align-items:center;justify-content:center;">
+                  <span style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(95,227,240,.55);animation:tdlPulse 2.4s infinite;"></span>
+                  <div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(140deg,#5FE3F0,#2E86E6);color:#fff;font-size:34px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 0 44px rgba(95,227,240,.55);">석</div>
+                </div>
+                <div style="background:rgba(0,0,0,.25);padding:4px 12px;border-radius:14px;font-size:12px;font-weight:700;color:#fff;">석현 · 호스트</div>
+              </div>
+              <div style="position:absolute;top:18px;left:30px;display:flex;flex-direction:column;align-items:center;gap:7px;">
+                <div style="position:relative;width:64px;height:64px;"><span style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(95,227,240,.5);animation:tdlPulse 2.4s .7s infinite;"></span><div style="width:64px;height:64px;border-radius:50%;background:#2BC4B0;color:#fff;font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center;">서</div></div>
+                <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.85);">서연</div>
+              </div>
+              <div style="position:absolute;top:36px;right:30px;display:flex;flex-direction:column;align-items:center;gap:7px;">
+                <div style="position:relative;width:64px;height:64px;"><span style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,157,82,.5);animation:tdlPulse 2.4s 1.3s infinite;"></span><div style="width:64px;height:64px;border-radius:50%;background:#FF9D52;color:#fff;font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center;">엄</div></div>
+                <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.85);">엄마</div>
+              </div>
+              <div style="position:absolute;left:48px;bottom:6px;font-size:30px;animation:tdlFloat 3.4s infinite;">🔥</div>
+              <div style="position:absolute;left:50%;bottom:0;font-size:26px;animation:tdlFloat 3.4s 1.1s infinite;">💪</div>
+              <div style="position:absolute;right:54px;bottom:8px;font-size:28px;animation:tdlFloat 3.4s 2.2s infinite;">🎉</div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:10px;margin-top:6px;margin-bottom:10px;">
+              <div style="width:50px;height:50px;border-radius:13px;background:repeating-linear-gradient(135deg,#1d4f8c,#1d4f8c 6px,#22578f 6px,#22578f 12px);display:flex;align-items:center;justify-content:center;flex:none;"><span style="font-size:8px;font-family:monospace;color:rgba(255,255,255,.65);">사진</span></div>
+              <div style="flex:1;color:#fff;"><div style="font-size:13px;font-weight:800;">석현님이 지금 모습을 공유했어요</div><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.6);">방금 · 탭하여 보기</div></div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            </div>
+            <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:13px 15px;display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:9px;"><div style="width:26px;height:26px;border-radius:50%;background:#2BC4B0;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;">서</div><div style="font-size:13px;color:#fff;"><b style="font-weight:800;">서연</b> &nbsp;마지막 바퀴 가자! 🏃</div></div>
+              <div style="display:flex;align-items:center;gap:9px;"><div style="width:26px;height:26px;border-radius:50%;background:#FF9D52;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;">엄</div><div style="font-size:13px;color:#fff;"><b style="font-weight:800;">엄마</b> &nbsp;둘 다 정말 자랑스러워 💙</div></div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:18px;right:18px;bottom:30px;display:flex;align-items:center;gap:9px;">
+            <div style="display:flex;gap:7px;">
+              <div style="width:46px;height:46px;border-radius:16px;background:#5FE3F0;display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A2E63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
+              <div style="width:46px;height:46px;border-radius:16px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:22px;">🔥</div>
+            </div>
+            <div style="flex:1;height:46px;border-radius:16px;background:rgba(255,255,255,.14);display:flex;align-items:center;padding:0 16px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.6);">응원 메시지 보내기…</div>
+            <div style="width:46px;height:46px;border-radius:16px;background:#1366CE;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(19,102,206,.4);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-7-7 16-2.5-6.5L4 12z"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 08 · 타임라인 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">08</span>&nbsp;&nbsp;활동 · 타임라인</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;">
+            <div style="padding:10px 22px 60px;">
+              <div style="font-size:27px;font-weight:800;color:#14233A;letter-spacing:-.5px;margin-bottom:16px;">활동</div>
+              <div style="display:flex;gap:8px;margin-bottom:24px;">
+                <div style="padding:9px 16px;border-radius:14px;background:#14233A;color:#fff;font-size:12.5px;font-weight:700;">전체</div>
+                <div style="padding:9px 16px;border-radius:14px;background:#fff;color:#7C8AA0;font-size:12.5px;font-weight:700;box-shadow:0 3px 10px rgba(20,50,90,.05);">이사 준비</div>
+                <div style="padding:9px 16px;border-radius:14px;background:#fff;color:#7C8AA0;font-size:12.5px;font-weight:700;box-shadow:0 3px 10px rgba(20,50,90,.05);">커플</div>
+              </div>
+
+              <div style="position:relative;">
+                <div style="position:absolute;left:19px;top:8px;bottom:18px;width:2px;background:#E0E6EF;"></div>
+
+                <div style="position:relative;display:flex;gap:16px;margin-bottom:22px;">
+                  <div style="width:40px;height:40px;border-radius:50%;background:#2BC4B0;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;z-index:1;border:3px solid #F2F6FC;">서</div>
+                  <div style="flex:1;padding-top:1px;"><div style="font-size:14px;color:#14233A;font-weight:600;"><b style="font-weight:800;">서연</b>님이 <b style="font-weight:800;">장보기</b>를 끝냈어요</div><div style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;background:#E2F8F4;padding:5px 11px;border-radius:11px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#159B89" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg><span style="font-size:11px;font-weight:800;color:#159B89;">12개 완료</span></div><div style="font-size:11px;font-weight:600;color:#9AA7BC;margin-top:7px;">2분 전</div></div>
+                </div>
+
+                <div style="position:relative;display:flex;gap:16px;margin-bottom:22px;">
+                  <div style="position:relative;width:40px;height:40px;flex:none;z-index:1;"><span style="position:absolute;inset:0;border-radius:50%;border:2px solid #2E86E6;animation:tdlPulse 2s infinite;"></span><div style="width:40px;height:40px;border-radius:50%;background:#2E86E6;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;border:3px solid #F2F6FC;">석</div></div>
+                  <div style="flex:1;padding-top:1px;"><div style="font-size:14px;color:#14233A;font-weight:600;"><b style="font-weight:800;">석현</b>님이 <b style="font-weight:800;">아침 러닝</b>을 시작했어요</div><div style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;background:#EAF2FE;padding:5px 11px;border-radius:11px;"><span style="width:6px;height:6px;border-radius:50%;background:#2E86E6;animation:tdlDot 1.4s infinite;"></span><span style="font-size:11px;font-weight:800;color:#1366CE;">지금 라이브 · 참여</span></div><div style="font-size:11px;font-weight:600;color:#9AA7BC;margin-top:7px;">12분 전</div></div>
+                </div>
+
+                <div style="position:relative;display:flex;gap:16px;margin-bottom:22px;">
+                  <div style="width:40px;height:40px;border-radius:50%;background:#FF9D52;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;z-index:1;border:3px solid #F2F6FC;">엄</div>
+                  <div style="flex:1;padding-top:1px;"><div style="font-size:14px;color:#14233A;font-weight:600;"><b style="font-weight:800;">엄마</b>가 <b style="font-weight:800;">건강 체크</b>를 완료했어요</div><div style="font-size:11px;font-weight:600;color:#9AA7BC;margin-top:7px;">1시간 전</div></div>
+                </div>
+
+                <div style="position:relative;display:flex;gap:16px;margin-bottom:22px;">
+                  <div style="width:40px;height:40px;border-radius:50%;background:#EDF1F7;display:flex;align-items:center;justify-content:center;flex:none;z-index:1;border:3px solid #F2F6FC;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+                  <div style="flex:1;padding-top:1px;"><div style="font-size:14px;color:#14233A;font-weight:600;"><b style="font-weight:800;">이사 준비</b>가 <b style="font-weight:800;">80%</b>에 도달했어요</div><div style="height:6px;border-radius:4px;background:#EDF1F7;overflow:hidden;margin-top:9px;max-width:170px;"><div style="width:80%;height:100%;background:linear-gradient(90deg,#34D9C4,#1366CE);border-radius:4px;"></div></div><div style="font-size:11px;font-weight:600;color:#9AA7BC;margin-top:8px;">5시간 전</div></div>
+                </div>
+
+                <div style="position:relative;display:flex;gap:16px;">
+                  <div style="width:40px;height:40px;border-radius:50%;background:#6B5BD0;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;z-index:1;border:3px solid #F2F6FC;">민</div>
+                  <div style="flex:1;padding-top:1px;"><div style="font-size:14px;color:#14233A;font-weight:600;"><b style="font-weight:800;">민재</b>님이 <b style="font-weight:800;">이사 준비</b>에 참여했어요</div><div style="font-size:11px;font-weight:600;color:#9AA7BC;margin-top:7px;">어제 · 18:40</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <dc-import name="TudlyNav" active="activity" hint-size="100%,92px" style="position:relative;z-index:24;"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 09 · 루틴 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">09</span>&nbsp;&nbsp;루틴</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;">
+            <div style="padding:10px 22px 120px;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;">
+                <div><div style="font-size:27px;font-weight:800;color:#14233A;letter-spacing:-.5px;">루틴</div><div style="font-size:12.5px;font-weight:600;color:#9AA7BC;margin-top:2px;">금요일 아침</div></div>
+                <div style="display:inline-flex;align-items:center;gap:6px;background:#FFF1E6;padding:8px 13px;border-radius:14px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="#FF9D52"><path d="M12 2c1 4-2 5-2 8a4 4 0 0 0 8 0c0-1-.3-2-1-3 2 1 4 4 4 7a8 8 0 1 1-16 0c0-5 5-7 7-12z"/></svg><span style="font-size:13px;font-weight:800;color:#E07B2E;">12일째</span></div>
+              </div>
+
+              <div style="background:linear-gradient(150deg,#1366CE,#0E4FA8);border-radius:26px;padding:22px;color:#fff;margin-bottom:24px;box-shadow:0 18px 38px rgba(19,102,206,.28);display:flex;align-items:center;gap:20px;">
+                <div style="position:relative;width:84px;height:84px;flex:none;">
+                  <svg width="84" height="84" viewBox="0 0 84 84"><circle cx="42" cy="42" r="36" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="9"/><circle cx="42" cy="42" r="36" fill="none" stroke="#5FE3F0" stroke-width="9" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="90" transform="rotate(-90 42 42)"/></svg>
+                  <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="font-size:22px;font-weight:800;">3/5</div></div>
+                </div>
+                <div><div style="font-size:18px;font-weight:800;">거의 다 왔어요</div><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.8);margin-top:3px;">오늘 2개 남았어요.<br>다음은 독서예요.</div></div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div style="background:#fff;border-radius:18px;padding:15px;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;gap:13px;">
+                  <div style="width:42px;height:42px;border-radius:14px;background:#E2F8F4;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#159B89" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg></div>
+                  <div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#AEB9CC;text-decoration:line-through;">아침 러닝</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">6:30 · 매일</div></div>
+                  <div style="width:26px;height:26px;border-radius:9px;background:#46D38A;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:15px;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;gap:13px;">
+                  <div style="width:42px;height:42px;border-radius:14px;background:#EEEAFB;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B5BD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a4 4 0 0 0-4 4c0 3 4 4 4 8 0-4 4-5 4-8a4 4 0 0 0-4-4z"/></svg></div>
+                  <div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#AEB9CC;text-decoration:line-through;">명상</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">7:00 · 매일</div></div>
+                  <div style="width:26px;height:26px;border-radius:9px;background:#46D38A;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:15px;box-shadow:0 8px 20px rgba(19,102,206,.12);border:1.5px solid #CFE2FB;display:flex;align-items:center;gap:13px;">
+                  <div style="width:42px;height:42px;border-radius:14px;background:#EAF2FE;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7a2 2 0 0 1 2 2v12a1.5 1.5 0 0 0-1.5-1.5H4z"/><path d="M20 5h-7a2 2 0 0 0-2 2v12a1.5 1.5 0 0 1 1.5-1.5H20z"/></svg></div>
+                  <div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">독서</div><div style="font-size:11.5px;font-weight:700;color:#1366CE;">다음 차례 · 20분</div></div>
+                  <div style="padding:9px 14px;border-radius:13px;background:#1366CE;color:#fff;font-size:11.5px;font-weight:800;display:flex;align-items:center;gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M7 5l11 7-11 7z"/></svg>시작</div>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:15px;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;gap:13px;">
+                  <div style="width:42px;height:42px;border-radius:14px;background:#FFF1E6;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E07B2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l3 3M18 4l-3 3"/><rect x="7" y="7" width="10" height="13" rx="3"/></svg></div>
+                  <div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">운동</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">18:00 · 월·수·금</div></div>
+                  <div style="width:26px;height:26px;border-radius:9px;border:2.5px solid #DDE3EC;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <dc-import name="TudlyNav" active="routine" hint-size="100%,92px" style="position:relative;z-index:24;"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 10 · 프로필 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">10</span>&nbsp;&nbsp;프로필 · 통계</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#fff;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#fff" stroke-width="1.4" opacity=".5"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#fff"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#fff" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:absolute;inset:0 0 auto 0;height:250px;background:linear-gradient(160deg,#1366CE 0%,#0E4FA8 100%);"></div>
+          <div style="position:relative;">
+            <div style="padding:14px 22px 120px;">
+              <div style="display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff;margin-bottom:22px;">
+                <div style="width:88px;height:88px;border-radius:50%;background:linear-gradient(140deg,#5FE3F0,#2E86E6);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;color:#fff;border:3px solid rgba(255,255,255,.4);box-shadow:0 12px 30px rgba(0,0,0,.2);margin-bottom:13px;">석</div>
+                <div style="font-size:23px;font-weight:800;">김석현</div>
+                <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.78);margin-top:2px;">@seokhyun · 그룹 4개</div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+                <div style="background:#fff;border-radius:20px;padding:17px;box-shadow:0 6px 20px rgba(17,40,86,.06);">
+                  <div style="font-size:30px;font-weight:800;color:#1366CE;letter-spacing:-.5px;">92%</div>
+                  <div style="font-size:12px;font-weight:600;color:#9AA7BC;margin-top:2px;">완료율</div>
+                </div>
+                <div style="background:#fff;border-radius:20px;padding:17px;box-shadow:0 6px 20px rgba(17,40,86,.06);">
+                  <div style="font-size:30px;font-weight:800;color:#E07B2E;letter-spacing:-.5px;">12</div>
+                  <div style="font-size:12px;font-weight:600;color:#9AA7BC;margin-top:2px;">연속 일수</div>
+                </div>
+                <div style="background:#fff;border-radius:20px;padding:17px;box-shadow:0 6px 20px rgba(17,40,86,.06);">
+                  <div style="font-size:30px;font-weight:800;color:#159B89;letter-spacing:-.5px;">840</div>
+                  <div style="font-size:12px;font-weight:600;color:#9AA7BC;margin-top:2px;">라이프 점수</div>
+                </div>
+                <div style="background:#fff;border-radius:20px;padding:17px;box-shadow:0 6px 20px rgba(17,40,86,.06);">
+                  <div style="font-size:30px;font-weight:800;color:#6B5BD0;letter-spacing:-.5px;">88%</div>
+                  <div style="font-size:12px;font-weight:600;color:#9AA7BC;margin-top:2px;">루틴 점수</div>
+                </div>
+              </div>
+
+              <div style="background:#fff;border-radius:22px;padding:18px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:14px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><div style="font-size:15px;font-weight:800;color:#14233A;">꾸준함</div><div style="font-size:12px;font-weight:700;color:#1366CE;">올해 248회 완료</div></div>
+                <div style="font-size:11.5px;font-weight:600;color:#9AA7BC;margin-bottom:15px;">최근 16주 동안의 활동</div>
+                <div style="display:grid;grid-template-columns:repeat(16,1fr);grid-template-rows:repeat(7,1fr);grid-auto-flow:column;gap:4px;width:100%;aspect-ratio:16/7;">
+                  <div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#EDF1F7;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#EDF1F7;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#EDF1F7;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#EDF1F7;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#EDF1F7;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#1257C4;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#1257C4;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#1257C4;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#1257C4;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#1257C4;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#1257C4;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#1257C4;"></div><div style="border-radius:3px;background:#1257C4;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#1257C4;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#7DB4ED;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#1257C4;"></div><div style="border-radius:3px;background:#2E86E6;"></div><div style="border-radius:3px;background:#C8E0FA;"></div><div style="border-radius:3px;background:#2E86E6;"></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:14px;">
+                  <span style="font-size:10px;font-weight:600;color:#AEB9CC;margin-right:2px;">적음</span>
+                  <div style="width:11px;height:11px;border-radius:3px;background:#EDF1F7;"></div>
+                  <div style="width:11px;height:11px;border-radius:3px;background:#C8E0FA;"></div>
+                  <div style="width:11px;height:11px;border-radius:3px;background:#7DB4ED;"></div>
+                  <div style="width:11px;height:11px;border-radius:3px;background:#2E86E6;"></div>
+                  <div style="width:11px;height:11px;border-radius:3px;background:#1257C4;"></div>
+                  <span style="font-size:10px;font-weight:600;color:#AEB9CC;margin-left:2px;">많음</span>
+                </div>
+              </div>
+
+              <div style="font-size:15px;font-weight:800;color:#14233A;margin:8px 2px 12px;">최근 활동</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="background:#fff;border-radius:16px;padding:13px 15px;box-shadow:0 4px 14px rgba(17,40,86,.05);display:flex;align-items:center;gap:12px;"><div style="width:30px;height:30px;border-radius:10px;background:#E2F8F4;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#159B89" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div><div style="flex:1;font-size:13px;font-weight:700;color:#14233A;">아침 러닝 완료</div><span style="font-size:11px;font-weight:600;color:#AEB9CC;">12분</span></div>
+                <div style="background:#fff;border-radius:16px;padding:13px 15px;box-shadow:0 4px 14px rgba(17,40,86,.05);display:flex;align-items:center;gap:12px;"><div style="width:30px;height:30px;border-radius:10px;background:#EAF2FE;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div style="flex:1;font-size:13px;font-weight:700;color:#14233A;">여행에 투두 3개 추가</div><span style="font-size:11px;font-weight:600;color:#AEB9CC;">2시간</span></div>
+              </div>
+            </div>
+          </div>
+          <dc-import name="TudlyNav" active="profile" hint-size="100%,92px" style="position:relative;z-index:24;"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 11 · 설정 ===================== -->
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">11</span>&nbsp;&nbsp;설정 · 테마 색상</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:10;">
+            <div style="width:38px;height:38px;border-radius:13px;background:#fff;box-shadow:0 4px 12px rgba(20,50,90,.06);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div>
+            <div style="font-size:16px;font-weight:800;color:#14233A;">설정</div>
+            <div style="width:38px;height:38px;"></div>
+          </div>
+          <div style="position:relative;">
+            <div style="padding:8px 22px 24px;">
+              <div style="background:#fff;border-radius:20px;padding:14px 16px;box-shadow:0 6px 20px rgba(17,40,86,.06);display:flex;align-items:center;gap:13px;margin-bottom:22px;">
+                <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(140deg,#5FE3F0,#2E86E6);color:#fff;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;flex:none;">석</div>
+                <div style="flex:1;"><div style="font-size:15.5px;font-weight:800;color:#14233A;">김석현</div><div style="font-size:12px;font-weight:600;color:#9AA7BC;">@seokhyun · 프로필 편집</div></div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+              </div>
+
+              <div style="font-size:13px;font-weight:800;color:#7C8AA0;margin:0 0 11px 4px;">테마 색상</div>
+              <div style="background:#fff;border-radius:22px;padding:20px 18px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:22px;">
+                <div style="display:flex;justify-content:space-between;">
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:9px;">
+                    <div style="width:46px;height:46px;border-radius:50%;background:#1366CE;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #fff,0 0 0 5px #1366CE;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div>
+                    <span style="font-size:11px;font-weight:800;color:#14233A;">오션</span>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:9px;">
+                    <div style="width:46px;height:46px;border-radius:50%;background:#0FB5A0;"></div>
+                    <span style="font-size:11px;font-weight:600;color:#9AA7BC;">민트</span>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:9px;">
+                    <div style="width:46px;height:46px;border-radius:50%;background:#6B5BD0;"></div>
+                    <span style="font-size:11px;font-weight:600;color:#9AA7BC;">바이올렛</span>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:9px;">
+                    <div style="width:46px;height:46px;border-radius:50%;background:#FF7A6B;"></div>
+                    <span style="font-size:11px;font-weight:600;color:#9AA7BC;">코랄</span>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:9px;">
+                    <div style="width:46px;height:46px;border-radius:50%;background:#FF9D52;"></div>
+                    <span style="font-size:11px;font-weight:600;color:#9AA7BC;">선셋</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:9px;margin-top:20px;padding-top:18px;border-top:1px solid #F0F3F8;">
+                  <div style="flex:1;height:42px;border-radius:14px;background:#1366CE;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;">미리보기</div>
+                  <div style="height:42px;padding:0 16px;border-radius:14px;background:#EAF2FE;display:flex;align-items:center;color:#1366CE;font-size:13px;font-weight:800;">배지</div>
+                  <div style="width:42px;height:42px;border-radius:14px;background:#EAF2FE;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2.2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg></div>
+                </div>
+              </div>
+
+              <div style="font-size:13px;font-weight:800;color:#7C8AA0;margin:0 0 11px 4px;">환경설정</div>
+              <div style="background:#fff;border-radius:22px;padding:2px 18px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:22px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;border-bottom:1px solid #F0F3F8;">
+                  <div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:10px;background:#EEF2F7;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></div><span style="font-size:14.5px;font-weight:700;color:#14233A;">다크 모드</span></div>
+                  <div style="width:46px;height:27px;border-radius:14px;background:#DDE3EC;position:relative;"><div style="position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.18);"></div></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;">
+                  <div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:10px;background:#FFF1E6;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#E07B2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg></div><span style="font-size:14.5px;font-weight:700;color:#14233A;">푸시 알림</span></div>
+                  <div style="width:46px;height:27px;border-radius:14px;background:#1366CE;position:relative;"><div style="position:absolute;top:3px;right:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.18);"></div></div>
+                </div>
+              </div>
+
+              <div style="background:#fff;border-radius:22px;padding:2px 18px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:22px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;border-bottom:1px solid #F0F3F8;">
+                  <span style="font-size:14.5px;font-weight:700;color:#14233A;">알림 설정</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;border-bottom:1px solid #F0F3F8;">
+                  <span style="font-size:14.5px;font-weight:700;color:#14233A;">계정</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;border-bottom:1px solid #F0F3F8;">
+                  <span style="font-size:14.5px;font-weight:700;color:#14233A;">언어</span>
+                  <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;font-weight:600;color:#9AA7BC;">한국어</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;">
+                  <span style="font-size:14.5px;font-weight:700;color:#14233A;">도움말</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+
+              <div style="height:52px;border-radius:16px;background:#fff;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;justify-content:center;color:#FF6B6B;font-size:14.5px;font-weight:800;">로그아웃</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">12</span>&nbsp;&nbsp;투두 상세 · 등록/삭제</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:10;"><div style="width:38px;height:38px;border-radius:13px;background:#fff;box-shadow:0 4px 12px rgba(20,50,90,.06);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div><div style="font-size:16px;font-weight:800;color:#14233A;">투두</div><div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#C2CBD8"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></div></div>
+          <div style="position:relative;"><div style="padding:8px 22px 24px;">
+            <div style="display:inline-flex;align-items:center;gap:6px;background:#EAF2FE;padding:6px 12px;border-radius:11px;margin-bottom:14px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.4" height="6.4" rx="2"/><rect x="13.6" y="4" width="6.4" height="6.4" rx="2"/><rect x="4" y="13.6" width="6.4" height="6.4" rx="2"/><rect x="13.6" y="13.6" width="6.4" height="6.4" rx="2"/></svg><span style="font-size:11.5px;font-weight:800;color:#1366CE;">이사 준비 · 짐 싸기</span></div>
+            <div style="font-size:24px;font-weight:800;color:#14233A;letter-spacing:-.4px;margin-bottom:14px;">박스 라벨 붙이기</div>
+            <div style="display:flex;gap:8px;margin-bottom:20px;">
+              <div style="display:flex;align-items:center;gap:6px;background:#fff;padding:8px 13px;border-radius:12px;box-shadow:0 4px 12px rgba(20,50,90,.05);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C8AA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 9h18M8 3v4M16 3v4"/></svg><span style="font-size:12.5px;font-weight:700;color:#14233A;">내일</span></div>
+              <div style="display:flex;align-items:center;gap:6px;background:#fff;padding:8px 13px;border-radius:12px;box-shadow:0 4px 12px rgba(20,50,90,.05);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF9D52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg><span style="font-size:12.5px;font-weight:700;color:#14233A;">보통</span></div>
+            </div>
+            <div style="height:54px;border-radius:16px;background:#1366CE;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:15px;font-weight:800;margin-bottom:22px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>내가 할게요</div>
+            <div style="background:#fff;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span style="font-size:14px;font-weight:800;color:#14233A;">체크리스트</span><span style="font-size:12px;font-weight:700;color:#9AA7BC;">2/3</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:7px 0;"><div style="width:22px;height:22px;border-radius:7px;background:#46D38A;display:flex;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div><span style="font-size:13.5px;font-weight:600;color:#AEB9CC;text-decoration:line-through;">라벨지 구매</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:7px 0;"><div style="width:22px;height:22px;border-radius:7px;background:#46D38A;display:flex;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div><span style="font-size:13.5px;font-weight:600;color:#AEB9CC;text-decoration:line-through;">방별로 분류</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:7px 0;"><div style="width:22px;height:22px;border-radius:7px;border:2.5px solid #DDE3EC;"></div><span style="font-size:13.5px;font-weight:700;color:#14233A;">박스에 부착</span></div>
+            </div>
+            <div style="background:#fff;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:14px;">
+              <div style="font-size:14px;font-weight:800;color:#14233A;margin-bottom:12px;">사진</div>
+              <div style="display:flex;gap:9px;">
+                <div style="width:64px;height:64px;border-radius:14px;background:repeating-linear-gradient(135deg,#E7EDF5,#E7EDF5 6px,#EEF2F8 6px,#EEF2F8 12px);"></div>
+                <div style="width:64px;height:64px;border-radius:14px;background:repeating-linear-gradient(135deg,#E7EDF5,#E7EDF5 6px,#EEF2F8 6px,#EEF2F8 12px);"></div>
+                <div style="width:64px;height:64px;border-radius:14px;background:#F4F7FB;border:1.5px dashed #C9D3E0;display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#AEB9CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
+              </div>
+            </div>
+            <div style="background:#fff;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;"><span style="font-size:14px;font-weight:800;color:#14233A;">이 투두의 꾸준함</span><span style="font-size:11.5px;font-weight:700;color:#1366CE;">14주째</span></div>
+              <div style="display:grid;grid-template-columns:repeat(14,1fr);grid-template-rows:repeat(7,1fr);grid-auto-flow:column;gap:3px;width:100%;aspect-ratio:2/1;"><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div></div>
+            </div>
+            <div style="background:#fff;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(17,40,86,.06);">
+              <div style="font-size:14px;font-weight:800;color:#14233A;margin-bottom:13px;">댓글</div>
+              <div style="display:flex;gap:9px;margin-bottom:11px;"><div style="width:28px;height:28px;border-radius:50%;background:#2BC4B0;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;">서</div><div style="background:#F4F7FB;border-radius:12px;padding:9px 12px;font-size:12.5px;font-weight:600;color:#14233A;">큰 박스부터 하면 편해요!</div></div>
+              <div style="display:flex;align-items:center;gap:9px;"><div style="width:28px;height:28px;border-radius:50%;background:#EDF1F7;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#AEB9CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span style="font-size:12.5px;font-weight:600;color:#AEB9CC;">댓글 달기…</span></div>
+            </div>
+          </div></div>
+          <div style="position:relative;padding:14px 22px 26px;background:linear-gradient(180deg,rgba(242,246,252,0),#F2F6FC 32%);display:flex;gap:10px;">
+            <div style="flex:1;height:54px;border-radius:16px;background:#1366CE;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:15px;font-weight:800;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg>완료로 등록</div>
+            <div style="width:54px;height:54px;border-radius:16px;background:#fff;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">13</span>&nbsp;&nbsp;꾸준함 · 루틴별 잔디</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:10;"><div style="width:38px;height:38px;border-radius:13px;background:#fff;box-shadow:0 4px 12px rgba(20,50,90,.06);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div><div style="font-size:16px;font-weight:800;color:#14233A;">꾸준함</div><div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;"></div></div>
+          <div style="position:relative;"><div style="padding:8px 22px 24px;">
+            <div style="font-size:13px;font-weight:600;color:#9AA7BC;margin-bottom:4px;">루틴별 꾸준함</div>
+            <div style="font-size:21px;font-weight:800;color:#14233A;letter-spacing:-.3px;margin-bottom:18px;">올해 248회 · 최고 32일 연속</div>
+            <div style="background:#fff;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:14px;"><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;"><div style="width:40px;height:40px;border-radius:13px;background:#E2F8F4;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#159B89" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg></div><div style="flex:1;"><div style="font-size:15px;font-weight:800;color:#14233A;">아침 러닝</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">매일 6:30</div></div><div style="font-size:12px;font-weight:800;color:#159B89;background:#E2F8F4;padding:6px 11px;border-radius:11px;">32일</div></div><div style="display:grid;grid-template-columns:repeat(14,1fr);grid-template-rows:repeat(7,1fr);grid-auto-flow:column;gap:3px;width:100%;aspect-ratio:2/1;"><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div></div></div>
+            <div style="background:#fff;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:14px;"><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;"><div style="width:40px;height:40px;border-radius:13px;background:#EEEAFB;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B5BD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a4 4 0 0 0-4 4c0 3 4 4 4 8 0-4 4-5 4-8a4 4 0 0 0-4-4z"/></svg></div><div style="flex:1;"><div style="font-size:15px;font-weight:800;color:#14233A;">명상</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">매일 7:00</div></div><div style="font-size:12px;font-weight:800;color:#6B5BD0;background:#EEEAFB;padding:6px 11px;border-radius:11px;">21일</div></div><div style="display:grid;grid-template-columns:repeat(14,1fr);grid-template-rows:repeat(7,1fr);grid-auto-flow:column;gap:3px;width:100%;aspect-ratio:2/1;"><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div></div></div>
+            <div style="background:#fff;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:14px;"><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;"><div style="width:40px;height:40px;border-radius:13px;background:#EAF2FE;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7a2 2 0 0 1 2 2v12a1.5 1.5 0 0 0-1.5-1.5H4z"/><path d="M20 5h-7a2 2 0 0 0-2 2v12a1.5 1.5 0 0 1 1.5-1.5H20z"/></svg></div><div style="flex:1;"><div style="font-size:15px;font-weight:800;color:#14233A;">독서</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">매일 20:00</div></div><div style="font-size:12px;font-weight:800;color:#1366CE;background:#EAF2FE;padding:6px 11px;border-radius:11px;">12일</div></div><div style="display:grid;grid-template-columns:repeat(14,1fr);grid-template-rows:repeat(7,1fr);grid-auto-flow:column;gap:3px;width:100%;aspect-ratio:2/1;"><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div></div></div>
+            <div style="background:#fff;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:14px;"><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;"><div style="width:40px;height:40px;border-radius:13px;background:#FFF1E6;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E07B2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l3 3M18 4l-3 3"/><rect x="7" y="7" width="10" height="13" rx="3"/></svg></div><div style="flex:1;"><div style="font-size:15px;font-weight:800;color:#14233A;">운동</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">월·수·금</div></div><div style="font-size:12px;font-weight:800;color:#E07B2E;background:#FFF1E6;padding:6px 11px;border-radius:11px;">8주</div></div><div style="display:grid;grid-template-columns:repeat(14,1fr);grid-template-rows:repeat(7,1fr);grid-auto-flow:column;gap:3px;width:100%;aspect-ratio:2/1;"><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#EDF1F7;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#7DB4ED;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#1257C4;"></div><div style="border-radius:2.5px;background:#2E86E6;"></div><div style="border-radius:2.5px;background:#C8E0FA;"></div></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">14</span>&nbsp;&nbsp;설정 · 알림</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:10;"><div style="width:38px;height:38px;border-radius:13px;background:#fff;box-shadow:0 4px 12px rgba(20,50,90,.06);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div><div style="font-size:16px;font-weight:800;color:#14233A;">알림 설정</div><div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;"></div></div>
+          <div style="position:relative;"><div style="padding:8px 22px 24px;">
+            <div style="font-size:12px;font-weight:800;letter-spacing:.3px;color:#9AA7BC;margin:0 0 10px 4px;">활동</div>
+            <div style="background:#fff;border-radius:22px;padding:2px 18px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:22px;"><div style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;border-bottom:1px solid #F0F3F8;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:10px;background:#E2F8F4;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#159B89" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg></div><span style="font-size:14.5px;font-weight:700;color:#14233A;">라이브 시작 알림</span></div><div style="width:46px;height:27px;border-radius:14px;background:#1366CE;position:relative;flex:none;"><div style="position:absolute;top:3px;right:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.18);"></div></div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;border-bottom:1px solid #F0F3F8;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:10px;background:#EAF2FE;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div><span style="font-size:14.5px;font-weight:700;color:#14233A;">투두 완료 알림</span></div><div style="width:46px;height:27px;border-radius:14px;background:#1366CE;position:relative;flex:none;"><div style="position:absolute;top:3px;right:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.18);"></div></div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:10px;background:#EEEAFB;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6B5BD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span style="font-size:14.5px;font-weight:700;color:#14233A;">댓글 알림</span></div><div style="width:46px;height:27px;border-radius:14px;background:#1366CE;position:relative;flex:none;"><div style="position:absolute;top:3px;right:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.18);"></div></div></div></div>
+            <div style="font-size:12px;font-weight:800;letter-spacing:.3px;color:#9AA7BC;margin:0 0 10px 4px;">친구</div>
+            <div style="background:#fff;border-radius:22px;padding:2px 18px;box-shadow:0 6px 20px rgba(17,40,86,.06);"><div style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:10px;background:#FFF1E6;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#E07B2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><path d="M18 8v6M21 11h-6"/></svg></div><span style="font-size:14.5px;font-weight:700;color:#14233A;">친구 요청</span></div><div style="width:46px;height:27px;border-radius:14px;background:#1366CE;position:relative;flex:none;"><div style="position:absolute;top:3px;right:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.18);"></div></div></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">15</span>&nbsp;&nbsp;설정 · 계정</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:10;"><div style="width:38px;height:38px;border-radius:13px;background:#fff;box-shadow:0 4px 12px rgba(20,50,90,.06);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div><div style="font-size:16px;font-weight:800;color:#14233A;">계정</div><div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;"></div></div>
+          <div style="position:relative;"><div style="padding:8px 22px 24px;">
+            <div style="background:#fff;border-radius:20px;padding:14px 16px;box-shadow:0 6px 20px rgba(17,40,86,.06);display:flex;align-items:center;gap:13px;margin-bottom:22px;"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(140deg,#5FE3F0,#2E86E6);color:#fff;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;flex:none;">석</div><div style="flex:1;"><div style="font-size:15.5px;font-weight:800;color:#14233A;">김석현</div><div style="font-size:12px;font-weight:600;color:#9AA7BC;">@seokhyun</div></div><div style="font-size:12.5px;font-weight:800;color:#1366CE;background:#EAF2FE;padding:7px 13px;border-radius:12px;">편집</div></div>
+            <div style="background:#fff;border-radius:22px;padding:2px 18px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:22px;"><div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid #F0F3F8;"><span style="font-size:14.5px;font-weight:700;color:#14233A;">이메일</span><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;font-weight:600;color:#9AA7BC;">junho@email.com</span></div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid #F0F3F8;"><span style="font-size:14.5px;font-weight:700;color:#14233A;">비밀번호 변경</span><div style="display:flex;align-items:center;gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid #F0F3F8;"><span style="font-size:14.5px;font-weight:700;color:#14233A;">연결된 계정</span><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;font-weight:600;color:#9AA7BC;">Apple</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;"><span style="font-size:14.5px;font-weight:700;color:#14233A;">데이터 내보내기</span><div style="display:flex;align-items:center;gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div></div></div>
+            <div style="height:52px;border-radius:16px;background:#fff;box-shadow:0 5px 16px rgba(17,40,86,.05);display:flex;align-items:center;justify-content:center;gap:8px;color:#FF6B6B;font-size:14.5px;font-weight:800;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>계정 삭제</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">16</span>&nbsp;&nbsp;설정 · 도움말</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:10;"><div style="width:38px;height:38px;border-radius:13px;background:#fff;box-shadow:0 4px 12px rgba(20,50,90,.06);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div><div style="font-size:16px;font-weight:800;color:#14233A;">도움말</div><div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;"></div></div>
+          <div style="position:relative;"><div style="padding:8px 22px 24px;">
+            <div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 5px 16px rgba(17,40,86,.05);margin-bottom:22px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#AEB9CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg><span style="font-size:14px;font-weight:600;color:#B4BFCE;">무엇을 도와드릴까요?</span></div>
+            <div style="font-size:13px;font-weight:800;color:#7C8AA0;margin:0 0 11px 4px;">자주 묻는 질문</div>
+            <div style="background:#fff;border-radius:22px;padding:2px 18px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:22px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid #F0F3F8;"><span style="font-size:14px;font-weight:700;color:#14233A;">라이브는 어떻게 시작하나요?</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div><div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid #F0F3F8;"><span style="font-size:14px;font-weight:700;color:#14233A;">그룹에 멤버를 초대하려면?</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div><div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid #F0F3F8;"><span style="font-size:14px;font-weight:700;color:#14233A;">루틴 알림을 끄려면?</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div><div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;"><span style="font-size:14px;font-weight:700;color:#14233A;">투두에 사진을 추가하려면?</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C2CBD8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+            </div>
+            <div style="height:54px;border-radius:16px;background:#1366CE;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:15px;font-weight:800;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 7l9 6 9-6"/></svg>문의하기</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">17</span>&nbsp;&nbsp;그룹 만들기 · 등록</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:10;"><div style="width:38px;height:38px;border-radius:13px;background:#fff;box-shadow:0 4px 12px rgba(20,50,90,.06);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div><div style="font-size:16px;font-weight:800;color:#14233A;">그룹 만들기</div><div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;"></div></div>
+          <div style="position:relative;"><div style="padding:14px 22px 24px;">
+            <div style="display:flex;justify-content:center;margin-bottom:26px;"><div style="position:relative;"><div style="width:78px;height:78px;border-radius:26px;background:#EAF2FE;display:flex;align-items:center;justify-content:center;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg></div><div style="position:absolute;right:-4px;bottom:-4px;width:30px;height:30px;border-radius:50%;background:#1366CE;border:3px solid #F2F6FC;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg></div></div></div>
+            <div style="font-size:13px;font-weight:800;color:#7C8AA0;margin:0 0 8px 2px;">그룹 이름</div>
+            <div style="background:#fff;border:1.5px solid #E6ECF4;border-radius:16px;padding:16px;margin-bottom:22px;box-shadow:0 4px 12px rgba(20,50,90,.04);"><span style="font-size:15px;font-weight:700;color:#14233A;">이사 준비</span></div>
+            <div style="font-size:13px;font-weight:800;color:#7C8AA0;margin:0 0 11px 2px;">색상</div>
+            <div style="display:flex;gap:12px;margin-bottom:24px;">
+              <div style="width:38px;height:38px;border-radius:50%;background:#1366CE;box-shadow:0 0 0 3px #fff,0 0 0 5px #1366CE;"></div>
+              <div style="width:38px;height:38px;border-radius:50%;background:#0FB5A0;"></div>
+              <div style="width:38px;height:38px;border-radius:50%;background:#6B5BD0;"></div>
+              <div style="width:38px;height:38px;border-radius:50%;background:#FF7A6B;"></div>
+              <div style="width:38px;height:38px;border-radius:50%;background:#FF9D52;"></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin:0 2px 11px;"><span style="font-size:13px;font-weight:800;color:#7C8AA0;">친구 초대</span><span style="font-size:11.5px;font-weight:800;color:#1366CE;">2명 선택됨</span></div>
+            <div style="display:flex;gap:12px;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;"><div style="width:48px;height:48px;border-radius:50%;background:#EAF2FE;border:1.5px dashed #9CC2F2;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2.2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg></div><span style="font-size:10px;font-weight:800;color:#1366CE;">초대</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;"><div style="position:relative;width:48px;height:48px;"><div style="width:48px;height:48px;border-radius:50%;background:#2BC4B0;color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;">서</div><div style="position:absolute;right:-2px;bottom:-2px;width:18px;height:18px;border-radius:50%;background:#1366CE;border:2px solid #F2F6FC;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div></div><span style="font-size:10px;font-weight:700;color:#14233A;">서연</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;"><div style="position:relative;width:48px;height:48px;"><div style="width:48px;height:48px;border-radius:50%;background:#6B5BD0;color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;">민</div><div style="position:absolute;right:-2px;bottom:-2px;width:18px;height:18px;border-radius:50%;background:#1366CE;border:2px solid #F2F6FC;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div></div><span style="font-size:10px;font-weight:700;color:#14233A;">민재</span></div>
+            </div>
+          </div></div>
+          <div style="position:relative;padding:14px 22px 26px;background:linear-gradient(180deg,rgba(242,246,252,0),#F2F6FC 32%);"><div style="height:56px;border-radius:18px;background:#1366CE;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 24px rgba(19,102,206,.26);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg>그룹 만들기</div></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">18</span>&nbsp;&nbsp;그룹에 친구 초대</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:10;"><div style="width:38px;height:38px;border-radius:13px;background:#fff;box-shadow:0 4px 12px rgba(20,50,90,.06);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div><div style="font-size:16px;font-weight:800;color:#14233A;">친구 초대</div><div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;"></div></div>
+          <div style="position:relative;"><div style="padding:8px 22px 24px;">
+            <div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 5px 16px rgba(17,40,86,.05);margin-bottom:22px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#AEB9CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg><span style="font-size:14px;font-weight:600;color:#B4BFCE;">이름 또는 아이디 검색</span></div>
+            <div style="font-size:13px;font-weight:800;color:#7C8AA0;margin:0 0 11px 4px;">내 친구</div>
+            <div style="background:#fff;border-radius:22px;padding:2px 18px;box-shadow:0 6px 20px rgba(17,40,86,.06);">
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #F0F3F8;"><div style="width:46px;height:46px;border-radius:50%;background:#2BC4B0;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;">서</div><div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">서연</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">@seoyeon · 함께한 그룹 3개</div></div><div style="width:30px;height:30px;border-radius:50%;background:#1366CE;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #F0F3F8;"><div style="width:46px;height:46px;border-radius:50%;background:#6B5BD0;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;">민</div><div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">민재</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">@minjae · 함께한 그룹 1개</div></div><div style="width:30px;height:30px;border-radius:50%;background:#1366CE;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></svg></div></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #F0F3F8;"><div style="width:46px;height:46px;border-radius:50%;background:#2E86E6;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;">지</div><div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">지우</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">@jiwoo · 친구 12명</div></div><div style="width:30px;height:30px;border-radius:50%;border:2px solid #DDE3EC;flex:none;"></div></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #F0F3F8;"><div style="width:46px;height:46px;border-radius:50%;background:#FF9D52;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;">현</div><div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">현우</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">@hyunwoo · 친구 8명</div></div><div style="width:30px;height:30px;border-radius:50%;border:2px solid #DDE3EC;flex:none;"></div></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 0;"><div style="width:46px;height:46px;border-radius:50%;background:#0FB5A0;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;">수</div><div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">수빈</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">@subin · 친구 24명</div></div><div style="width:30px;height:30px;border-radius:50%;border:2px solid #DDE3EC;flex:none;"></div></div>
+            </div>
+          </div></div>
+          <div style="position:relative;padding:14px 22px 26px;background:linear-gradient(180deg,rgba(242,246,252,0),#F2F6FC 32%);"><div style="height:56px;border-radius:18px;background:#1366CE;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 24px rgba(19,102,206,.26);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><path d="M18 8v6M21 11h-6"/></svg>2명 초대하기</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:none;">
+      <div style="font-size:13px;font-weight:700;color:#5A6B82;margin:0 0 16px 6px;"><span style="color:#AEB9CC;">19</span>&nbsp;&nbsp;친구 관리</div>
+      <div style="width:390px;">
+        <div style="position:relative;width:100%;border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(20,40,80,.13);background:#F2F6FC;">
+          
+          <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:17px 30px 0;z-index:20;">
+            <span style="font-size:15px;font-weight:700;color:#14233A;">9:41</span>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#14233A"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+              <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="#14233A" stroke-width="1.4" opacity=".45"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="#14233A"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#14233A" opacity=".5"/></svg>
+            </div>
+          </div>
+          <div style="position:relative;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:10;"><div style="width:38px;height:38px;border-radius:13px;background:#fff;box-shadow:0 4px 12px rgba(20,50,90,.06);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14233A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div><div style="font-size:16px;font-weight:800;color:#14233A;">친구</div><div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1366CE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><path d="M18 8v6M21 11h-6"/></svg></div></div>
+          <div style="position:relative;"><div style="padding:8px 22px 24px;">
+            <div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 5px 16px rgba(17,40,86,.05);margin-bottom:22px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#AEB9CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg><span style="font-size:14px;font-weight:600;color:#B4BFCE;">친구 검색 또는 아이디로 추가</span></div>
+            <div style="display:flex;align-items:center;gap:7px;margin:0 0 11px 4px;"><span style="font-size:13px;font-weight:800;color:#7C8AA0;">친구 요청</span><span style="font-size:11px;font-weight:800;color:#fff;background:#FF6B6B;padding:1px 7px;border-radius:9px;">2</span></div>
+            <div style="background:#fff;border-radius:22px;padding:2px 18px;box-shadow:0 6px 20px rgba(17,40,86,.06);margin-bottom:22px;">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #F0F3F8;"><div style="width:46px;height:46px;border-radius:50%;background:#FF9D52;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;">태</div><div style="flex:1;min-width:0;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">태경</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">@taekyung</div></div><div style="display:flex;gap:7px;flex:none;"><div style="padding:0 16px;height:34px;border-radius:12px;background:#1366CE;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;">수락</div><div style="width:34px;height:34px;border-radius:12px;background:#F0F3F8;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9AA7BC" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 0;"><div style="width:46px;height:46px;border-radius:50%;background:#0FB5A0;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;">하</div><div style="flex:1;min-width:0;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">하늘</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">@haneul</div></div><div style="display:flex;gap:7px;flex:none;"><div style="padding:0 16px;height:34px;border-radius:12px;background:#1366CE;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;">수락</div><div style="width:34px;height:34px;border-radius:12px;background:#F0F3F8;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9AA7BC" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div></div>
+            </div>
+            <div style="font-size:13px;font-weight:800;color:#7C8AA0;margin:8px 0 13px 4px;">내 친구 5</div>
+            <div style="background:#fff;border-radius:22px;padding:8px 18px;box-shadow:0 6px 20px rgba(17,40,86,.06);">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #F0F3F8;"><div style="position:relative;width:46px;height:46px;flex:none;"><div style="width:46px;height:46px;border-radius:50%;background:#2BC4B0;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;">서</div><div style="position:absolute;right:0;bottom:0;width:13px;height:13px;border-radius:50%;background:#46D38A;border:2.5px solid #fff;"></div></div><div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">서연</div><div style="font-size:11.5px;font-weight:600;color:#159B89;">지금 활동 중</div></div><svg width="20" height="20" viewBox="0 0 24 24" fill="#C2CBD8"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #F0F3F8;"><div style="position:relative;width:46px;height:46px;flex:none;"><div style="width:46px;height:46px;border-radius:50%;background:#6B5BD0;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;">민</div><div style="position:absolute;right:0;bottom:0;width:13px;height:13px;border-radius:50%;background:#46D38A;border:2.5px solid #fff;"></div></div><div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">민재</div><div style="font-size:11.5px;font-weight:600;color:#159B89;">온라인</div></div><svg width="20" height="20" viewBox="0 0 24 24" fill="#C2CBD8"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #F0F3F8;"><div style="position:relative;width:46px;height:46px;flex:none;"><div style="width:46px;height:46px;border-radius:50%;background:#2E86E6;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;">지</div></div><div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">지우</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">2시간 전</div></div><svg width="20" height="20" viewBox="0 0 24 24" fill="#C2CBD8"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #F0F3F8;"><div style="position:relative;width:46px;height:46px;flex:none;"><div style="width:46px;height:46px;border-radius:50%;background:#FF9D52;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;">현</div></div><div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">현우</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">어제</div></div><svg width="20" height="20" viewBox="0 0 24 24" fill="#C2CBD8"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 0;"><div style="position:relative;width:46px;height:46px;flex:none;"><div style="width:46px;height:46px;border-radius:50%;background:#0FB5A0;color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;">수</div></div><div style="flex:1;"><div style="font-size:14.5px;font-weight:800;color:#14233A;">수빈</div><div style="font-size:11.5px;font-weight:600;color:#9AA7BC;">3일 전</div></div><svg width="20" height="20" viewBox="0 0 24 24" fill="#C2CBD8"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
