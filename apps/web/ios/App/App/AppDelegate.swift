@@ -1,5 +1,6 @@
 import UIKit
 import Capacitor
+import FirebaseCore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -7,7 +8,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Configure Firebase (Cloud Messaging) for the todly-a8c34 project so the
+        // @capacitor-firebase/messaging plugin can mint FCM registration tokens.
+        // Values mirror GoogleService-Info.plist; the iOS API key is not secret
+        // (it ships inside the app bundle regardless). Done programmatically to
+        // avoid bundling the plist as an Xcode resource.
+        if FirebaseApp.app() == nil {
+            let options = FirebaseOptions(
+                googleAppID: "1:911768339804:ios:4f9736a7925002a9e72d99",
+                gcmSenderID: "911768339804"
+            )
+            options.apiKey = "AIzaSyC5YIImrsbqcWoTY3Xu4igi9NIEujmjD5Y"
+            options.projectID = "todly-a8c34"
+            options.storageBucket = "todly-a8c34.firebasestorage.app"
+            options.bundleID = "today.mohe.todly"
+            FirebaseApp.configure(options: options)
+        }
         return true
     }
 

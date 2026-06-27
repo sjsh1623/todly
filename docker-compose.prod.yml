@@ -57,8 +57,12 @@ services:
       SPRING_DATA_REDIS_URL: redis://redis:6379
       JWT_SECRET: ${JWT_SECRET:-9rV/iHD75blihUcAqvLxsk+0ctJfG97f8fHTMnIaze19cOePzJrXhiKT70IHxCpW}
       TODLY_STORAGE_DIR: /app/data/photos
+      # Native push (FCM/APNs) — Firebase Admin service account for project
+      # todly-a8c34. Mounted read-only from ./apps/api/secrets (gitignored).
+      TODLY_PUSH_FCM_CREDENTIALS: /app/secrets/todly-fcm-service-account.json
     volumes:
       - photos:/app/data/photos
+      - ./apps/api/secrets:/app/secrets:ro
     networks:
       - todly_internal
       - proxy_network
