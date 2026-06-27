@@ -2,9 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Paint the root element too (not just <body>) so the notch / status-bar strip
+   and any rubber-band overscroll area show the app background instead of white. */
+html {
+  background: var(--color-bg);
+}
+
 body {
   font-family: var(--font);
   background: var(--color-bg);
+  /* Suppress the rubber-band bounce so screens that fit don't feel scrollable.
+     Real scrolling still works when content overflows (small devices). */
+  overscroll-behavior: none;
 }
 
 /* Live/presence animations (shared by task items, presence dots, etc.) */
