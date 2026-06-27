@@ -96,7 +96,7 @@ export default function Activity() {
   })
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--color-bg-2)' }}>
+    <div className="min-h-[calc(100vh_-_92px)]" style={{ background: 'var(--color-bg-2)' }}>
       <StatusBar />
       <div style={{ padding: '10px 22px 90px' }}>
         <h1 style={{ fontSize: 27, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.5px', marginBottom: 16 }}>

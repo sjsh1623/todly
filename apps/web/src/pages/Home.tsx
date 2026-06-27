@@ -38,7 +38,7 @@ export default function Home() {
   const anyLive = liveNow.length > 0
 
   return (
-    <div className="relative min-h-screen" style={{ background: 'var(--color-bg-2)' }}>
+    <div className="relative min-h-[calc(100vh_-_92px)]" style={{ background: 'var(--color-bg-2)' }}>
       {/* Gradient header backdrop */}
       <div className="absolute left-0 right-0 top-0" style={{ height: 240, background: HEADER_GRADIENT }} />
 
