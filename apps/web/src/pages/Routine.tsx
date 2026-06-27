@@ -82,7 +82,7 @@ export default function Routine() {
   }
 
   return (
-    <div className="relative min-h-screen" style={{ background: 'var(--color-bg-2)' }}>
+    <div className="relative min-h-[calc(100vh_-_92px)]" style={{ background: 'var(--color-bg-2)' }}>
       <StatusBar />
       <div style={{ padding: '10px 22px 120px' }}>
         {/* Header */}

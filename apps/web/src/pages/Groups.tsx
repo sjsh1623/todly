@@ -87,7 +87,7 @@ export default function Groups() {
   const { data, isLoading, isError, refetch } = useGroups()
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-[calc(100vh_-_92px)]">
       <StatusBar />
 
       <header style={{ padding: '6px 22px 12px' }}>
