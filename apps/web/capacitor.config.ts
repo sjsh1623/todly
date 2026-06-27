@@ -1,16 +1,26 @@
 import type { CapacitorConfig } from '@capacitor/cli'
 
 /**
- * Capacitor config — wraps the Vite PWA build (apps/web/dist) into native
- * iOS + Android shells. The same React app runs inside a WKWebView (iOS) /
- * Android System WebView, so 100% of the UI code is reused.
+ * Capacitor config — wraps the React web app into native iOS + Android shells.
+ *
+ * By default the native app loads the LIVE web app from the server
+ * (`server.url`) rather than the bundled dist/, so web deploys reach the app
+ * instantly without a native rebuild. The Capacitor bridge (push, status bar,
+ * …) is still injected into the remote page, so native plugins keep working.
+ * `webDir: 'dist'` is only the offline fallback bundle.
  *
  * Build flow:
- *   npm run build        # produces dist/
- *   npx cap sync         # copies dist/ into ios/ + android/ and updates plugins
+ *   npm run build        # produces dist/ (the offline fallback bundle)
+ *   npx cap sync         # writes config + plugins into ios/ + android/
  *   npx cap open ios     # Xcode  →  Product ▸ Archive / Run
  *   npx cap open android # Android Studio  →  Run / assembleRelease
+ *
+ * To ship the OFFLINE bundled build instead (no remote dependency), run the
+ * sync with an empty override:  CAP_SERVER_URL= npx cap sync
  */
+const serverUrl =
+  process.env.CAP_SERVER_URL !== undefined ? process.env.CAP_SERVER_URL : 'https://mohe.today/todly'
+
 const config: CapacitorConfig = {
   // Bundle id under the Mohe Apple Developer team (B7JXA8GGC8), matching the
   // today.mohe.* namespace used by the team's other apps.
@@ -18,6 +28,9 @@ const config: CapacitorConfig = {
   appName: 'todly',
   webDir: 'dist',
   backgroundColor: '#EDF1F7',
+  // Load the deployed web app from the server (omit when CAP_SERVER_URL='' to
+  // use the bundled dist/ for offline-first).
+  ...(serverUrl ? { server: { url: serverUrl, cleartext: false } } : {}),
   ios: {
     // Use the system content inset so the web UI's own safe-area handling owns
     // the notch/home-indicator spacing.
