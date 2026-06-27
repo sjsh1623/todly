@@ -16,6 +16,10 @@ apps/api/bin/
 .env
 .env.*
 !.env.example
+apps/api/secrets/
+**/GoogleService-Info.plist
+**/google-services.json
+**/AuthKey_*.p8
 
 # Logs
 *.log

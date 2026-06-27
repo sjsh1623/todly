@@ -40,8 +40,49 @@ function urlBase64ToUint8Array(base64String: string): Uint8Array {
   return out
 }
 
-/** Native push: request permission (optionally), then register for a token. */
+/**
+ * Native push: request permission (optionally), then register an **FCM
+ * registration token** with the backend (platform 'ios'/'android'), which is
+ * what the server's Firebase Admin sender (`FcmSender`) delivers to.
+ *
+ * - iOS: `@capacitor/push-notifications` only yields the raw APNs token, which
+ *   FCM rejects, so iOS goes through `@capacitor-firebase/messaging` to obtain a
+ *   real FCM token (Firebase bridges APNs→FCM on-device).
+ * - Android: `@capacitor/push-notifications` already returns an FCM token.
+ */
 async function registerNative(promptIfNeeded: boolean): Promise<boolean> {
+  return Capacitor.getPlatform() === 'ios'
+    ? registerNativeFcm(promptIfNeeded)
+    : registerNativeApns(promptIfNeeded)
+}
+
+/** iOS: obtain an FCM registration token via Firebase Cloud Messaging. */
+async function registerNativeFcm(promptIfNeeded: boolean): Promise<boolean> {
+  const { FirebaseMessaging } = await import('@capacitor-firebase/messaging')
+  let perm = await FirebaseMessaging.checkPermissions()
+  if (perm.receive !== 'granted') {
+    if (!promptIfNeeded) return false
+    perm = await FirebaseMessaging.requestPermissions()
+  }
+  if (perm.receive !== 'granted') return false
+
+  await FirebaseMessaging.removeAllListeners()
+  // Token may rotate; keep the backend in sync.
+  await FirebaseMessaging.addListener('tokenReceived', ({ token }) => {
+    if (token) void registerDeviceToken({ token, platform: 'ios' })
+  })
+  // Tapping a notification opens the linked screen.
+  await FirebaseMessaging.addListener('notificationActionPerformed', (event) => {
+    const url = (event.notification?.data as Record<string, unknown> | undefined)?.url
+    if (typeof url === 'string' && url) window.location.assign(url)
+  })
+  const { token } = await FirebaseMessaging.getToken()
+  if (token) void registerDeviceToken({ token, platform: 'ios' })
+  return true
+}
+
+/** Android: FCM token via the Capacitor PushNotifications plugin. */
+async function registerNativeApns(promptIfNeeded: boolean): Promise<boolean> {
   const { PushNotifications } = await import('@capacitor/push-notifications')
   let perm = await PushNotifications.checkPermissions()
   if (perm.receive !== 'granted') {
@@ -52,8 +93,7 @@ async function registerNative(promptIfNeeded: boolean): Promise<boolean> {
 
   await PushNotifications.removeAllListeners()
   await PushNotifications.addListener('registration', (token) => {
-    const platform = Capacitor.getPlatform() === 'ios' ? 'ios' : 'android'
-    void registerDeviceToken({ token: token.value, platform })
+    void registerDeviceToken({ token: token.value, platform: 'android' })
   })
   await PushNotifications.addListener('registrationError', (err) => {
     console.warn('[push] native registration error', err)

@@ -6,6 +6,6 @@
 	     provisions APNs from this entitlement. Use "production" for App Store /
 	     TestFlight archives. -->
 	<key>aps-environment</key>
-	<string>development</string>
+	<string>production</string>
 </dict>
 </plist>
