@@ -8,21 +8,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Configure Firebase (Cloud Messaging) for the todly-a8c34 project so the
-        // @capacitor-firebase/messaging plugin can mint FCM registration tokens.
-        // Values mirror GoogleService-Info.plist; the iOS API key is not secret
-        // (it ships inside the app bundle regardless). Done programmatically to
-        // avoid bundling the plist as an Xcode resource.
+        // Configure Firebase (Cloud Messaging) so the @capacitor-firebase/messaging
+        // plugin can mint FCM registration tokens. Config is read from the bundled
+        // GoogleService-Info.plist (download it from the Firebase console). The plist
+        // is gitignored and never committed — see GoogleService-Info.plist.example.
         if FirebaseApp.app() == nil {
-            let options = FirebaseOptions(
-                googleAppID: "1:911768339804:ios:4f9736a7925002a9e72d99",
-                gcmSenderID: "911768339804"
-            )
-            options.apiKey = "AIzaSyC5YIImrsbqcWoTY3Xu4igi9NIEujmjD5Y"
-            options.projectID = "todly-a8c34"
-            options.storageBucket = "todly-a8c34.firebasestorage.app"
-            options.bundleID = "today.mohe.todly"
-            FirebaseApp.configure(options: options)
+            FirebaseApp.configure()
         }
         return true
     }
