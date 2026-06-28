@@ -19,6 +19,21 @@ echo "▸ post-clone: building web + capacitor sync"
 # Xcode Cloud exposes the cloned repo root via CI_PRIMARY_REPOSITORY_PATH.
 cd "$CI_PRIMARY_REPOSITORY_PATH/apps/web"
 
+# GoogleService-Info.plist is wired into the Xcode "App" target as a required
+# resource but is gitignored, so it's absent on a fresh CI clone and the archive
+# would fail with "Build input file cannot be found". Materialize it from the
+# base64 Xcode Cloud secret env var GOOGLE_SERVICE_INFO_PLIST_B64. Local builds
+# (file already on disk) are untouched.
+if [ ! -f ios/App/App/GoogleService-Info.plist ]; then
+  if [ -n "$GOOGLE_SERVICE_INFO_PLIST_B64" ]; then
+    echo "▸ writing GoogleService-Info.plist from GOOGLE_SERVICE_INFO_PLIST_B64"
+    echo "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/App/App/GoogleService-Info.plist
+  else
+    echo "✗ GOOGLE_SERVICE_INFO_PLIST_B64 is not set — the iOS archive will fail." >&2
+    exit 1
+  fi
+fi
+
 # Node 20 (matches CI). The Xcode Cloud macOS image ships Homebrew.
 brew install node@20
 export PATH="$(brew --prefix node@20)/bin:$PATH"
