@@ -34,13 +34,18 @@ if [ ! -f ios/App/App/GoogleService-Info.plist ]; then
   fi
 fi
 
-# Node 20 (matches CI). The Xcode Cloud macOS image ships Homebrew.
-brew install node@20
-export PATH="$(brew --prefix node@20)/bin:$PATH"
+# Node 22 — @capacitor/cli requires node >=22. The Xcode Cloud macOS image ships
+# Homebrew.
+brew install node@22
+export PATH="$(brew --prefix node@22)/bin:$PATH"
 node --version
 npm --version
 
-npm ci
+# Use `npm install`, not `npm ci`: the CI runner is darwin-x64 while the lockfile
+# was generated on darwin-arm64, and `npm ci`'s strict optional-dependency check
+# rejects esbuild's other-platform binaries (EBADPLATFORM). `npm install` honors
+# the lockfile but skips incompatible optional platform packages gracefully.
+npm install --no-audit --no-fund
 npm run build
 npx cap sync ios
 
