@@ -1,0 +1,66 @@
+# Android build, automatically, when native Android code changes.
+#
+# Trigger policy (per product requirement):
+#   - Runs ONLY when files under apps/web/android/** change on main.
+#   - Web changes (apps/web/src, …) and server changes (apps/api) do NOT match,
+#     so they never trigger an Android build.
+#
+# Builds the web (offline fallback) + `cap sync`, then assembles a debug APK and
+# uploads it as a workflow artifact. (No Play Store delivery is configured — add
+# a release keystore + Play Developer API secret to ship to Play, mirroring the
+# iOS → TestFlight workflow.)
+
+name: Android Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/web/android/**'
+  workflow_dispatch: {}
+
+concurrency:
+  group: android-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Assemble debug APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Build web + capacitor sync
+        working-directory: apps/web
+        run: |
+          npm ci
+          npm run build
+          npx cap sync android
+
+      - name: Assemble debug APK
+        working-directory: apps/web/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: todly-android-debug
+          path: apps/web/android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error

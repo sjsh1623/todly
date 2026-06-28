@@ -1,0 +1,142 @@
+# iOS → TestFlight, automatically, when native iOS code changes.
+#
+# Trigger policy (per product requirement):
+#   - Runs ONLY when files under apps/web/ios/** change on main.
+#   - Web changes (apps/web/src, public, configs) and server changes (apps/api)
+#     do NOT match the path filter, so they never trigger an iOS build.
+#
+# What it does: build the web (offline fallback) + `cap sync`, sign with the
+# Apple Distribution cert, archive, export an App Store IPA, and upload it to
+# App Store Connect. The "Andrew Internal" TestFlight group has automatic
+# distribution enabled, so the new build reaches testers once Apple finishes
+# processing — i.e. a new TestFlight version is registered on every run.
+#
+# Required repository secrets (Settings ▸ Secrets and variables ▸ Actions):
+#   ASC_KEY_ID                     App Store Connect API key id
+#   ASC_ISSUER_ID                  App Store Connect API issuer id
+#   ASC_KEY_P8_BASE64              base64 of the API key .p8
+#   IOS_DIST_CERT_P12_BASE64       base64 of the Apple Distribution .p12
+#   IOS_DIST_CERT_PASSWORD         password for that .p12
+#   GOOGLE_SERVICE_INFO_PLIST_B64  base64 of GoogleService-Info.plist (gitignored)
+
+name: iOS TestFlight
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/web/ios/**'
+  workflow_dispatch: {} # allow manual runs
+
+concurrency:
+  group: ios-testflight
+  cancel-in-progress: false
+
+env:
+  ASC_APP_ID: '6784900293'
+  ASC_KEY_DIR: ${{ github.workspace }}/.asc_keys
+
+jobs:
+  build:
+    name: Archive & upload to TestFlight
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_16.app || sudo xcode-select -switch /Applications/Xcode.app
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Build web + capacitor sync
+        working-directory: apps/web
+        run: |
+          npm ci
+          npm run build           # offline fallback bundle; app loads live server.url
+          npx cap sync ios
+
+      - name: Write GoogleService-Info.plist
+        run: |
+          echo "${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}" | base64 --decode \
+            > apps/web/ios/App/App/GoogleService-Info.plist
+
+      - name: Install Apple Distribution certificate
+        env:
+          P12_B64: ${{ secrets.IOS_DIST_CERT_P12_BASE64 }}
+          P12_PW: ${{ secrets.IOS_DIST_CERT_PASSWORD }}
+        run: |
+          KEYCHAIN="$RUNNER_TEMP/app-signing.keychain-db"
+          KEYCHAIN_PW="$(openssl rand -base64 24)"
+          echo "${P12_B64}" | base64 --decode > "$RUNNER_TEMP/dist.p12"
+          security create-keychain -p "$KEYCHAIN_PW" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KEYCHAIN_PW" "$KEYCHAIN"
+          security import "$RUNNER_TEMP/dist.p12" -P "$P12_PW" -A -t cert -f pkcs12 -k "$KEYCHAIN"
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PW" "$KEYCHAIN" >/dev/null
+          security list-keychain -d user -s "$KEYCHAIN" login.keychain-db
+          echo "✓ distribution certificate imported"
+
+      - name: Write App Store Connect API key
+        run: |
+          mkdir -p "$ASC_KEY_DIR" "$HOME/.appstoreconnect/private_keys"
+          echo "${{ secrets.ASC_KEY_P8_BASE64 }}" | base64 --decode \
+            | tee "$ASC_KEY_DIR/AuthKey_${{ secrets.ASC_KEY_ID }}.p8" \
+            > "$HOME/.appstoreconnect/private_keys/AuthKey_${{ secrets.ASC_KEY_ID }}.p8"
+
+      - name: Compute next build number
+        id: build_number
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        run: |
+          ASC_KEY_P8="$(cat "$ASC_KEY_DIR/AuthKey_${{ secrets.ASC_KEY_ID }}.p8")" \
+          ASC_APP_ID="$ASC_APP_ID" \
+            node .github/scripts/asc-next-build.mjs > /tmp/bn.txt
+          BN="$(cat /tmp/bn.txt)"
+          echo "Next build number: $BN"
+          echo "build=$BN" >> "$GITHUB_OUTPUT"
+
+      - name: Stamp build number
+        run: |
+          sed -i '' "s/CURRENT_PROJECT_VERSION = [0-9][0-9]*;/CURRENT_PROJECT_VERSION = ${{ steps.build_number.outputs.build }};/g" \
+            apps/web/ios/App/App.xcodeproj/project.pbxproj
+
+      - name: Archive
+        run: |
+          xcodebuild -project apps/web/ios/App/App.xcodeproj \
+            -scheme App -configuration Release \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -destination 'generic/platform=iOS' \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$ASC_KEY_DIR/AuthKey_${{ secrets.ASC_KEY_ID }}.p8" \
+            -authenticationKeyID "${{ secrets.ASC_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ secrets.ASC_ISSUER_ID }}" \
+            archive
+
+      - name: Export App Store IPA
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -exportOptionsPlist apps/web/ios/App/ExportOptions.plist \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$ASC_KEY_DIR/AuthKey_${{ secrets.ASC_KEY_ID }}.p8" \
+            -authenticationKeyID "${{ secrets.ASC_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ secrets.ASC_ISSUER_ID }}"
+
+      - name: Upload to App Store Connect (TestFlight)
+        run: |
+          xcrun altool --upload-app -f "$RUNNER_TEMP/export/App.ipa" -t ios \
+            --apiKey "${{ secrets.ASC_KEY_ID }}" \
+            --apiIssuer "${{ secrets.ASC_ISSUER_ID }}"
+
+      - name: Cleanup keychain
+        if: always()
+        run: security delete-keychain "$RUNNER_TEMP/app-signing.keychain-db" || true
