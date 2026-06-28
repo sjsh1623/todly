@@ -21,12 +21,15 @@
 
 name: iOS TestFlight
 
+# Manual-only: the project builds on push via Xcode Cloud. This GitHub Actions
+# path is kept as an opt-in backup — enable the push trigger below and add the
+# documented secrets to use it instead of Xcode Cloud.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'apps/web/ios/**'
-  workflow_dispatch: {} # allow manual runs
+  workflow_dispatch: {}
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - 'apps/web/ios/**'
 
 concurrency:
   group: ios-testflight

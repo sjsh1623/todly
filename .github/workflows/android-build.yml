@@ -12,12 +12,14 @@
 
 name: Android Build
 
+# Manual-only backup (project builds on push via Xcode Cloud). Re-enable the
+# push trigger below to use GitHub Actions for Android instead.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'apps/web/android/**'
   workflow_dispatch: {}
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - 'apps/web/android/**'
 
 concurrency:
   group: android-build

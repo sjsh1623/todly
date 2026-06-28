@@ -17,7 +17,10 @@ apps/api/bin/
 .env.*
 !.env.example
 apps/api/secrets/
-**/GoogleService-Info.plist
+# GoogleService-Info.plist IS committed (wired into the Xcode App target as a
+# required resource so Xcode Cloud / CI archives can build it). Its iOS API key
+# is not a real secret — it ships in every app bundle — restrict it in Google
+# Cloud (iOS bundle id + FCM) for actual protection.
 **/google-services.json
 **/AuthKey_*.p8
 
