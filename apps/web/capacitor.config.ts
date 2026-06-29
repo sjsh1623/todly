@@ -32,9 +32,12 @@ const config: CapacitorConfig = {
   // use the bundled dist/ for offline-first).
   ...(serverUrl ? { server: { url: serverUrl, cleartext: false } } : {}),
   ios: {
-    // Use the system content inset so the web UI's own safe-area handling owns
-    // the notch/home-indicator spacing.
-    contentInset: 'always',
+    // Edge-to-edge: the web view fills the whole screen (under the status bar /
+    // home indicator) and the page paints into the safe areas — no white strip
+    // at the top. The web UI reserves the notch via the CSS
+    // env(safe-area-inset-top) spacer and the runtime StatusBar overlay
+    // (see shared/native/statusBar). 'never' = don't auto-inset the web view.
+    contentInset: 'never',
   },
   android: {
     // Keep the WebView background matching the app shell to avoid white flashes.

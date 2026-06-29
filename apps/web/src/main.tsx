@@ -9,6 +9,9 @@ import { ToastProvider, OfflineIndicator } from './shared/ui'
 import i18n from './shared/i18n/i18n'
 import './index.css'
 import './shared/tokens/tokens.css'
+import { initNativeStatusBar } from './shared/native/statusBar'
+
+void initNativeStatusBar()
 
 const queryClient = new QueryClient()
 
