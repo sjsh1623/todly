@@ -37,9 +37,9 @@ export default function Login() {
 
   return (
     <AuthScreen gradientHeader>
-      <form noValidate onSubmit={onSubmit} className="relative flex flex-col" style={{ padding: '24px 26px 32px' }}>
-        <div className="flex flex-col items-center text-center" style={{ marginTop: 54, marginBottom: 38 }}>
-          <div style={{ marginBottom: 20 }}>
+      <form noValidate onSubmit={onSubmit} className="relative flex flex-col" style={{ padding: '16px 26px 20px' }}>
+        <div className="flex flex-col items-center text-center" style={{ marginTop: 20, marginBottom: 24 }}>
+          <div style={{ marginBottom: 12 }}>
             <Wordmark size={40} />
           </div>
           <h1 style={{ fontSize: 28, fontWeight: 800, color: 'var(--color-text)', letterSpacing: '-.6px' }}>
@@ -71,7 +71,7 @@ export default function Login() {
           {...register('password')}
         />
 
-        <div style={{ textAlign: 'right', marginTop: 14, marginBottom: 20 }}>
+        <div style={{ textAlign: 'right', marginTop: 10, marginBottom: 16 }}>
           <Link to="/reset-password" style={{ fontSize: 12.5, fontWeight: 700, color: '#7C8AA0' }}>
             {t('login.forgotPassword')}
           </Link>
@@ -86,12 +86,12 @@ export default function Login() {
         <Button
           type="submit"
           disabled={login.isPending}
-          style={{ boxShadow: '0 10px 24px rgba(19,102,206,.26)', marginBottom: 22 }}
+          style={{ boxShadow: '0 10px 24px rgba(19,102,206,.26)', marginBottom: 16 }}
         >
           {login.isPending ? t('login.submitting') : t('login.submit')}
         </Button>
 
-        <div className="flex items-center" style={{ gap: 12, marginBottom: 20 }}>
+        <div className="flex items-center" style={{ gap: 12, marginBottom: 16 }}>
           <div style={{ flex: 1, height: 1, background: '#E0E6EF' }} />
           <span style={{ fontSize: 12, fontWeight: 600, color: '#AEB9CC' }}>{t('login.or')}</span>
           <div style={{ flex: 1, height: 1, background: '#E0E6EF' }} />
@@ -99,7 +99,7 @@ export default function Login() {
 
         <OAuthButtons disabled={login.isPending} />
 
-        <div style={{ textAlign: 'center', fontSize: 13.5, fontWeight: 600, color: '#7C8AA0', padding: '24px 0 30px' }}>
+        <div style={{ textAlign: 'center', fontSize: 13.5, fontWeight: 600, color: '#7C8AA0', padding: '16px 0 12px' }}>
           {t('login.noAccount')}{' '}
           <Link to="/signup" style={{ color: '#1366CE', fontWeight: 800 }}>
             {t('login.signupLink')}
