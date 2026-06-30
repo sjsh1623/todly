@@ -71,17 +71,21 @@ services:
       - todly_internal
       - proxy_network
 
+  # Serves the pre-built static bundle straight from the host's apps/web/dist
+  # (mounted read-only) — so a web deploy is just `npm run build` on the host,
+  # no image rebuild. Build with the /todly base + api/ws URLs baked in:
+  #   cd apps/web && VITE_BASE_PATH=/todly/ VITE_API_BASE_URL=/todly/api/v1 \
+  #     VITE_WS_URL=/todly/ws npm run build      (or: scripts/deploy-web.sh)
+  # nginx serves the new files immediately; no container restart needed.
   web:
-    build:
-      context: ./apps/web
-      args:
-        VITE_BASE_PATH: /todly/
-        VITE_API_BASE_URL: /todly/api/v1
-        VITE_WS_URL: /todly/ws
+    image: nginx:alpine
     container_name: todly-web
     restart: unless-stopped
     depends_on:
       - api
+    volumes:
+      - ./apps/web/dist:/usr/share/nginx/html:ro
+      - ./apps/web/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
       - proxy_network
 
