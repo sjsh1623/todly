@@ -1,32 +1,49 @@
 import type { ReactNode } from 'react'
-import { StatusBar } from './StatusBar'
 
 type AuthScreenProps = {
-  /** When set, paints the soft blue gradient band behind the top of the screen. */
+  /** @deprecated retained for call-site compatibility; the shell is now flat. */
   gradientHeader?: boolean
   children: ReactNode
 }
 
 /**
- * Full-screen phone frame used by the public auth routes (no bottom nav).
- * Mirrors the AppShell centering but with the #F2F6FC auth background.
+ * Clean full-screen shell for the public auth routes (login / signup / reset).
+ *
+ * Pinned with `position: fixed` so the *document* never scrolls. The content is
+ * vertically centred via auto margins and only scrolls *inside* the shell when
+ * it genuinely can't fit (very small devices) — so a normal phone shows the
+ * form perfectly centred with no scroll, while a tiny one can still reach
+ * everything. Safe-area padding paints and clears the notch / home indicator
+ * (edge-to-edge), so there's no white strip at the top.
  */
-export function AuthScreen({ gradientHeader = false, children }: AuthScreenProps) {
+export function AuthScreen({ children }: AuthScreenProps) {
   return (
-    <div className="min-h-screen flex justify-center" style={{ background: 'var(--color-bg)' }}>
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        overflowY: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        background: 'var(--color-bg-2)',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       <div
-        className="relative w-full max-w-[420px] min-h-screen overflow-hidden"
-        style={{ background: '#F2F6FC' }}
+        style={{
+          minHeight: '100%',
+          width: '100%',
+          maxWidth: 440,
+          boxSizing: 'border-box',
+          display: 'flex',
+          flexDirection: 'column',
+          padding:
+            'calc(env(safe-area-inset-top, 0px) + 24px) 26px calc(env(safe-area-inset-bottom, 0px) + 20px)',
+        }}
       >
-        <StatusBar />
-        {gradientHeader && (
-          <div
-            className="absolute left-0 right-0 top-0 pointer-events-none"
-            style={{ height: 300, background: 'linear-gradient(180deg,#E2EEFD 0%,#F2F6FC 100%)' }}
-            aria-hidden="true"
-          />
-        )}
-        <div className="relative">{children}</div>
+        {/* auto top+bottom margins centre the block, and collapse to a normal
+            top-aligned scroll when the content is taller than the viewport. */}
+        <div style={{ margin: 'auto 0', width: '100%' }}>{children}</div>
       </div>
     </div>
   )
