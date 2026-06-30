@@ -14,7 +14,8 @@ import {
   TextField,
   Wordmark,
 } from '../shared/ui'
-import { getApiErrorMessage, useSignup } from '../features/auth'
+import { getApiErrorMessage, useOauth, useSignup } from '../features/auth'
+import { AppleSignInError, getAppleIdToken, isAppleCancel } from '../features/auth/apple'
 import { PROFILE_COLOR_TO_AVATAR, type ProfileColor } from '../features/auth/types'
 import { checkUsername } from '../features/auth/api'
 import { getPasswordStrength } from '../features/auth/password'
@@ -30,6 +31,29 @@ export default function Signup() {
   const signup = useSignup()
   const [showPassword, setShowPassword] = useState(false)
   const [usernameState, setUsernameState] = useState<UsernameState>('idle')
+  const oauth = useOauth()
+  const [oauthError, setOauthError] = useState<string | null>(null)
+
+  async function handleApple() {
+    setOauthError(null)
+    try {
+      const idToken = await getAppleIdToken()
+      oauth.mutate(
+        { provider: 'apple', idToken },
+        {
+          onSuccess: () => navigate('/', { replace: true }),
+          onError: () => setOauthError('Apple 로그인에 실패했어요'),
+        },
+      )
+    } catch (e) {
+      if (isAppleCancel(e)) return
+      setOauthError(
+        e instanceof AppleSignInError && e.code === 'WEB_APPLE_UNCONFIGURED'
+          ? '웹에서는 Apple 로그인을 준비 중이에요'
+          : 'Apple 로그인에 실패했어요',
+      )
+    }
+  }
 
   const schema = z.object({
     nickname: z
@@ -231,7 +255,15 @@ export default function Signup() {
         </div>
 
         <div style={{ marginBottom: 18 }}>
-          <OAuthButtons disabled={signup.isPending} />
+          <OAuthButtons onApple={handleApple} disabled={signup.isPending || oauth.isPending} />
+          {oauthError && (
+            <p
+              role="alert"
+              style={{ marginTop: 8, textAlign: 'center', fontSize: 12.5, fontWeight: 600, color: 'var(--color-due)' }}
+            >
+              {oauthError}
+            </p>
+          )}
         </div>
 
         <p style={{ textAlign: 'center', fontSize: 11.5, fontWeight: 500, color: '#9AA7BC', lineHeight: 1.6 }}>

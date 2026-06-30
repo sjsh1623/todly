@@ -5,7 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useTranslation } from 'react-i18next'
 import { AuthScreen, Button, OAuthButtons, PasswordToggle, Wordmark } from '../shared/ui'
-import { getApiErrorMessage, useLogin } from '../features/auth'
+import { getApiErrorMessage, useLogin, useOauth } from '../features/auth'
+import { AppleSignInError, getAppleIdToken, isAppleCancel } from '../features/auth/apple'
 
 const schema = z.object({
   email: z.string().min(1, '이메일을 입력해 주세요').email('올바른 이메일 형식이 아니에요'),
@@ -43,7 +44,30 @@ export default function Login() {
   const login = useLogin()
   const { t } = useTranslation()
   const [showPassword, setShowPassword] = useState(false)
+  const oauth = useOauth()
+  const [oauthError, setOauthError] = useState<string | null>(null)
   const from = (location.state as { from?: string } | null)?.from ?? '/'
+
+  async function handleApple() {
+    setOauthError(null)
+    try {
+      const idToken = await getAppleIdToken()
+      oauth.mutate(
+        { provider: 'apple', idToken },
+        {
+          onSuccess: () => navigate(from, { replace: true }),
+          onError: () => setOauthError('Apple 로그인에 실패했어요'),
+        },
+      )
+    } catch (e) {
+      if (isAppleCancel(e)) return
+      setOauthError(
+        e instanceof AppleSignInError && e.code === 'WEB_APPLE_UNCONFIGURED'
+          ? '웹에서는 Apple 로그인을 준비 중이에요'
+          : 'Apple 로그인에 실패했어요',
+      )
+    }
+  }
 
   const {
     register,
@@ -61,6 +85,7 @@ export default function Login() {
   const errorText =
     errors.email?.message ??
     errors.password?.message ??
+    oauthError ??
     (login.isError ? getApiErrorMessage(login.error) : '')
 
   return (
@@ -130,7 +155,7 @@ export default function Login() {
         <div style={{ flex: 1, height: 1, background: '#E7ECF3' }} />
       </div>
 
-      <OAuthButtons disabled={login.isPending} />
+      <OAuthButtons onApple={handleApple} disabled={login.isPending || oauth.isPending} />
 
       <div style={{ textAlign: 'center', fontSize: 13.5, fontWeight: 600, color: '#7C8AA0', marginTop: 22 }}>
         {t('login.noAccount')}{' '}

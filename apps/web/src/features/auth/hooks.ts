@@ -3,6 +3,17 @@ import * as authApi from './api'
 import { useAuthStore } from './store'
 import type { AuthResponse, LoginPayload, SignupPayload } from './types'
 
+/** Exchange a provider id token (Apple / Google) for a todly session. */
+export function useOauth() {
+  const login = useAuthStore((s) => s.login)
+  return useMutation<AuthResponse, unknown, { provider: string; idToken: string }>({
+    mutationFn: ({ provider, idToken }) => authApi.oauth(provider, idToken),
+    onSuccess: (data) => {
+      login({ accessToken: data.accessToken, refreshToken: data.refreshToken }, data.user)
+    },
+  })
+}
+
 export function useLogin() {
   const login = useAuthStore((s) => s.login)
   return useMutation<AuthResponse, unknown, LoginPayload>({
