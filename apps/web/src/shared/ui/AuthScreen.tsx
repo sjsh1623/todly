@@ -24,7 +24,9 @@ export function AuthScreen({ children }: AuthScreenProps) {
         inset: 0,
         overflowY: 'auto',
         WebkitOverflowScrolling: 'touch',
-        background: 'var(--color-bg-2)',
+        // Match the html / native web-view background so the top safe-area
+        // strip is the same colour as the page (no two-tone band at the notch).
+        background: 'var(--color-bg)',
         display: 'flex',
         justifyContent: 'center',
       }}

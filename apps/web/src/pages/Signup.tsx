@@ -9,6 +9,7 @@ import {
   AuthScreen,
   Button,
   ColorPicker,
+  OAuthButtons,
   PasswordToggle,
   TextField,
   Wordmark,
@@ -222,6 +223,16 @@ export default function Signup() {
         >
           {signup.isPending ? t('signup.submitting') : t('signup.submit')}
         </Button>
+
+        <div className="flex items-center" style={{ gap: 12, margin: '6px 0 16px' }}>
+          <div style={{ flex: 1, height: 1, background: '#E7ECF3' }} />
+          <span style={{ fontSize: 12, fontWeight: 600, color: '#AEB9CC' }}>{t('login.or')}</span>
+          <div style={{ flex: 1, height: 1, background: '#E7ECF3' }} />
+        </div>
+
+        <div style={{ marginBottom: 18 }}>
+          <OAuthButtons disabled={signup.isPending} />
+        </div>
 
         <p style={{ textAlign: 'center', fontSize: 11.5, fontWeight: 500, color: '#9AA7BC', lineHeight: 1.6 }}>
           {t('signup.termsPrefix')} <span style={{ color: '#7C8AA0', fontWeight: 700 }}>{t('signup.termsOfService')}</span>
