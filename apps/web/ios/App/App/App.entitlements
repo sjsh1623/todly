@@ -7,5 +7,12 @@
 	     TestFlight archives. -->
 	<key>aps-environment</key>
 	<string>production</string>
+	<!-- Sign in with Apple. Requires the "Sign in with Apple" capability to be
+	     enabled on the App ID (today.mohe.todly) in the Apple Developer portal,
+	     otherwise the archive fails at signing. -->
+	<key>com.apple.developer.applesignin</key>
+	<array>
+		<string>Default</string>
+	</array>
 </dict>
 </plist>
